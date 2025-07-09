@@ -43,13 +43,20 @@
       <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
         <a href="index.html" class="text-xl font-extrabold tracking-tight accent-brown">Caledonian Rocketry</a>
 
-        <!-- desktop -->
-        <nav class="hidden md:flex gap-8 text-sm uppercase font-semibold">
-          <a href="index.html"           class="hover:text-[color:var(--rocket-red)]">Home</a>
-          <a href="Events.html"          class="hover:text-[color:var(--rocket-red)]">Events</a>
-          <a href="Preliminaries.html"   class="hover:text-[color:var(--rocket-red)]">Preliminaries</a>
-          <a href="certification.html"   class="text-[color:var(--rocket-red)]">Certifications</a>
-        </nav>
+   <nav class="hidden md:flex space-x-6 text-sm font-semibold">
+  <!-- Anchors (same-page sections) -->
+  <a href="Index.html#mission" class="hover:text-red-500 transition">Mission</a>
+  <a href="Index.html#projects" class="hover:text-red-500 transition">Projects</a>
+  <a href="Index.html#tutorials" class="hover:text-red-500 transition">Tutorials</a>
+  <a href="Index.html#sponsors" class="hover:text-red-500 transition">Sponsors</a>
+  <a href="Index.html#contact"  class="hover:text-red-500 transition">Contact</a>
+
+  <!-- External Pages -->
+  <a href="MeetTeam.html" class="hover:text-red-500 transition">Team</a>
+  <a href="Events.html" class="hover:text-red-500 transition">Events</a>
+  <a href="certification.html" class="hover:text-red-500 transition">Certification</a>
+  <a href="preliminaries.html"    class="hover:text-[color:var(--rocket-red)]">Preliminaries</a>
+</nav>
 
         <!-- mobile burger -->
         <button @click="open=!open" class="md:hidden text-gray-100">

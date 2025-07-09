@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<!-- Dual-Deployment Rocket Tutorial • Caledonian Rocketry -->
+<!-- Dual‑Deployment Rocket Tutorial • Caledonian Rocketry -->
 <html lang="en" x-data="guRocketryApp" :class="{ dark: darkMode }">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Build a Dual-Deployment Rocket • Caledonian Rocketry</title>
+    <title>Build a Dual‑Deployment Rocket • Caledonian Rocketry</title>
 
-    <!-- Fonts & Tailwind -->
+    <!-- Google Fonts & Tailwind -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet" />
     <script src="https://cdn.tailwindcss.com?plugins=typography,aspect-ratio"></script>
 
@@ -22,14 +22,15 @@
       });
     </script>
 
-    <!-- Colour tokens + prose utilities -->
+    <!-- Craig’s colour tokens + helpers -->
     <style>
       :root { --rocket-red:#ff3131; --earth-brown:#8b5e3c; }
       body  { font-family:'Inter',sans-serif; }
       .accent-red   { color:var(--rocket-red); }
       .accent-brown { color:var(--earth-brown); }
+      .cta-btn{ @apply inline-block mt-8 px-6 py-3 rounded-lg bg-[color:var(--rocket-red)] text-white font-semibold shadow-lg hover:opacity-90 transition; }
 
-      /* tutorial prose helpers  */
+      /* prose helpers */
       .callout{background:rgba(31,41,55,.6);border-left:4px solid var(--rocket-red);
                padding:1rem;border-radius:.5rem;font-size:.875rem;color:#e5e7eb;margin:1.5rem 0;}
       pre code{display:block;background:rgba(17,24,39,.9);padding:1rem;border-radius:.375rem;
@@ -39,36 +40,42 @@
                          align-items:center;justify-content:center;height:200px;border-radius:.5rem;
                          margin:1rem 0;font-size:.875rem;}
 
-      /* ★ star-field canvas */
+      /* ★ star‑field canvas */
       #starfield{position:fixed;inset:0;z-index:-1;background:#000;touch-action:none}
     </style>
   </head>
 
-  <!-- ★ no fade-in opacity trap here -->
   <body class="bg-white dark:bg-gray-950 text-gray-900 dark:text-white antialiased scroll-smooth">
 
-    <!-- ★ star-field canvas -->
+    <!-- ★ star‑field canvas -->
     <canvas id="starfield"></canvas>
 
-    <!-- ============== NAVBAR (from Certification page) ============== -->
+    <!-- ========================= NAVBAR ========================= -->
     <header class="sticky top-0 z-50 backdrop-blur-lg/60 border-b border-gray-800 dark:border-gray-700" x-data="{open:false}">
       <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
         <a href="index.html" class="text-xl font-extrabold tracking-tight accent-brown">Caledonian Rocketry</a>
 
-        <!-- desktop links -->
-        <nav class="hidden md:flex gap-8 text-sm uppercase font-semibold">
-          <a href="index.html"             class="hover:text-[color:var(--rocket-red)]">Home</a>
-          <a href="Events.html"            class="hover:text-[color:var(--rocket-red)]">Events</a>
-          <a href="Preliminaries.html"     class="hover:text-[color:var(--rocket-red)]">Preliminaries</a>
-          <a href="DeploymentTutorial.html"class="text-[color:var(--rocket-red)]">Tutorials</a>
-          <a href="certification.html"     class="hover:text-[color:var(--rocket-red)]">Certifications</a>
-        </nav>
+   <nav class="hidden md:flex space-x-6 text-sm font-semibold">
+  <!-- Anchors (same-page sections) -->
+  <a href="Index.html#mission" class="hover:text-red-500 transition">Mission</a>
+  <a href="Index.html#projects" class="hover:text-red-500 transition">Projects</a>
+  <a href="Index.html#tutorials" class="hover:text-red-500 transition">Tutorials</a>
+  <a href="Index.html#sponsors" class="hover:text-red-500 transition">Sponsors</a>
+  <a href="Index.html#contact"  class="hover:text-red-500 transition">Contact</a>
+
+  <!-- External Pages -->
+  <a href="MeetTeam.html" class="hover:text-red-500 transition">Team</a>
+  <a href="Events.html" class="hover:text-red-500 transition">Events</a>
+  <a href="certification.html" class="hover:text-red-500 transition">Certification</a>
+  <a href="preliminaries.html"    class="hover:text-[color:var(--rocket-red)]">Preliminaries</a>
+</nav>
+        
 
         <!-- mobile burger -->
         <button @click="open=!open" class="md:hidden text-gray-100">
           <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" stroke="currentColor">
-            <path x-show="!open" stroke-linecap="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
-            <path x-show="open"  stroke-linecap="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+            <path x-show="!open" stroke-linecap="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+            <path x-show="open"  stroke-linecap="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
           </svg>
         </button>
       </div>
@@ -85,64 +92,165 @@
       </div>
     </header>
 
-    <!-- ====================== HERO ====================== -->
+    <!-- ========================= HERO ========================= -->
     <section class="pt-32 pb-20 bg-gradient-to-b from-black to-gray-900 text-center relative overflow-hidden">
-      <img src="./assets/tutorials/dual_hero.jpg"
-           alt="Dual Deployment schematic"
-           class="absolute inset-0 w-full h-full object-cover opacity-20 pointer-events-none" />
+      <img src="./assets/tutorials/dual_hero.jpg" alt="Dual Deployment schematic" class="absolute inset-0 w-full h-full object-cover opacity-20 pointer-events-none" />
       <div class="relative z-10 max-w-4xl mx-auto px-4" data-aos="zoom-in">
-        <h1 class="text-4xl md:text-5xl font-extrabold mb-3 accent-brown">
-          Dual-Deployment Rocket: Structural Tutorial
-        </h1>
-        <p class="text-gray-300">
-          Step-by-step guide to each airframe component, payload, wiring and recovery hardware—right down to epoxy fillets.
-        </p>
+        <h1 class="text-4xl md:text-5xl font-extrabold mb-3 accent-brown">Dual‑Deployment Rocket: Structural Tutorial</h1>
+        <p class="text-gray-300 max-w-2xl mx-auto">Step‑by‑step guide to each airframe component, payload, wiring and recovery hardware — right down to epoxy fillets.</p>
       </div>
     </section>
 
-    <!-- ====================== MAIN (existing content stays unchanged) ====================== -->
+    <!-- =============== BODY CONTENT =============== -->
     <main class="prose dark:prose-invert md:prose-lg max-w-4xl mx-auto px-4 py-16 prose-headings:font-semibold prose-headings:accent-brown">
-      <!-- … full original tutorial markup continues here exactly as before … -->
-      <!-- (kept intact from your previous DeploymentTutorial.html) -->
+
+      <!-- OpenRocket Simulation Preview -->
+      <h2>OpenRocket Simulation</h2>
+      <img src="./assets/dual/openrocket_preview.png" alt="OpenRocket simulation" class="rounded-lg shadow-lg my-4" />
+      <p>This simulation outlines trajectory, apogee, and deployment sequence in OpenRocket.</p>
+
+      <!-- Full Rocket Images -->
+      <h2>Full Rocket Assembly</h2>
+      <div class="grid sm:grid-cols-2 gap-6 my-4" data-aos="zoom-in-up">
+        <img src="./assets/dual/full_rocket_side.jpg" alt="Full rocket side view" class="rounded-lg shadow-lg" />
+        <img src="./assets/dual/full_rocket_isometric.jpg" alt="Full rocket isometric view" class="rounded-lg shadow-lg" />
+      </div>
+      <p>Front and side profiles showing all major sections mated together.</p>
+
+      <h2 id="overview">0 · Overview</h2>
+      <p>This page walks through the <strong>structural parts</strong> of a dual‑deployment rocket: from nose cone to fin can, plus payload bay and recovery system. Each section includes materials, dimensions, and assembly steps with image placeholders.</p>
+      <div class="callout">🧰 <strong>Materials</strong> — phenolic kraft tubing, PLA, birch plywood rings, shock cord, quick links, dual parachutes, CanSat components. Customise per your design!</div>
+
+      <!-- Nose Cone -->
+      <h2 id="nose-cone">1 · Nose Cone</h2>
+      <img src="./assets/dual/nose_cone.jpg" alt="PLA Nose Cone" class="rounded-lg shadow-lg my-4" />
+      <ul>
+        <li><strong>Material:</strong> PLA printed, 3 mm wall</li>
+        <li><strong>Length:</strong> 150 mm</li>
+        <li><strong>Attachment:</strong> Threaded bulkhead ring with O‑ring seal</li>
+      </ul>
+      <p><strong>Assembly:</strong> Mount to forward bulkhead with M4 screws and silicone sealant.</p>
+
+      <!-- Upper Airframe -->
+      <h2 id="upper-airframe">2 · Upper Airframe Tube</h2>
+      <img src="./assets/dual/upper_airframe.jpg" alt="Phenolic tubing upper airframe" class="rounded-lg shadow-lg my-4" />
+      <ul>
+        <li><strong>Tube:</strong> Phenolic kraft, 54 mm OD, 3 mm wall</li>
+        <li><strong>Length:</strong> 600 mm</li>
+        <li><strong>Center Ring:</strong> Birch plywood, 3 mm</li>
+      </ul>
+      <p><strong>Assembly:</strong> Slide over forward ring, align fin‑can mounts, secure with epoxy fillets.</p>
+
+      <!-- Avionics Bay -->
+      <h2 id="avionics-bay">3 · Avionics &amp; CanSat Bay</h2>
+      <img src="./assets/dual/avionics_bay.jpg" alt="Avionics bay" class="rounded-lg shadow-lg my-4" />
+      <ul>
+        <li><strong>Length:</strong> 200 mm</li>
+        <li><strong>Bulkheads:</strong> Forward &amp; aft plywood rings</li>
+        <li><strong>Components:</strong> Flight computer, battery sled, BP charges, CanSat module</li>
+      </ul>
+      <p><strong>Assembly:</strong> Mount PCBs, insert CanSat in dedicated pocket, route wiring through cutouts, secure with nylon screws.</p>
+
+      <!-- Payload -->
+      <h2 id="payload">4 · Payload: CanSat</h2>
+      <img src="./assets/dual/cansat.jpg" alt="CanSat payload" class="rounded-lg shadow-lg my-4" />
+      <ul>
+        <li><strong>Casing:</strong> 38 mm tube</li>
+        <li><strong>Electronics:</strong> Sensor board, comms module, battery pack</li>
+        <li><strong>Mount:</strong> Shock‑absorbing foam cradle</li>
+      </ul>
+      <p><strong>Assembly:</strong> Secure CanSat in foam, slide into avionics bay pocket, connect power/data harness to flight computer.</p>
+
+      <!-- Lower Airframe -->
+      <h2 id="lower-airframe">5 · Lower Airframe Tube</h2>
+      <img src="./assets/dual/lower_airframe.jpg" alt="Phenolic tubing lower airframe" class="rounded-lg shadow-lg my-4" />
+      <ul>
+        <li><strong>Tube:</strong> Phenolic kraft, 54 mm OD, 3 mm wall</li>
+        <li><strong>Length:</strong> 800 mm</li>
+        <li><strong>Coupler:</strong> Internal phenolic sleeve, 6 mm wall</li>
+      </ul>
+      <p><strong>Assembly:</strong> Bond to aft coupler ring, align shock‑cord eyelet, apply epoxy fillets around seam.</p>
+
+      <!-- Fin Can -->
+      <h2 id="fin-can">6 · Fin Can Assembly</h2>
+      <img src="./assets/dual/fin_can.jpg" alt="Fin can assembly" class="rounded-lg shadow-lg my-4" />
+      <ul>
+        <li><strong>Fins:</strong> 5‑layer birch plywood, CNC cut</li>
+        <li><strong>Root Chord:</strong> 100 mm</li>
+        <li><strong>Can Diameter:</strong> 54 mm</li>
+      </ul>
+      <p><strong>Assembly:</strong> Epoxy fins into centering ring slots, insert into lower tube, fillet at roots.</p>
+
+      <!-- Recovery -->
+      <h2 id="recovery">7 · Recovery System &amp; Test Videos</h2>
+      <img src="./assets/dual/recovery_system.jpg" alt="Recovery system components" class="rounded-lg shadow-lg my-4" />
+      <ul>
+        <li><strong>Drogue:</strong> 14″ chute, BP release at apogee</li>
+        <li><strong>Main:</strong> 42″ chute, deployed at 300 m</li>
+        <li><strong>Shock Cord:</strong> 1 m nylon, quick‑link anchors</li>
+      </ul>
+      <p><strong>Assembly:</strong> Connect cords to bulkheads, pack parachutes, wire BP charges.</p>
+      <div class="video-placeholder">Recovery System Test Video Placeholder</div>
+      <div class="video-placeholder">Recovery System Ejection Sequence Placeholder</div>
+
+      <div class="callout">💡 <strong>Tip</strong> — Conduct static ejection tests outdoors with inert charges to verify separation timing and cord strength.</div>
+
     </main>
 
-    <!-- ====================== FOOTER ====================== -->
+    <!-- ========================= FOOTER ========================= -->
     <footer class="border-t border-gray-800 dark:border-gray-700 py-8 text-center text-sm text-gray-500 dark:text-gray-400">
       © 2025 Craig Andrews · Caledonian Rocketry
     </footer>
 
-    <!-- Init AOS -->
-    <script> AOS.init({ duration: 800, once: true }); </script>
-
-    <!-- ★★ Star-field JS (same proven code) -->
+    <!-- Init scripts -->
     <script>
-      document.addEventListener('DOMContentLoaded',()=>{
-        const c=document.getElementById('starfield'),ctx=c.getContext('2d'),
-              DPR=window.devicePixelRatio||1,
-              L=[{n:60,s:.06,z:1.6},{n:120,s:.03,z:1.1},{n:180,s:.015,z:.8}];
-        let W,H,S=[],tx=0,ty=0,last=0;
-        const R=()=>{W=c.width=innerWidth*DPR;H=c.height=innerHeight*DPR;ctx.scale(DPR,DPR);S=[];
-          L.forEach(l=>{for(let i=0;i<l.n;i++)S.push({x:Math.random()*innerWidth,y:Math.random()*innerHeight,l,phi:Math.random()*360})})};
-        const draw=t=>{
-          ctx.clearRect(0,0,W,H);
-          if(t-last>600+Math.random()*600){last=t;const n=1+Math.floor(Math.random()*3);
-            for(let k=0;k<n;k++){const v=4+Math.random()*4;
-              S.push({m:1,x:-200-Math.random()*150,y:Math.random()*innerHeight*.7,vx:v,vy:v*.15,len:120+Math.random()*80})}}
-          S.forEach((s,i)=>{
-            if(s.m){
-              ctx.strokeStyle='rgba(255,255,255,.85)';ctx.lineWidth=2;
-              ctx.beginPath();ctx.moveTo(s.x,s.y);ctx.lineTo(s.x-s.len,s.y-s.len*.2);ctx.stroke();
-              s.x+=s.vx;s.y+=s.vy;s.len*=.985;if(s.x>innerWidth+200)S.splice(i,1);return;}
-            const px=s.x+tx*s.l.s*30,py=s.y+ty*s.l.s*30,
-                  a=.6+.4*Math.sin(t/1000+s.phi),
-                  h=200+55*Math.sin(t/1500+s.phi);
-            ctx.fillStyle=`hsla(${h},100%,88%,${a})`;
-            ctx.fillRect(px,py,s.l.z,s.l.z);
-            s.y+=s.l.s*16;if(s.y>innerHeight)s.y=0;});
-          requestAnimationFrame(draw);};
-        addEventListener('pointermove',e=>{tx=e.clientX/innerWidth-.5;ty=e.clientY/innerHeight-.5},{passive:true});
-        addEventListener('deviceorientation',e=>{if(e.beta!=null){tx=e.gamma/20;ty=e.beta/40}},{passive:true});
-        R();requestAnimationFrame(draw);addEventListener('resize',R);
+      AOS.init({ duration: 800, once: true });
+    </script>
+
+    <!-- ★★ Star‑field JS -->
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        const c = document.getElementById('starfield'), ctx = c.getContext('2d'),
+              DPR = window.devicePixelRatio || 1,
+              L = [{ n: 60,  s: .06,  z: 1.6 },
+                   { n: 120, s: .03,  z: 1.1 },
+                   { n: 180, s: .015, z: .8 }];
+        let W, H, S = [], tx = 0, ty = 0, last = 0;
+        const R = () => {
+          W = c.width  = innerWidth  * DPR;
+          H = c.height = innerHeight * DPR;
+          ctx.scale(DPR, DPR);
+          S = [];
+          L.forEach(l => { for (let i = 0; i < l.n; i++) S.push({ x: Math.random()*innerWidth, y: Math.random()*innerHeight, l, phi: Math.random()*360 }); });
+        };
+        const draw = t => {
+          ctx.clearRect(0, 0, W, H);
+          if (t - last > 600 + Math.random()*600) {
+            last = t; const n = 1 + Math.floor(Math.random()*3);
+            for (let k = 0; k < n; k++) {
+              const v = 4 + Math.random()*4;
+              S.push({ m: 1, x: -200 - Math.random()*150, y: Math.random()*innerHeight*.7, vx: v, vy: v*.15, len: 120 + Math.random()*80 });
+            }
+          }
+          S.forEach((s, i) => {
+            if (s.m) {
+              ctx.strokeStyle = 'rgba(255,255,255,.85)';
+              ctx.lineWidth = 2;
+              ctx.beginPath(); ctx.moveTo(s.x, s.y); ctx.lineTo(s.x - s.len, s.y - s.len*.2); ctx.stroke();
+              s.x += s.vx; s.y += s.vy; s.len *= .985; if (s.x > innerWidth + 200) S.splice(i, 1); return;
+            }
+            const px = s.x + tx*s.l.s*30, py = s.y + ty*s.l.s*30,
+                  a = .6 + .4*Math.sin(t/1000 + s.phi),
+                  h = 200 + 55*Math.sin(t/1500 + s.phi);
+            ctx.fillStyle = `hsla(${h},100%,88%,${a})`;
+            ctx.fillRect(px, py, s.l.z, s.l.z);
+            s.y += s.l.s*16; if (s.y > innerHeight) s.y = 0;
+          });
+          requestAnimationFrame(draw);
+        };
+        addEventListener('pointermove', e => { tx = e.clientX/innerWidth - .5; ty = e.clientY/innerHeight - .5; }, { passive:true });
+        addEventListener('deviceorientation', e => { if (e.beta != null) { tx = e.gamma/20; ty = e.beta/40; } }, { passive:true });
+        R(); requestAnimationFrame(draw); addEventListener('resize', R);
       });
     </script>
   </body>

@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<!-- Preliminaries • 5-DOF Rocket Simulation Tutorial -->
 <html lang="en" x-data="guRocketryApp" :class="{ dark: darkMode }">
   <head>
     <meta charset="UTF-8" />
@@ -8,183 +9,520 @@
     <!-- Fonts & core CSS -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet" />
     <script src="https://cdn.tailwindcss.com?plugins=typography,aspect-ratio"></script>
-
-    <!-- AOS scroll animations -->
-    <link rel="stylesheet" href="https://unpkg.com/aos@2.3.4/dist/aos.css" />
     <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
-
-    <!-- Alpine.js -->
     <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
+    <style>
+  :root {
+    --rocket-red: #ff3131;
+    --earth-brown: #8b5e3c;
+  }
+
+  body {
+    font-family: "Inter", sans-serif;
+  }
+
+  .accent-red {
+    color: var(--rocket-red);
+  }
+
+  .accent-brown {
+    color: var(--earth-brown);
+  }
+
+  ::selection {
+    background: #dc2626;
+    color: white;
+  }
+
+  [x-cloak] {
+    display: none;
+  }
+
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 9999px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #555;
+  }
+</style>
+
+    <!-- AOS init -->
     <script>
-      document.addEventListener('alpine:init', () => {
-        Alpine.data('guRocketryApp', () => ({ darkMode: true }));
+      document.addEventListener('DOMContentLoaded', () => {
+        AOS.init({ duration: 800, once: true });
       });
     </script>
 
+    <!-- Starfield background style -->
     <style>
-      :root{ --rocket-red:#ff3131; --earth-brown:#8b5e3c; }
-      body{ font-family:'Inter',sans-serif; }
-      .accent-red  { color:var(--rocket-red); }
-      .accent-brown{ color:var(--earth-brown); }
-      pre code{display:block;background:rgba(17,24,39,.9);padding:1rem;border-radius:.375rem;
-               color:#f3f4f6;overflow-x:auto;font-size:.75rem;line-height:1.625;}
-      /* ★ star-field canvas */
-      #starfield{position:fixed;inset:0;background:#000;z-index:-1;touch-action:none}
+      #starfield { position: fixed; inset: 0; z-index: -1; background: #000; touch-action: none; }
     </style>
   </head>
-
-  <body class="bg-white dark:bg-gray-950 text-gray-900 dark:text-white antialiased">
+  <body class="bg-white dark:bg-gray-950 text-gray-900 dark:text-white antialiased scroll-smooth">
 
     <!-- ★ star-field canvas -->
     <canvas id="starfield"></canvas>
 
-    <!-- ╔════════ NAVBAR ═════════╗ -->
-    <header class="sticky top-0 z-50 backdrop-blur-lg/60 border-b border-gray-800 dark:border-gray-700"
-            x-data="{open:false}">
-      <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
-        <a href="/index.html" class="text-xl font-extrabold tracking-tight accent-brown">
-          Caledonian Rocketry
-        </a>
+    <!-- Navigation Bar -->
+    <header class="w-full py-6 px-4 flex justify-center">
+   <nav class="hidden md:flex space-x-6 text-sm font-semibold">
+  <!-- Anchors (same-page sections) -->
+  <a href="Index.html#mission" class="hover:text-red-500 transition">Mission</a>
+  <a href="Index.html#projects" class="hover:text-red-500 transition">Projects</a>
+  <a href="Index.html#tutorials" class="hover:text-red-500 transition">Tutorials</a>
+  <a href="Index.html#sponsors" class="hover:text-red-500 transition">Sponsors</a>
+  <a href="Index.html#contact"  class="hover:text-red-500 transition">Contact</a>
 
-        <!-- desktop links -->
-        <nav class="hidden md:flex space-x-6 text-sm uppercase">
-          <a href="/index.html"            class="hover:text-[color:var(--rocket-red)]">Home</a>
-          <a href="/tutorials/5dof.html"   class="hover:text-[color:var(--rocket-red)]">Tutorial</a>
-          <a href="/preliminaries.html"    class="text-[color:var(--rocket-red)] font-semibold">Preliminaries</a>
-        </nav>
+  <!-- External Pages -->
+  <a href="MeetTeam.html" class="hover:text-red-500 transition">Team</a>
+  <a href="Events.html" class="hover:text-red-500 transition">Events</a>
+  <a href="certification.html" class="hover:text-red-500 transition">Certification</a>
+  <a href="preliminaries.html"    class="hover:text-[color:var(--rocket-red)]">Preliminaries</a>
+</nav>
 
-        <!-- burger -->
-        <button @click="open=!open" class="md:hidden text-gray-100 focus:outline-none">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" stroke="currentColor">
-            <path x-show="!open" stroke-linecap="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
-            <path x-show="open"  stroke-linecap="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
-          </svg>
-        </button>
-      </div>
-
-      <!-- mobile drawer -->
-      <div x-show="open" x-transition class="md:hidden bg-gray-900 border-t border-gray-800">
-        <ul class="flex flex-col items-center py-6 gap-6 text-lg font-semibold">
-          <li><a href="/index.html"          @click="open=false" class="hover:text-[color:var(--rocket-red)]">Home</a></li>
-          <li><a href="/tutorials/5dof.html" @click="open=false" class="hover:text-[color:var(--rocket-red)]">Tutorial</a></li>
-          <li><a href="/preliminaries.html"  @click="open=false" class="text-[color:var(--rocket-red)]">Preliminaries</a></li>
-        </ul>
-      </div>
     </header>
-    <!-- ╚═════════════════════════╝ -->
 
-    <!-- ================= HERO (unchanged) ================= -->
+    <!-- Hero Section -->
     <section class="pt-28 pb-20 bg-gradient-to-b from-black to-gray-900 text-center relative overflow-hidden">
-      <img src="../assets/preliminaries/preliminaries_hero.jpg" alt=""
-           class="absolute inset-0 w-full h-full object-cover opacity-20 pointer-events-none" />
+      <img src="../assets/preliminaries/preliminaries_hero.jpg" alt="" class="absolute inset-0 w-full h-full object-cover opacity-20 pointer-events-none" />
       <div class="relative z-10 max-w-4xl mx-auto px-4" data-aos="zoom-in">
         <h1 class="text-4xl md:text-5xl font-extrabold mb-3 accent-brown">Preliminaries</h1>
         <p class="text-gray-300 max-w-2xl mx-auto">
           Foundational dynamics, modelling assumptions &amp; control-theory concepts behind
-          the 5-DOF rocket simulation and SCvx controller.
+          the 5-DOF rocket simulation and (coming soon) SCvx controller.
         </p>
       </div>
     </section>
 
-    <!-- ================= ORIGINAL MAIN CONTENT (unchanged) ================= -->
-    <main class="prose dark:prose-invert md:prose-lg max-w-4xl mx-auto px-4 py-16
-                 prose-headings:font-semibold prose-headings:accent-brown">
+    <!-- Sidebar Table of Contents (Desktop) -->
+ <!-- Sidebar Table of Contents (Desktop) -->
+<aside class="hidden lg:block fixed top-40 left-8 space-y-2 text-sm text-gray-700 dark:text-gray-300">
+  <div class="text-gray-500 dark:text-gray-400 uppercase font-semibold mb-1">On this page</div>
+  <a href="#mathematical-formulation" class="block hover:text-[color:var(--rocket-red)]">Mathematical Formulation</a>
+  <a href="#rocket-problem" class="block hover:text-[color:var(--rocket-red)]">The Rocket Problem</a>
+  <a href="#quatintro" class="block hover:text-[color:var(--rocket-red)]">Orientation (Frames)</a>
+  <a href="#non-linear-physics" class="block hover:text-[color:var(--rocket-red)]">Non-Linear Physics</a>
+  <a href="#aerodynamics" class="block hover:text-[color:var(--rocket-red)]">Aerodynamic Forces</a>
+  <a href="#tvc" class="block hover:text-[color:var(--rocket-red)]">Thrust Vector Control</a>
+  <a href="#references" class="block hover:text-[color:var(--rocket-red)]">References</a>
+</aside>
+
+
+    <!-- Main Content -->
+    <main class="prose dark:prose-invert md:prose-lg max-w-4xl mx-auto px-4 py-16 prose-headings:font-extrabold prose-headings:text-[var(--rocket-red)] prose-p:text-gray-200 prose-li:text-gray-200 prose-code:text-rocket-red">
 
       <!-- 4.1 ------------------------------------------------------------------------>
       <h2 id="mathematical-formulation">4 · Mathematical Formulation</h2>
-      <div class="my-8 flex justify-center"><!-- TODO: Insert Figure here --></div>
-      <p>The thrust-vector-controlled rocket is modelled as a rigid body with five active degrees of freedom. …</p>
+        <div class="my-8 flex justify-center" data-aos="fade-up">
+        <img src="Figures/simulationimage.png" alt="Overall 5-DOF rocket simulation schematic" class="rounded border border-gray-700 dark:border-gray-300">
+      </div>
+      <p>The thrust-vector-controlled rocket is modelled as a rigid body with five active degrees of freedom (5-DOF). In other words, the rocket can translate in three axes (X, Y, Z) and rotate about two axes (pitch and yaw), while roll motion is assumed negligible. The rotational and translational dynamics are tightly coupled via the rocket’s changing orientation and inertial effects. The following differential equations capture the core <em>non-linear</em> equations of motion for this 5-DOF system:</p>
       <pre><code>q̇ = ½ q ⊗ ω
-v̇<b>_b</b> = F<b>_b</b> / m
+v̇<sub>i</sub> = F<sub>i</sub> / m
 ω̇ = J⁻¹ (τ − ω × Jω)</code></pre>
-      <p>where <em>q</em> …</p>
+      <p>Here, <em>q</em> is the unit quaternion representing the rocket’s orientation (with time derivative <em>q̇</em>), <em>ω</em> is the angular velocity vector in the body frame, <em>v<sub>i</sub></em> and <em>F<sub>i</sub></em> are the rocket’s velocity and total force in the inertial frame, <em>m</em> is the mass, <em>J</em> is the inertia matrix, and <em>τ</em> is the total torque in the body frame. These non-linear equations (Newton’s second law for translation and Euler’s rotation equation) form the basis of the simulation’s dynamics. In the simulation, they are integrated at each time-step to update the rocket’s state (position, velocity, attitude, and angular rate). We will later see how simplifying assumptions are applied to reduce their complexity.</p>
 
-      <!-- 4.2 -->
+      <!-- 4.2 ------------------------------------------------------------------------>
       <h2 id="rocket-problem">4 · The Rocket Problem</h2>
-      <div class="my-8 flex justify-center"><!-- TODO schematic --></div>
       <h3>4.2.1 Simulation Requirements</h3>
-      <p>The objective is …</p>
+      <p>Before diving into simulation design, it is essential to consider the requirements of the simulation with respect to the end goal: to provide a sandbox environment in which a multitude of tests can be orchestrated so that consistent and reliable data can be extracted to capture the most considerable contributions of dynamics, that can be refined in future. Integral to this discussion is the scale of the rocket, which dictates its performance and ultimately the bounds of its translation. Orbital rockets, like the European Space Agency's (ESA) Ariane 5 rocket, must consider centrifugal forces and the Coriolis effect (perturbations due to the rotation of the Earth and motion relative to its frame) as well as substantial mass variation as the immense fuel tanks are spent during launch.
+The hypothetical rocket used throughout this thesis will be much smaller: on the scale of a model rocket, which allows for various assumptions outlined in the next section. The simulation dynamics will also rely on the manoeuvres to be tested. For this thesis, the rocket will follow sequential pitch and yaw diagonal turns, necessitating accurate aerodynamic forces and moments in their respective planes. Finally, the simulation should be able to be validated against a verified simulation, Openrocket.</p>
       <h3>4.2.2 Assumptions</h3>
+      <p>Model rockets, typically used for recreation and minor experiments, are designed to resemble the assumptions used to analyse their flight. The imperative is to find a balance between model accuracy and simplicity that satisfies the requirements for testing the control strategy. In this case, various assumptions were reasoned from the literature to build a model which still reasonably emulates the physics that would be expected, allowing the real emphasis to be put into the controller design. Furthermore, the assumptions can be dealt with in future for precision, once the controller dynamics have been analysed. Following standard assumptions in sub-orbital simulations, the rocket is modelled as:</p>
       <ul>
-        <li>Rigid, axisymmetric airframe; roll dynamics neglected.</li>
-        <li>Constant mass (<em>m</em>) and inertia throughout burn.</li>
-        <li>Flat-Earth kinematics …</li>
-        <li>Constant air density ρ = 1.225 kg·m<sup>−3</sup>.</li>
-        <li>Small solid motor ⇒ negligible mass depletion.</li>
-        <li>Sinusoidal lateral wind profile used as a disturbance.</li>
+        <li>Rigid, axisymmetric airframe (no structural flex); roll dynamics are neglected.</li>
+        <li>Mass <em>m</em> and moments of inertia are constant throughout the flight (no major mass depletion).</li>
+        <li>“Flat Earth” kinematics – Earth’s rotation and Coriolis effects are ignored.</li>
+        <li>Air density <em>ρ</em> is constant at 1.225 kg·m<sup>−3</sup> (sea-level density).</li>
+        <li>The solid rocket motor’s propellant mass is small, so the rocket’s total mass is treated as constant.</li>
+        <li>A lateral wind disturbance is modeled as a fixed sinusoidal wind profile (varying with altitude or time).</li>
       </ul>
+<p>With the requirements and assumptions clearly laid forth, the scope of the simulation preordains that for the TVC to manipulate the orientation of the rocket, it is essential to conceptualise how the rocket would rotate in a simulation. Thus, it must rotate with respect to another reference frame.</p>
+<h2 id="quatintro"> Introducing Orientation Using Body and Inertial Frames</h2>
+  <p>This paper entails the construction of a 5 Degree-of-Freedom (5DOF) simulation. These allow the rocket to translate in the typical X, Y, and Z axes; the final 2 degrees allow the rocket to rotate around its pitch, Y and yaw, Z axes. This adds complexity to the system; it is now necessary to define the axes with respect to which the rocket will translate and rotate. Firstly, the inertial frame, which corresponds to the stationary reference frame of the Earth, encompasses the second and final frame within the rocket's body, located at its center of gravity. The concept and naming convention are illustrated below</p>
 
-      <!-- 4.3 -->
-      <h2 id="frames">4 · Orientation Using Body &amp; Inertial Frames</h2>
-      <div class="my-8 flex justify-center"><!-- TODO visual --></div>
-      <p>The inertial frame … quaternion math …</p>
+  <!-- Side-by-side figure pair -->
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-4 my-8">
+    <img src="Figures/bodyinInertial.png" alt="Rocket simulation figure" class="rounded border border-gray-700 dark:border-gray-300">
+    <img src="Figures/referenceFrames.png" alt="Rocket simulation figure" class="rounded border border-gray-700 dark:border-gray-300">
+  </div>
 
-      <!-- 4.4 -->
-      <h2 id="physics">4 · Relevant Non-Linear Physics</h2>
-      <div class="my-8 flex justify-center"><!-- TODO forces diagram --></div>
-      <h3>4.4.1 Coupled Differential Equations</h3>
-      <p>Newton–Euler equations …</p>
-      <h3>4.4.2 Aerodynamics</h3>
-      <p>Normal, side and drag forces …</p>
-      <h3>4.4.3 Thrust Vector Control</h3>
-      <p>TVC gimbals …</p>
-      <pre><code>f<b>_TVC</b> = f<b>_T</b>[cosθ cosϕ, −sinϕ, sinθ]ᵀ
-τ<b>_TVC</b> = r<b>_TVC</b> × f<b>_TVC</b></code></pre>
+  <p>As force vectors need to be converted between frames depending on which frame they are calculated - for example, the aerodynamic forces are dependent on the relative velocity in the body frame - the unit quaternion method was chosen as a computationally efficient representation of orientation, avoiding issues that arise utilising Euler angles, such as gimbal lock. Angular velocities, w, are used to update the quaternion’s rate of change, ensuring accurate orientation tracking and transformation of vectors between the inertial and body frames.  Although the concept of a 4D vector representing an orientation/rotation seems daunting, as explained in the Figure below, intuition can be developed through understanding axis-angles. Conceptually, each term represents the same aspect, but they differ mathematically.</p>
 
-      <!-- 4.5 -->
-      <h2 id="ltv-mpc">4 · Linear Time-Varying MPC</h2>
-      <div class="my-8 flex justify-center"><!-- TODO MPC diagram --></div>
-      <p>Full NMPC is computationally …</p>
-      <h3>4.5.1 Single vs Multiple Shooting</h3>
-      <p>Multiple shooting …</p>
-      <h3>4.5.2 Linearising a Non-Linear World</h3>
-      <p>Jacobian matrices …</p>
-      <h3>4.5.3 Successive Linearisation</h3>
-      <p>By re-linearising …</p>
+  <img src="Figures/axisAngle.png" alt="Rocket simulation figure" class="rounded border border-gray-700 dark:border-gray-300">
+  <p>Finding a robust mathematical representation is critical now that the coordinate systems have been clearly articulated.</p>
+  <h3>Quaternion Transformation</h3>
+  <p>A glance at the literature will yield three of the most common ways to represent a rotation/orientation of a vector - namely, Euler angles, Direction Cosine Matrices (DCM) and quaternions. The literature states that Euler Angles are unfavourable in many rocket problems due to the infamous gimbal lock that occurs when one of its rotation axes reaches 90 degrees, resulting in a loss of a degree of freedom. However, the reference trajectories for this thesis will render this an unreachable ambit. Furthermore, DCM (3x3) matrices have redundant components and result in larger computational loads: not ideal when optimising for speed.</p>
+ <p>Lastly, quaternions: a commonplace 4D vector in rocket control systems due to their computational speed (although storing four components compared to Euler angles' 3 components) and numerical stability. Curiously, using quaternions demands an awareness of the 'unwinding' phenomenon that leads to some positive quaternion representing the same orientation as its negative counterpart. Based on this review, a decision was made to proceed with quaternions due to their intuitive and computationally desirable use, especially considering numerical integration. 
 
-      <!-- 4.6 -->
-      <h2 id="scvx">4 · Successive Convexification</h2>
-      <div class="my-8 flex justify-center"><!-- TODO SCvx graph --></div>
-      <p>SCvx refines …</p>
-      <h3>4.6.1 Trust Regions</h3>
-      <p>A radius Δ …</p>
-      <h3>4.6.2 Slack Variables</h3>
-      <p>Soft constraints …</p>
-      <h3>4.6.3 Convergence Criteria</h3>
-      <p>Terminates when …</p>
-    </main>
+<p>As the simulation progresses, for example, at each time step, aerodynamic forces need to be calculated in the body frame whilst wind is applied in the inertial frame. This demands that a relative velocity is computed and converted at every time step to calculate orientation changes.
+The relative velocity vector can be rotated to the inertial frame using the Equation below</p>
+  <pre><code>
+    v_i = q* ⊗ v_b ⊗ q
+    v_b = q ⊗ v_i ⊗ q*
+  </code></pre>
 
-    <footer class="border-t border-gray-800 dark:border-gray-700 py-8 text-center text-sm
-                   text-gray-500 dark:text-gray-400">
-      © 2025 Craig Andrews · Caledonian Rocketry
-    </footer>
+  <section class="prose dark:prose-invert max-w-4xl mx-auto py-8 text-gray-800 dark:text-gray-200">
 
-    <script> AOS.init({ duration:800, once:true }); </script>
+  <p>
+    Similarly, Equation <code>vb</code> shows an inertial frame velocity vector rotated to the body frame by reversing the positions of the quaternion and its conjugate:
+  </p>
 
-    <!-- ★ Star-field JS -->
+  <pre><code>
+v_b = q ⊗ v_i ⊗ q*
+  </code></pre>
+
+  <p><strong>Where:</strong></p>
+  <ul>
+    <li><code>q = [q₀, q₁, q₂, q₃]<sup>T</sup></code>: Quaternion representing orientation,</li>
+    <li><code>q* = [q₀, -q₁, -q₂, -q₃]<sup>T</sup></code>: Conjugate of the quaternion,</li>
+    <li><code>⊗</code>: Denotes quaternion multiplication.</li>
+  </ul>
+
+  <p>
+    Therefore, the vector in the body frame can be written as in Equation <code>rvbi</code>:
+  </p>
+
+  <pre><code>
+v_b = q ⊗ v_i ⊗ q* = R<sub>i,b</sub> · v_i
+  </code></pre>
+
+  <p>
+    Where <code>R<sub>i,b</sub></code> is the rotation matrix derived and expanded from the quaternion and its conjugate — shown in Equation <code>qr1</code> <cite>[Markley, 2008]</cite>:
+  </p>
+
+  <pre><code>
+R<sub>i,b</sub> =
+[ [q₀² + q₁² − q₂² − q₃²,     2(q₁q₂ − q₀q₃),       2(q₁q₃ + q₀q₂)],
+  [2(q₁q₂ + q₀q₃),           q₀² − q₁² + q₂² − q₃², 2(q₂q₃ − q₀q₁)],
+  [2(q₁q₃ − q₀q₂),           2(q₂q₃ + q₀q₁),       q₀² − q₁² − q₂² + q₃²] ]
+  </code></pre>
+
+  <p>
+    The transpose of matrix <code>R<sub>b,i</sub> = R<sub>i,b</sub><sup>T</sup></code> performs the reverse operation, from body to inertial frame, and is displayed in Equation <code>qr2</code>.
+  </p>
+
+  <pre><code>
+R<sub>b,i</sub> =
+[ [q₀² + q₁² − q₂² − q₃²,     2(q₁q₂ + q₀q₃),       2(q₁q₃ − q₀q₂)],
+  [2(q₁q₂ − q₀q₃),           q₀² − q₁² + q₂² − q₃², 2(q₂q₃ + q₀q₁)],
+  [2(q₁q₃ + q₀q₂),           2(q₂q₃ − q₀q₁),       q₀² − q₁² − q₂² + q₃²] ]
+  </code></pre>
+
+  <p>
+    As the rocket's angular acceleration vector <code>𝜔̇</code> changes, consequently, the translational acceleration vector <code>v̇</code> in the inertial frame is altered.
+  </p>
+
+</section>
+
+
+  <h2 id="non-linear-physics">Describing the Relevant Non-Linear Physics</h2>
+  <h3>Coupled Differential Equations</h3>
+<section class="prose dark:prose-invert max-w-4xl mx-auto py-8 text-gray-800 dark:text-gray-200">
+  
+
+
+  <p>
+    Given the assumptions in Section <code>Assumptions</code>, the central equations of motion from Isaac Newton and Euler's laws can be used to calculate the rocket's translation and rotation. They can be written mathematically as in Equations <code>Translation</code> and <code>Rotation</code> <cite>[dos2023adcs, danielson2021spacecraft]</cite>:
+  </p>
+
+  <pre><code>
+<b>Equation (Translation):</b>
+v̇<sub>i</sub> = f<sub>i</sub> / m
+  </code></pre>
+
+  <pre><code>
+<b>Equation (Rotation):</b>
+ω̇ = J⁻¹ (τ − ω × Jω)
+  </code></pre>
+
+  <p><strong>Where:</strong></p>
+  <ul>
+    <li><code>v̇<sub>i</sub></code>: Acceleration in the inertial frame (<code>m/s²</code>),</li>
+    <li><code>f<sub>i</sub></code>: Total force in the inertial frame (N),</li>
+    <li><code>m</code>: Mass of the rocket (kg),</li>
+    <li><code>ω̇</code>: Angular acceleration in the body frame (<code>rad/s²</code>),</li>
+    <li><code>ω</code>: Angular velocity in the body frame (<code>rad/s</code>),</li>
+    <li><code>τ</code>: Total torque in the body frame (Nm),</li>
+    <li><code>J</code>: Inertia matrix of the rocket in the body frame (<code>kg·m²</code>),</li>
+    <li><code>ω × Jω</code>: Gyroscopic term accounting for angular momentum coupling.</li>
+  </ul>
+
+  <p>
+    As the rocket is perfectly axisymmetric and therefore has only diagonal components in the inertial matrix <code>J</code> without losing significant accuracy. Moreover, due to the neglected roll rate, the rotational equation of motion can be reduced to Equation <code>reduc</code>:
+  </p>
+
+  <pre><code>
+ω̇ = J⁻¹ τ
+  </code></pre>
+
+  <p>
+    Finally, the rate of change of the quaternion is given by Equation <code>rocq</code>:
+  </p>
+
+  <pre><code>
+q̇ = ½ · Ω(ω) · q
+  </code></pre>
+
+  <p><strong>Where:</strong></p>
+  <ul>
+    <li><code>q̇</code>: Time derivative of the quaternion, representing the rate of change of orientation,</li>
+    <li><code>Ω(ω)</code>: Skew-symmetric matrix constructed from <code>ω</code>.</li>
+  </ul>
+
+  <p>
+    These differential equations make up the dynamic states for the control system to optimise along with the control inputs, but the rotation and translation are further perturbed by interference effects from the environment.
+  </p>
+
+</section>
+
+  <h3 id="aerodynamics">Aerodynamics: Squared Terms &amp; Trigonometric Non-Linearities</h3>
+
+<section class="prose dark:prose-invert max-w-4xl mx-auto py-8 text-gray-800 dark:text-gray-200">
+
+  <p>
+    Aerodynamic forces, which contribute to the coupled relationship between rotation and translation, depend on aerodynamic coefficients such as the normal force coefficient <code>cₙ</code> and the pitching moment coefficient <code>cₘ</code>. They are typically calculated by summing pressure distributions across the components using Slender Body Theory for low Angles of Attack, <code>α</code>, where low perturbations in airflow are assumed and result in linear behaviour <cite>[Barrowman, 1967]</cite>.
+  </p>
+
+  <p>
+    As <code>α</code> increases, the perturbations and body lift effects become significant in the airflow, resulting in non-linear behaviour requiring approximate correction terms <cite>[Niskanen, 2013]</cite>. The contributions accumulate and average out over each component — the nose cone, cylindrical body, and fins — and are assumed to act at a singular location: the center of pressure (COP). These coefficients vary significantly with geometry. CFD (Computational Fluid Dynamics) can provide high-fidelity coefficients, but here, parameters are based on OpenRocket's technical documentation <cite>[Niskanen, 2013]</cite>.
+  </p>
+
+  <p>
+    As the rocket is axisymmetric, <code>cₙ</code> and <code>cₛ</code> are functions of the angle of attack <code>α</code> and sideslip angle <code>β</code>, defined below and visualized in Figure <code>alphaBeta</code> <cite>[Chowdhury, 2012; Venkatesan, 2014]</cite>:
+  </p>
+
+  <img src="Figures/alphaBeta.png" alt="Angle of attack and sideslip" class="rounded border border-gray-700 dark:border-gray-300 my-6">
+
+  <pre><code>
+<b>Equation (alpsid):</b>
+α = arctan(w / u)
+β = arctan(v / √(u² + w²))
+  </code></pre>
+
+  <p><strong>Where:</strong></p>
+  <ul>
+    <li><code>u</code>: Velocity component along the body-frame x-axis,</li>
+    <li><code>v</code>: Velocity component along the y-axis,</li>
+    <li><code>w</code>: Velocity component along the z-axis.</li>
+  </ul>
+
+  <p>These angles trigonometrically scale the intensity of the aerodynamic forces and resulting moments.</p>
+
+  <h4>Aerodynamic Forces and Moments</h4>
+
+  <p>
+    The normal force <code>fₙ</code>, side force <code>fₛ</code>, and drag force <code>f_d</code> are given by:
+  </p>
+
+  <pre><code>
+<b>Equation (forcess):</b>
+fₙ = q_dyn · cₙ · A_ref
+fₛ = q_dyn · c_y · A_ref
+f_d = q_dyn · c_d · A_ref
+  </code></pre>
+
+  <p><strong>Where:</strong></p>
+  <ul>
+    <li><code>q_dyn = ½ · ρ · v₀²</code>: Dynamic pressure,</li>
+    <li><code>cₙ</code>: Normal force coefficient,</li>
+    <li><code>cₛ</code>: Side force coefficient,</li>
+    <li><code>c_d</code>: Drag coefficient,</li>
+    <li><code>A_ref</code>: Reference cross-sectional area.</li>
+  </ul>
+
+  <img src="Figures/forcesCPCG.png" alt="Aerodynamic forces and CG/COP" class="rounded border border-gray-700 dark:border-gray-300 my-6">
+
+  <p>
+    Neglecting roll rate, the resulting aerodynamic forces induce a moment depending on <code>α</code> or <code>β</code> around the pitch and yaw axes, as described in:
+  </p>
+
+  <pre><code>
+<b>Equation (torque):</b>
+τ = q_dyn · c_M · A_ref · d
+  </code></pre>
+
+  <p><strong>Where:</strong></p>
+  <ul>
+    <li><code>c_M</code>: Resultant moment coefficient (includes pitch and yaw components),</li>
+    <li><code>d</code>: Reference length (airframe diameter).</li>
+  </ul>
+
+  <p>
+    The total moment coefficient is the sum of damping and direct moment terms:
+  </p>
+
+  <pre><code>
+<b>Equation (summed):</b>
+c_M = c_m,damp + c_m
+
+<b>Equation (moment):</b>
+c_m = cₙ · d / l_ref
+  </code></pre>
+
+  <p><strong>Where:</strong></p>
+  <ul>
+    <li><code>l_ref</code>: Distance from COG to COP (moment arm).</li>
+  </ul>
+
+  <p>
+    As the rocket approaches apogee, angular velocity increases due to gravity turns. Without damping, this could cause unstable tumbling. The damping moment term is:
+  </p>
+
+  <pre><code>
+<b>Equation (damp):</b>
+c_m,damp = 0.55 · (l_ref⁴ / A_ref) · (r_t / d) · (ω² / v₀²)
+  </code></pre>
+
+  <p><strong>Where:</strong></p>
+  <ul>
+    <li><code>r_t</code>: Rocket radius.</li>
+  </ul>
+
+  <p>
+    Combatting these aerodynamic forces and torques is the task of the TVC system, which manipulates thrust to stabilise and control the rocket.
+  </p>
+
+</section>
+
+
+<section class="prose dark:prose-invert max-w-4xl mx-auto py-8 text-gray-800 dark:text-gray-200">
+
+  <h3 id="tvc">Thrust Vector Control: Trigonometric Coupling of Translation &amp; Rotation</h3>
+
+
+  <p>
+    The TVC system manipulates the orientation of the engine's thrust to actuate the desired forces and moments, shown in Figure <code>TVCDynamics</code> <cite>[Ferrante, 2017]</cite>.
+    The forces generated by the TVC in the body frame can be — assuming no thrust misalignment from the COG — derived by breaking the thrust vector into its components.
+    Then, applying the lever arm between the thrust exit and the COG gives the equations according to the right-hand rule, as seen in Equation <code>tvc_forces</code> <cite>[dos2023adcs]</cite>:
+  </p>
+
+  <pre><code>
+<b>Equation (tvc_forces):</b>
+
+f<sub>TVC</sub> = f<sub>T</sub> ·
+[
+  cos(θ)·cos(ϕ)
+ −sin(ϕ)
+  sin(θ)
+]
+
+τ<sub>TVC</sub> = r<sub>tvc</sub> × f<sub>TVC</sub>
+  </code></pre>
+
+  <p><strong>Where:</strong></p>
+  <ul>
+    <li><code>r<sub>tvc</sub></code>: Vector from the center of gravity to the thrust vectoring nozzle (lever arm),</li>
+    <li><code>f<sub>T</sub></code>: Thrust magnitude,</li>
+    <li><code>θ</code>: TVC pitch gimbal angle,</li>
+    <li><code>ϕ</code>: TVC yaw gimbal angle.</li>
+  </ul>
+
+  <img src="Figures/TVCDynamics.png" alt="Thrust vector control diagram" class="rounded border border-gray-700 dark:border-gray-300 my-6">
+
+  <p>
+    These equations and their couplings establish the simulation's non-linear dynamics.
+    Once integrated into a dynamics function, they create the prediction mechanism inherent to MPC, the bedrock of the SCvx framework.
+    Given the aim of this thesis, the next section will explore typical approaches to non-linear control and specifically rocketry, highlighting the challenges with real-time control that requires pinpoint precision, logically culminating in a discussion of SCvx.
+  </p>
+
+</section>
+<section class="prose dark:prose-invert max-w-4xl mx-auto py-12 text-gray-800 dark:text-gray-200" id="references">
+  <h2>References</h2>
+
+  <ol class="list-decimal pl-4 space-y-2">
+    
+    <li>Serale, G., Fiorentini, M., Capozzoli, A., Bernardini, D., & Bemporad, A. <em>Model predictive control (MPC) for enhancing building and HVAC system energy efficiency: Problem formulation, applications and opportunities.</em> Energies, 11(3), 631, 2018.</li>
+
+    <li>Goldsman, D., Nance, R. E., & Wilson, J. R. <em>A brief history of simulation revisited.</em> Proceedings of the 2010 Winter Simulation Conference, 567–574, 2010. DOI: <a href="https://doi.org/10.1109/WSC.2010.5679129">10.1109/WSC.2010.5679129</a></li>
+
+    <li>Raychaudhuri, S. <em>Introduction to Monte Carlo simulation.</em> Proceedings of the 2008 Winter Simulation Conference, 91–100, 2008. DOI: <a href="https://doi.org/10.1109/WSC.2008.4736059">10.1109/WSC.2008.4736059</a></li>
+
+    <li>Evans, G. E., & Jones, B. <em>The Application of Monte Carlo Simulation in Finance, Economics and Operations Management.</em> 2009 WRI World Congress on Computer Science and Information Engineering, 4, 379–383. DOI: <a href="https://doi.org/10.1109/CSIE.2009.703">10.1109/CSIE.2009.703</a></li>
+
+    <li>MATLAB. <em>MATLAB.</em> The MathWorks, Natick, MA, vol. 9, 2012.</li>
+
+    <li>Doyle, J. C., Francis, B. A., & Tannenbaum, A. R. <em>Feedback Control Theory.</em> Courier Corporation, 2013.</li>
+
+    <li>Stevens, B. L., Lewis, F. L., & Johnson, E. N. <em>Aircraft Control and Simulation: Dynamics, Controls Design, and Autonomous Systems.</em> John Wiley & Sons, 2015.</li>
+
+    <li>Heermann, D. W. <em>Computer-Simulation Methods.</em> Springer, 1990.</li>
+
+    <li>Rose, D. <em>Rotation Quaternions, and How to Use Them.</em> <a href="http://danceswithcode.net/engineeringnotes/quaternions/quaternions.html" target="_blank" rel="noopener">danceswithcode.net</a>, 2015.</li>
+
+    <li>Markley, F. L. <em>Unit Quaternion from Rotation Matrix.</em> Journal of Guidance, Control, and Dynamics, 31(2), 440–442, 2008.</li>
+
+    <li>Danielson, C., Kloeppel, J., & Petersen, C. <em>Spacecraft Attitude Control Using the Invariant-Set Motion-Planner.</em> IEEE Control Systems Letters, 6, 1700–1705, 2021.</li>
+
+    <li>Venkatesan, C. <em>Fundamentals of Helicopter Dynamics.</em> CRC Press, 2014.</li>
+
+    <li>Barrowman, J. S. <em>The Practical Calculation of the Aerodynamic Characteristics of Slender Finned Vehicles.</em> 1967.</li>
+
+    <li>Niskanen, S. <em>OpenRocket Technical Documentation.</em> Development of an Open Source Model Rocket Simulation Software, 11–13, 2013.</li>
+
+    <li>dos Santos, P., & Oliveira, P. <em>ADCS Design for a Sounding Rocket with Thrust Vectoring.</em> Aerotecnica Missili & Spazio, 102(3), 257–270, Springer, 2023.</li>
+
+    <li>Gregory, D. A. <em>Specific Impulse and Mass Flow Rate Error.</em> The 2004 NASA Faculty Fellowship Program Research Reports, 2005.</li>
+  </ol>
+</section>
+
+    <!-- Starfield JS (Canvas Animation) -->
     <script>
-      document.addEventListener('DOMContentLoaded',()=>{
-        const c=document.getElementById('starfield'),g=c.getContext('2d'),
-              D=window.devicePixelRatio||1,L=[[70,.06,1.6],[120,.03,1.1],[160,.015,.8]];
-        let W,H,S=[],mx=0,my=0,last=0;
-        const R=()=>{W=c.width=innerWidth*D;H=c.height=innerHeight*D;g.scale(D,D);S=[];
-          L.forEach(([n,v,z])=>{for(let i=0;i<n;i++)S.push({x:Math.random()*innerWidth,y:Math.random()*innerHeight,v,z})})};
-        const step=t=>{
-          g.clearRect(0,0,W,H);
-          if(t-last>600+Math.random()*600){last=t;const n=1+Math.floor(Math.random()*3);
-            for(let k=0;k<n;k++){const v=4+Math.random()*4;
-              S.push({m:1,x:-180-Math.random()*100,y:Math.random()*innerHeight*.7,v,len:120+Math.random()*80})}}
-          S.forEach((s,i)=>{
-            if(s.m){g.strokeStyle='rgba(255,255,255,.85)';g.lineWidth=2;
-              g.beginPath();g.moveTo(s.x,s.y);g.lineTo(s.x-s.len,s.y-s.len*.2);g.stroke();
-              s.x+=s.v;s.y+=s.v*.15;s.len*=.985;if(s.x>innerWidth+200)S.splice(i,1);return}
-            const X=s.x+mx*s.v*30,Y=s.y+my*s.v*30;
-            g.fillStyle='hsla(200,100%,88%,'+(.6+.4*Math.sin(t/1000+i))+')';
-            g.fillRect(X,Y,s.z,s.z);s.y+=s.v*16;if(s.y>innerHeight)s.y=0});
-          requestAnimationFrame(step)};
-        addEventListener('pointermove',e=>{mx=e.clientX/innerWidth-.5;my=e.clientY/innerHeight-.5},{passive:!0});
-        addEventListener('resize',R);R();requestAnimationFrame(step);
+      const c = document.getElementById('starfield'), g = c.getContext('2d'),
+            D = window.devicePixelRatio || 1,
+            layers = [[70, 0.06, 1.6], [120, 0.03, 1.1], [160, 0.015, 0.8]];
+      let W, H, stars = [], mx = 0, my = 0;
+      const resize = () => {
+        W = c.width = innerWidth * D;
+        H = c.height = innerHeight * D;
+        g.scale(D, D);
+        stars = [];
+        layers.forEach(([count, speed, size]) => {
+          for (let i = 0; i < count; i++) {
+            stars.push({
+              x: Math.random() * innerWidth,
+              y: Math.random() * innerHeight,
+              speed,
+              size
+            });
+          }
+        });
+      };
+      const step = (timestamp) => {
+        if (lastTimestamp === undefined) lastTimestamp = timestamp;
+        const elapsed = timestamp - lastTimestamp;
+        lastTimestamp = timestamp;
+        g.fillStyle = '#000';
+        g.fillRect(0, 0, innerWidth, innerHeight);
+        for (const star of stars) {
+          star.x += star.speed * mx * elapsed;
+          star.y += star.speed * my * elapsed;
+          if (star.x < 0) star.x += innerWidth;
+          if (star.x > innerWidth) star.x -= innerWidth;
+          if (star.y < 0) star.y += innerHeight;
+          if (star.y > innerHeight) star.y -= innerHeight;
+          g.fillStyle = 'rgba(255,255,255,' + star.size + ')';
+          g.fillRect(star.x, star.y, star.size * 2, star.size * 2);
+        }
+        requestAnimationFrame(step);
+      };
+      let lastTimestamp;
+      window.addEventListener('mousemove', (e) => {
+        mx = (e.clientX / innerWidth - 0.5) * 2;
+        my = (e.clientY / innerHeight - 0.5) * 2;
       });
+      window.addEventListener('resize', resize);
+      resize();
+      requestAnimationFrame(step);
     </script>
+
   </body>
 </html>

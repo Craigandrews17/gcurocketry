@@ -262,75 +262,51 @@
         Caledonian Rocketry 
       </a>
 
-      <nav class="hidden md:flex space-x-6 text-sm font-semibold">
-      <a href="#mission" class="hover:text-red-500 transition">Mission</a>
-      <a href="#projects" class="hover:text-red-500 transition">Projects</a>
-      <a href="#tutorials" class="hover:text-red-500 transition">Tutorials</a>
-      <a href="#team"     class="hover:text-red-500 transition">Team</a>
-      <a href="#sponsors" class="hover:text-red-500 transition">Sponsorship</a>
-      <a href="#contact"  class="hover:text-red-500 transition">Contact</a>
-  
+   <nav class="hidden md:flex space-x-6 text-sm font-semibold">
+  <!-- Anchors (same-page sections) -->
+  <a href="#mission" class="hover:text-red-500 transition">Mission</a>
+  <a href="#projects" class="hover:text-red-500 transition">Projects</a>
+  <a href="#tutorials" class="hover:text-red-500 transition">Tutorials</a>
+  <a href="#sponsors" class="hover:text-red-500 transition">Sponsors</a>
+  <a href="#contact"  class="hover:text-red-500 transition">Contact</a>
+
+  <!-- External Pages -->
+  <a href="MeetTeam.html" class="hover:text-red-500 transition">Team</a>
+  <a href="Events.html" class="hover:text-red-500 transition">Events</a>
+  <a href="certification.html" class="hover:text-red-500 transition">Certification</a>
+  <a href="preliminaries.html"    class="hover:text-[color:var(--rocket-red)]">Preliminaries</a>
 </nav>
+
+
 
 
     </div>
   </header>
 
-  <!-- ────────────────────────────
-       HERO
-  ──────────────────────────── -->
-  <section
-    class="relative h-screen flex items-center justify-center text-center overflow-hidden"
-  >
-    <img
-      src="assets/hero_launch.jpg"
-      alt="Rocket launch"
-      class="absolute inset-0 w-full h-full object-cover brightness-50"
-    />
-    <div class="relative z-10 px-6 max-w-4xl mx-auto" data-aos="zoom-in">
-      <h1
-        class="text-white text-5xl md:text-6xl font-extrabold mb-4"
-      >
-        Bolstering Glasgow as Scotland’s Rocketry Hub
-      </h1>
-      <p class="text-white text-lg md:text-xl mb-8">
-        Glasgow’s next student-run rocket lab — designing, building, and
-        launching the next generation of aerospace talent.
-      </p>
-      <a href="#projects" class="btn btn-red shadow-lg">
-        Explore Our Rockets
-      </a>
-    </div>
-  </section>
+<!-- ────────────────────────────
+     HERO
+──────────────────────────── -->
+<section class="relative h-screen flex flex-col items-center justify-center text-center overflow-hidden">
+  <!-- Background Image -->
+  <img
+    src="hero_launch.jpg"
+    alt="Rocket launch background"
+    class="absolute inset-0 w-full h-full object-cover brightness-50"
+  />
 
-  <!-- ╔══════════════════════════════════════════════════════════╗
-       MISSION  (PDF mission statement & objectives)
-  ╚══════════════════════════════════════════════════════════╝ -->
-  <section
-    id="mission"
-    class="relative overflow-hidden py-28"
-    data-aos="fade-right"
-  >
-    <div
-      class="absolute inset-0 bg-[url('assets/blueprint_grid.png')] bg-cover opacity-5"
-    ></div>
-    <div
-      class="absolute inset-0 bg-gradient-to-b from-black/80 to-black"
-    ></div>
+  <!-- Foreground Content -->
+  <div class="relative z-10 px-6 max-w-4xl mx-auto" data-aos="zoom-in">
+    <!-- Title and Subtitle -->
+    <h1 class="text-white text-5xl md:text-6xl font-extrabold mb-4">
+      Bolstering Glasgow as Scotland’s Rocketry Hub
+    </h1>
+    <p class="text-white text-lg md:text-xl mb-8">
+      Glasgow’s next student-run rocket lab — designing, building, and
+      launching the next generation of aerospace talent.
+    </p>
 
-    <div class="relative z-10 max-w-6xl mx-auto px-6 text-center">
-      <h2 class="section-h2 accent-brown">Our Mission</h2>
+</section>
 
-      <p
-        class="text-xl md:text-2xl text-gray-300 max-w-4xl mx-auto mb-12 leading-relaxed"
-      >
-        “Our mission is to <span class="accent-red font-semibold"
-          >inspire, educate, and empower</span
-        >
-        the next generation of engineers by advancing hands-on
-        expertise in rocketry and promoting awareness of the vast
-        opportunities within the UK’s space industry.
-      </p>
 
 <!-- ╔══════════════════════════════════════════════════════════╗
      MISSION  (PDF mission statement & objectives)
@@ -418,7 +394,36 @@
     </div>
   </div>
 </section>
+<!-- ╔══════════════════════════════════════════════════════════╗
+     PROJECTS SECTION
+╚══════════════════════════════════════════════════════════╝ -->
+<section id="projects" class="relative overflow-hidden py-32 bg-gray-950 text-white" data-aos="fade-up">
+  <!-- Optional background styling -->
+  <div class="absolute inset-0 bg-[url('assets/blueprint_grid.png')] bg-cover opacity-5"></div>
+  <div class="absolute inset-0 bg-gradient-to-b from-black/80 to-black"></div>
 
+  <div class="relative z-10 max-w-5xl mx-auto px-6 text-center">
+    <!-- Title -->
+    <h2 class="section-h2 accent-brown">Rocket the Bruce</h2>
+    <p class="text-lg max-w-3xl mx-auto text-gray-300 mb-12">
+      Our flagship competition rocket — dual-deploy recovery, onboard telemetry, and built for Mach 25 altitude challenges.
+    </p>
+
+    <!-- Rocket Image (Larger + Below Text) -->
+    <a href="#projects" class="block mb-8 transition hover:scale-105">
+      <img
+        src="IndexImages/rocketbruce-removebg-preview.png"
+        alt="Rocket the Bruce"
+        class="h-72 md:h-[28rem] object-contain mx-auto"
+      />
+    </a>
+
+    <!-- CTA Button -->
+    <a href="#projects" class="btn btn-red shadow-lg text-lg px-6 py-3">
+      See Our Rocket
+    </a>
+  </div>
+</section>
 
    <!-- ╔══════════════════════════════════════════════════════════╗
      TUTORIALS  (replaces the old “master-class” video block)
@@ -443,42 +448,32 @@
 
       <!-- 5-DOF Rocket Simulation card -->
       <div class="bg-black/70 rounded-2xl p-6 shadow-lg hover:shadow-red-600/60 transition flex flex-col">
-        <img src="assets/tutorials/5dof_thumb.png"
-             alt="5-DOF rocket sim thumbnail"
-             class="rounded-xl mb-4 aspect-video object-cover">
         <h3 class="text-xl font-semibold accent-brown mb-2">
           Build a 5-DOF Rocket&nbsp;Simulation
         </h3>
         <p class="text-sm text-gray-400 flex-grow">
           Step-by-step article and downloadable Simulink model. Grasp translational dynamics, aero tables and event stops without quaternion headaches.
         </p>
-        <a href="tutorials/5dof.html"
+        <a href="TutorialPage.html"
            class="btn btn-red mt-4 self-start">
           Read the Tutorial
         </a>
       </div>
 
-      <!-- optional placeholders for future tutorials -->
-      <div class="bg-black/70 rounded-2xl p-6 shadow-lg hover:shadow-red-600/60 transition flex flex-col">
-        <img src="assets/tutorials/tvc_thumb.png"
-             alt="TVC design thumbnail"
-             class="rounded-xl mb-4 aspect-video object-cover">
-        <h3 class="text-xl font-semibold accent-brown mb-2">
-          Thrust Vector Control&nbsp;101
-        </h3>
-        <p class="text-sm text-gray-400 flex-grow">
-          Design servo-driven gimbals, size actuators and simulate closed-loop pitch/yaw control.
-        </p>
-        <span class="inline-block mt-4 bg-gray-700 text-gray-300 text-xs px-3 py-1 rounded-full self-start">
-          Coming&nbsp;Soon
-        </span>
-      </div>
+<a href="DeploymentTutorial.html" class="bg-black/70 rounded-2xl p-6 shadow-lg hover:shadow-red-600/60 transition flex flex-col">
+  <h3 class="text-xl font-semibold accent-brown mb-2">
+    Dual Deployment&nbsp;101
+  </h3>
+  <p class="text-sm text-gray-400 flex-grow">
+    Design and learn about a dual deployment rocket.
+  </p>
+  <span class="inline-block mt-4 bg-gray-700 text-gray-300 text-xs px-3 py-1 rounded-full self-start">
+    Coming&nbsp;soon
+  </span>
+</a>
+
 
       <div class="bg-black/70 rounded-2xl p-6 shadow-lg hover:shadow-red-600/60 transition flex flex-col">
-        <img src="assets/tutorials/mpc_thumb.png"
-             alt="MPC guidance thumbnail"
-             class="rounded-xl mb-4 aspect-video object-cover">
-        <h3 class="text-xl font-semibold accent-brown mb-2">
           Model&nbsp;Predictive Control&nbsp;for&nbsp;Rockets
         </h3>
         <p class="text-sm text-gray-400 flex-grow">

@@ -46,14 +46,20 @@
           Caledonian Rocketry
         </a>
 
-        <!-- desktop links -->
-        <nav class="hidden md:flex space-x-6 text-sm uppercase">
-          <a href="/index.html"            class="hover:text-[color:var(--rocket-red)]">Home</a>
-          <a href="/tutorials/5dof.html"   class="hover:text-[color:var(--rocket-red)]">Tutorial</a>
-          <a href="/preliminaries.html"    class="hover:text-[color:var(--rocket-red)]">Preliminaries</a>
-          <a href="/certifications.html"   class="hover:text-[color:var(--rocket-red)]">Certifications</a>
-          <a href="/events.html"           class="text-[color:var(--rocket-red)] font-semibold">Events</a>
-        </nav>
+   <nav class="hidden md:flex space-x-6 text-sm font-semibold">
+  <!-- Anchors (same-page sections) -->
+  <a href="Index.html#mission" class="hover:text-red-500 transition">Mission</a>
+  <a href="Index.html#projects" class="hover:text-red-500 transition">Projects</a>
+  <a href="Index.html#tutorials" class="hover:text-red-500 transition">Tutorials</a>
+  <a href="Index.html#sponsors" class="hover:text-red-500 transition">Sponsors</a>
+  <a href="Index.html#contact"  class="hover:text-red-500 transition">Contact</a>
+
+  <!-- External Pages -->
+  <a href="MeetTeam.html" class="hover:text-red-500 transition">Team</a>
+  <a href="Events.html" class="hover:text-red-500 transition">Events</a>
+  <a href="certification.html" class="hover:text-red-500 transition">Certification</a>
+  <a href="preliminaries.html"    class="hover:text-[color:var(--rocket-red)]">Preliminaries</a>
+</nav>
 
         <!-- burger -->
         <button @click="open=!open" class="md:hidden text-gray-100 focus:outline-none">

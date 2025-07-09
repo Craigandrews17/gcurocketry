@@ -27,7 +27,23 @@
       body  { font-family:'Inter',sans-serif; }
       .accent-red   { color:var(--rocket-red); }
       .accent-brown { color:var(--earth-brown); }
-      .cta-btn { @apply inline-block mt-8 px-6 py-3 rounded-lg bg-[color:var(--rocket-red)] text-white font-semibold shadow-lg hover:opacity-90 transition; }
+      .cta-btn {
+        display: inline-block;
+        margin-top: 2rem;
+        padding-left: 1.5rem;
+        padding-right: 1.5rem;
+        padding-top: 0.75rem;
+        padding-bottom: 0.75rem;
+        border-radius: 0.5rem;
+        background-color: var(--rocket-red);
+        color: #fff;
+        font-weight: 600;
+        box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05);
+        transition: opacity 0.2s;
+      }
+      .cta-btn:hover {
+        opacity: 0.9;
+      }
       /* ★ star-field canvas */
       #starfield{position:fixed;inset:0;background:#000;z-index:-1;touch-action:none}
     </style>
@@ -48,12 +64,11 @@
 
    <nav class="hidden md:flex space-x-6 text-sm font-semibold">
   <!-- Anchors (same-page sections) -->
-  <a href="Index.html#mission" class="hover:text-red-500 transition">Mission</a>
-  <a href="Index.html#projects" class="hover:text-red-500 transition">Projects</a>
-  <a href="Index.html#tutorials" class="hover:text-red-500 transition">Tutorials</a>
-  <a href="Index.html#sponsors" class="hover:text-red-500 transition">Sponsors</a>
-  <a href="Index.html#contact"  class="hover:text-red-500 transition">Contact</a>
-
+  <a href="/gcurocketry/#mission" class="hover:text-red-500 transition">Mission</a>
+  <a href="/gcurocketry/#projects" class="hover:text-red-500 transition">Projects</a>
+  <a href="/gcurocketry/#tutorials" class="hover:text-red-500 transition">Tutorials</a>
+  <a href="/gcurocketry/#sponsors" class="hover:text-red-500 transition">Sponsors</a>
+  <a href="/gcurocketry/#contact"  class="hover:text-red-500 transition">Contact</a>
   <!-- External Pages -->
   <a href="MeetTeam.html" class="hover:text-red-500 transition">Team</a>
   <a href="Events.html" class="hover:text-red-500 transition">Events</a>

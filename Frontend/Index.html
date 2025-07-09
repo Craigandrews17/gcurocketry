@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html
+  lang="en"
+  x-data="guRocketryApp()"
+  :class="{ dark: darkMode }"
+>
+<head>
+  <!-- ────────────────────────────
+       META
+  ──────────────────────────── -->
+  <meta charset="UTF-8" />
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  />
+  <title>
+    Caledonian Rocketry • GCU’s Student Rocket Lab
+  </title>
+
+  <!-- ────────────────────────────
+       GOOGLE FONT + LIBS
+  ──────────────────────────── -->
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap"
+    rel="stylesheet"
+  />
+  <script
+    src="https://cdn.tailwindcss.com?plugins=typography,aspect-ratio"
+  ></script>
+  <script
+    src="https://unpkg.com/aos@2.3.4/dist/aos.js"
+  ></script>
+  <link
+    rel="stylesheet"
+    href="https://unpkg.com/aos@2.3.4/dist/aos.css"
+  />
+  <script
+    defer
+    src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"
+  ></script>
+
+  <!-- ────────────────────────────
+       TOKENS + UTILS
+  ──────────────────────────── -->
+  <style>
+    :root {
+      --rocket-red: #ff3131;
+      --earth-brown: #8b5e3c;
+    }
+
+    body {
+      font-family: "Inter", sans-serif;
+    }
+
+    .accent-red {
+      color: var(--rocket-red);
+    }
+
+    .accent-brown {
+      color: var(--earth-brown);
+    }
+
+    .btn {
+      @apply inline-block px-6 py-3 font-semibold rounded-xl shadow transition hover:scale-105;
+    }
+
+    .btn-red {
+      @apply bg-[var(--rocket-red)] text-white hover:bg-red-600;
+    }
+
+    .btn-dark {
+      @apply bg-gray-900 text-[var(--rocket-red)] hover:bg-gray-800;
+    }
+
+    .section-h2 {
+      @apply text-4xl md:text-5xl font-extrabold uppercase tracking-wide text-center mb-12;
+    }
+
+    ::selection {
+      background: #dc2626;
+      color: white;
+    }
+
+    [x-cloak] {
+      display: none;
+    }
+
+    /* page-fade */
+    body {
+      opacity: 0;
+    }
+    body.opacity-100 {
+      opacity: 1;
+    }
+
+    /* bespoke scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #888;
+      border-radius: 9999px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #555;
+    }
+
+    /* table */
+    th,
+    td {
+      @apply px-4 py-3;
+    }
+  </style>
+
+  <!-- ────────────────────────────
+       STAR-FIELD CANVAS + SCRIPT
+  ──────────────────────────── -->
+  <style>
+    #starfield {
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      background: #000;
+      touch-action: none;
+    }
+  </style>
+  <script>
+    /* star-field w/ mega-meteor shower */
+    document.addEventListener("DOMContentLoaded", () => {
+      const c = document.getElementById("starfield"),
+        ctx = c.getContext("2d"),
+        DPR = window.devicePixelRatio || 1,
+        LAYERS = [
+          { count: 60, size: 1.6, speed: 0.06 },
+          { count: 120, size: 1.1, speed: 0.03 },
+          { count: 180, size: 0.8, speed: 0.015 },
+        ];
+      let W,
+        H,
+        stars = [],
+        tiltX = 0,
+        tiltY = 0,
+        lastShot = 0;
+
+      const resize = () => {
+        W = c.width = innerWidth * DPR;
+        H = c.height = innerHeight * DPR;
+        ctx.scale(DPR, DPR);
+        stars = [];
+        LAYERS.forEach((l) => {
+          for (let i = 0; i < l.count; i++) {
+            stars.push({
+              x: Math.random() * innerWidth,
+              y: Math.random() * innerHeight,
+              z: l,
+              a: Math.random() * 360,
+            });
+          }
+        });
+      };
+
+      const draw = (t) => {
+        ctx.clearRect(0, 0, W, H);
+
+        /* ███ mega-meteor spawn ███ */
+        const MIN = 600,
+          MAX = 1200;
+        if (t - lastShot > MIN + Math.random() * (MAX - MIN)) {
+          lastShot = t;
+          const n = 1 + Math.floor(Math.random() * 3);
+          for (let k = 0; k < n; k++) {
+            const v = 4 + Math.random() * 4;
+            stars.push({
+              meteor: true,
+              x: -200 - Math.random() * 150,
+              y: Math.random() * innerHeight * 0.7,
+              vx: v,
+              vy: v * 0.15,
+              len: 120 + Math.random() * 80,
+            });
+          }
+        }
+
+        stars.forEach((s, i) => {
+          if (s.meteor) {
+            ctx.strokeStyle = "rgba(255,255,255,.85)";
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(s.x, s.y);
+            ctx.lineTo(s.x - s.len, s.y - s.len * 0.2);
+            ctx.stroke();
+            s.x += s.vx;
+            s.y += s.vy;
+            s.len *= 0.985;
+            if (s.x > innerWidth + 200) stars.splice(i, 1);
+            return;
+          }
+
+          const px = s.x + tiltX * s.z.speed * 30,
+            py = s.y + tiltY * s.z.speed * 30,
+            alpha = 0.6 + 0.4 * Math.sin(t / 1000 + s.a),
+            hue = 200 + 55 * Math.sin(t / 1500 + s.a);
+
+          ctx.fillStyle = `hsla(${hue},100%,88%,${alpha})`;
+          ctx.fillRect(px, py, s.z.size, s.z.size);
+
+          s.y += s.z.speed * 16;
+          if (s.y > innerHeight) s.y = 0;
+        });
+
+        requestAnimationFrame(draw);
+      };
+
+      addEventListener(
+        "pointermove",
+        (e) => {
+          tiltX = e.clientX / innerWidth - 0.5;
+          tiltY = e.clientY / innerHeight - 0.5;
+        },
+        { passive: true }
+      );
+      addEventListener(
+        "deviceorientation",
+        (e) => {
+          if (e.beta != null) {
+            tiltX = e.gamma / 20;
+            tiltY = e.beta / 40;
+          }
+        },
+        { passive: true }
+      );
+
+      resize();
+      requestAnimationFrame(draw);
+      addEventListener("resize", resize);
+    });
+  </script>
+</head>
+
+<body
+  class="bg-white dark:bg-gray-950 text-gray-900 dark:text-white antialiased scroll-smooth"
+>
+  <!-- canvas first -->
+  <canvas id="starfield"></canvas>
+
+  <!-- ────────────────────────────
+       NAVBAR
+  ──────────────────────────── -->
+  <header
+    class="fixed top-0 left-0 w-full z-50 bg-white/80 dark:bg-gray-900/90 backdrop-blur border-b border-gray-200 dark:border-gray-800"
+  >
+    <div
+      class="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between"
+    >
+      <a
+        href="#"
+        class="text-2xl font-extrabold text-red-600 tracking-wide"
+      >
+        Caledonian Rocketry 
+      </a>
+
+   <nav class="hidden md:flex space-x-6 text-sm font-semibold">
+  <!-- Anchors (same-page sections) -->
+  <a href="#mission" class="hover:text-red-500 transition">Mission</a>
+  <a href="#projects" class="hover:text-red-500 transition">Projects</a>
+  <a href="#tutorials" class="hover:text-red-500 transition">Tutorials</a>
+  <a href="#sponsors" class="hover:text-red-500 transition">Sponsors</a>
+  <a href="#contact"  class="hover:text-red-500 transition">Contact</a>
+
+  <!-- External Pages -->
+  <a href="MeetTeam.html" class="hover:text-red-500 transition">Team</a>
+  <a href="Events.html" class="hover:text-red-500 transition">Events</a>
+  <a href="certification.html" class="hover:text-red-500 transition">Certification</a>
+  <a href="preliminaries.html"    class="hover:text-[color:var(--rocket-red)]">Preliminaries</a>
+</nav>
+
+
+
+
+    </div>
+  </header>
+
+<!-- ────────────────────────────
+     HERO
+──────────────────────────── -->
+<section class="relative h-screen flex flex-col items-center justify-center text-center overflow-hidden">
+  <!-- Background Image -->
+  <img
+    src="hero_launch.jpg"
+    alt="Rocket launch background"
+    class="absolute inset-0 w-full h-full object-cover brightness-50"
+  />
+
+  <!-- Foreground Content -->
+  <div class="relative z-10 px-6 max-w-4xl mx-auto" data-aos="zoom-in">
+    <!-- Title and Subtitle -->
+    <h1 class="text-white text-5xl md:text-6xl font-extrabold mb-4">
+      Bolstering Glasgow as Scotland’s Rocketry Hub
+    </h1>
+    <p class="text-white text-lg md:text-xl mb-8">
+      Glasgow’s next student-run rocket lab — designing, building, and
+      launching the next generation of aerospace talent.
+    </p>
+
+</section>
+
+
+<!-- ╔══════════════════════════════════════════════════════════╗
+     MISSION  (PDF mission statement & objectives)
+╚══════════════════════════════════════════════════════════╝ -->
+<section
+  id="mission"
+  class="relative overflow-hidden py-28"
+  data-aos="fade-right"
+>
+  <!-- Background overlays -->
+  <div class="absolute inset-0 bg-[url('assets/blueprint_grid.png')] bg-cover opacity-5"></div>
+  <div class="absolute inset-0 bg-gradient-to-b from-black/80 to-black"></div>
+
+  <div class="relative z-10 max-w-6xl mx-auto px-6 text-center">
+    <h2 class="section-h2 accent-brown">Our Mission</h2>
+    <p
+      class="text-xl md:text-2xl text-gray-300 max-w-4xl mx-auto mb-12 leading-relaxed"
+    >
+      “Our mission is to <span class="accent-red font-semibold"
+        >inspire, educate, and empower</span
+      >
+      the next generation of engineers by advancing hands-on
+      expertise in rocketry and promoting awareness of the vast
+      opportunities within the UK’s space industry.”
+    </p>
+
+    <!-- Objectives + Pillars wrapper -->
+    <div class="mb-16">
+      <!-- Centered Objectives -->
+      <div
+        class="max-w-3xl mx-auto mb-12"
+        data-aos="fade-right"
+      >
+        <h3 class="text-2xl font-semibold accent-red mb-4 text-center">
+          Objectives
+        </h3>
+        <ul class="list-disc list-inside text-left text-gray-300 space-y-2">
+          <li>Inspire students &amp; public by highlighting aerospace opportunities.</li>
+          <li>Provide a multidisciplinary platform for practical engineering, business &amp; communication skills.</li>
+          <li>Build pathways to internships through industry partnerships.</li>
+          <li>Compete in national competitions (Mach 25) fostering innovation.</li>
+        </ul>
+      </div>
+
+      <!-- Horizontally-scrolling Pillars -->
+      <div
+        class="flex flex-nowrap overflow-x-auto justify-center gap-6 px-4"
+        data-aos="zoom-in-up"
+      >
+        <div
+          class="flex-shrink-0 w-64 bg-black/70 rounded-2xl p-6 shadow-lg hover:shadow-red-600/60 transition"
+        >
+          <div class="text-5xl accent-red mb-4">🚀</div>
+          <h3 class="font-semibold accent-brown mb-2">Propulsion</h3>
+          <p class="text-sm text-gray-400"></p>
+        </div>
+
+        <div
+          class="flex-shrink-0 w-64 bg-black/70 rounded-2xl p-6 shadow-lg hover:shadow-red-600/60 transition"
+          data-aos-delay="100"
+        >
+          <div class="text-5xl accent-red mb-4">🛰️</div>
+          <h3 class="font-semibold accent-brown mb-2">Avionics</h3>
+          <p class="text-sm text-gray-400"></p>
+        </div>
+
+        <div
+          class="flex-shrink-0 w-64 bg-black/70 rounded-2xl p-6 shadow-lg hover:shadow-red-600/60 transition"
+          data-aos-delay="200"
+        >
+          <div class="text-5xl accent-red mb-4">🛡️</div>
+          <h3 class="font-semibold accent-brown mb-2">Safety</h3>
+          <p class="text-sm text-gray-400"></p>
+        </div>
+
+        <div
+          class="flex-shrink-0 w-64 bg-black/70 rounded-2xl p-6 shadow-lg hover:shadow-red-600/60 transition"
+          data-aos-delay="300"
+        >
+          <div class="text-5xl accent-red mb-4">🛠️</div>
+          <h3 class="font-semibold accent-brown mb-2">Iteration</h3>
+          <p class="text-sm text-gray-400"></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- ╔══════════════════════════════════════════════════════════╗
+     PROJECTS SECTION
+╚══════════════════════════════════════════════════════════╝ -->
+<section id="projects" class="relative overflow-hidden py-32 bg-gray-950 text-white" data-aos="fade-up">
+  <!-- Optional background styling -->
+  <div class="absolute inset-0 bg-[url('assets/blueprint_grid.png')] bg-cover opacity-5"></div>
+  <div class="absolute inset-0 bg-gradient-to-b from-black/80 to-black"></div>
+
+  <div class="relative z-10 max-w-5xl mx-auto px-6 text-center">
+    <!-- Title -->
+    <h2 class="section-h2 accent-brown">Rocket the Bruce</h2>
+    <p class="text-lg max-w-3xl mx-auto text-gray-300 mb-12">
+      Our flagship competition rocket — dual-deploy recovery, onboard telemetry, and built for Mach 25 altitude challenges.
+    </p>
+
+    <!-- Rocket Image (Larger + Below Text) -->
+    <a href="#projects" class="block mb-8 transition hover:scale-105">
+      <img
+        src="IndexImages/rocketbruce-removebg-preview.png"
+        alt="Rocket the Bruce"
+        class="h-72 md:h-[28rem] object-contain mx-auto"
+      />
+    </a>
+
+    <!-- CTA Button -->
+    <a href="#projects" class="btn btn-red shadow-lg text-lg px-6 py-3">
+      See Our Rocket
+    </a>
+  </div>
+</section>
+
+   <!-- ╔══════════════════════════════════════════════════════════╗
+     TUTORIALS  (replaces the old “master-class” video block)
+╚══════════════════════════════════════════════════════════╝ -->
+<section id="tutorials"
+         class="relative overflow-hidden py-32"
+         data-aos="fade-up">
+
+  <!-- faint PCB background & dark overlay -->
+  <div class="absolute inset-0 bg-[url('assets/circuit_board.jpg')] bg-cover opacity-5"></div>
+  <div class="absolute inset-0 bg-gradient-to-b from-black/80 to-gray-900"></div>
+
+  <div class="relative z-10 max-w-6xl mx-auto px-6 text-center">
+    <h2 class="section-h2 accent-brown">Tutorials</h2>
+
+    <p class="text-lg max-w-3xl mx-auto mb-12 text-gray-300">
+      Free, hands-on modules you can finish in a weekend.
+    </p>
+
+    <!-- card grid -->
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+
+      <!-- 5-DOF Rocket Simulation card -->
+      <div class="bg-black/70 rounded-2xl p-6 shadow-lg hover:shadow-red-600/60 transition flex flex-col">
+        <h3 class="text-xl font-semibold accent-brown mb-2">
+          Build a 5-DOF Rocket&nbsp;Simulation
+        </h3>
+        <p class="text-sm text-gray-400 flex-grow">
+          Step-by-step article and downloadable Simulink model. Grasp translational dynamics, aero tables and event stops without quaternion headaches.
+        </p>
+        <a href="TutorialPage.html"
+           class="btn btn-red mt-4 self-start">
+          Read the Tutorial
+        </a>
+      </div>
+
+<a href="DeploymentTutorial.html" class="bg-black/70 rounded-2xl p-6 shadow-lg hover:shadow-red-600/60 transition flex flex-col">
+  <h3 class="text-xl font-semibold accent-brown mb-2">
+    Dual Deployment&nbsp;101
+  </h3>
+  <p class="text-sm text-gray-400 flex-grow">
+    Design and learn about a dual deployment rocket.
+  </p>
+  <span class="inline-block mt-4 bg-gray-700 text-gray-300 text-xs px-3 py-1 rounded-full self-start">
+    Coming&nbsp;soon
+  </span>
+</a>
+
+
+      <div class="bg-black/70 rounded-2xl p-6 shadow-lg hover:shadow-red-600/60 transition flex flex-col">
+          Model&nbsp;Predictive Control&nbsp;for&nbsp;Rockets
+        </h3>
+        <p class="text-sm text-gray-400 flex-grow">
+          Bring Falcon-style guidance to small launch vehicles with MATLAB’s MPC toolbox.
+        </p>
+        <span class="inline-block mt-4 bg-gray-700 text-gray-300 text-xs px-3 py-1 rounded-full self-start">
+          Coming&nbsp;Soon
+        </span>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+  <!-- TEAM (already injected above) -->
+
+  <!-- OUTREACH (already included) -->
+
+  <!-- ╔══════════════════════════════════════════════════════════╗
+       SPONSORSHIP TIERS  (PDF table verbatim)
+  ╚══════════════════════════════════════════════════════════╝ -->
+  <section
+    id="sponsors"
+    class="relative overflow-hidden py-32"
+    data-aos="fade-up"
+  >
+    <div
+      class="absolute inset-0 bg-[url('assets/hangar_metal.jpg')] bg-cover opacity-10"
+    ></div>
+    <div
+      class="absolute inset-0 bg-gradient-to-b from-black/90 to-stone-900"
+    ></div>
+
+    <div class="relative z-10 max-w-6xl mx-auto px-6 text-center">
+      <h2 class="section-h2 accent-brown">
+        Would like to partner with us?
+      </h2>
+      <p
+        class="text-lg max-w-3xl mx-auto mb-12 text-gray-300"
+      >
+        Sponsorship fuels hardware, travel &amp; outreach while
+        showcasing your brand to the UK’s future aerospace engineers.
+
+      </p>
+
+      
+      <a
+        href="mailto:rocketry@gcustudents.co.uk"
+        class="btn btn-red mt-12 shadow-lg"
+        data-aos="fade-up"
+        data-aos-delay="200"
+      >
+        Discuss a Partnership
+      </a>
+    </div>
+  </section>
+
+  <!-- TESTIMONIAL (already included) -->
+
+  <!-- CONTACT (already injected above) -->
+
+  <!-- SIGN-UP BANNER (already injected above) -->
+
+  <!-- SIGN-UP EMAIL (already included) -->
+
+  <!-- FOOTER (already included) -->
+
+  <!-- ────────────────────────────
+       SCRIPTS
+  ──────────────────────────── -->
+  <script>
+    function guRocketryApp() {
+      return {
+        darkMode: true,
+      };
+    }
+
+    AOS.init({
+      duration: 800,
+      once: true,
+      easing: "ease-in-out",
+    });
+
+    document.addEventListener("DOMContentLoaded", () => {
+      document.body.classList.add(
+        "transition-opacity",
+        "duration-1000",
+        "opacity-100"
+      );
+    });
+  </script>
+</body>
+</html>

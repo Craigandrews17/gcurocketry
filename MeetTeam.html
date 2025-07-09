@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en" x-data="guRocketryApp" :class="{ dark: darkMode }">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Meet the Team • Caledonian Rocketry</title>
+
+    <!-- Fonts & Tailwind -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet" />
+    <script src="https://cdn.tailwindcss.com?plugins=typography,aspect-ratio"></script>
+
+    <!-- AOS -->
+    <link  href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet" />
+    <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+
+    <!-- Alpine.js -->
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <script>
+      document.addEventListener('alpine:init', () => {
+        Alpine.data('guRocketryApp', () => ({ darkMode: true }));
+      });
+    </script>
+
+    <!-- Design tokens -->
+    <style>
+      :root{ --rocket-red:#ff3131; --earth-brown:#8b5e3c; }
+      body{ font-family:'Inter',sans-serif; }
+      .accent-red   { color:var(--rocket-red); }
+      .accent-brown { color:var(--earth-brown); }
+      /* ★ star-field canvas */
+      #starfield{position:fixed;inset:0;background:#000;z-index:-1;touch-action:none}
+    </style>
+  </head>
+
+  <body class="bg-white dark:bg-gray-950 text-gray-900 dark:text-white antialiased">
+
+    <!-- ★ star-field canvas -->
+    <canvas id="starfield"></canvas>
+
+    <!-- ╔════════ NAVBAR ═════════╗ -->
+    <header class="sticky top-0 z-50 backdrop-blur-lg/60 border-b border-gray-800 dark:border-gray-700"
+            x-data="{open:false}">
+      <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
+        <a href="/index.html" class="text-xl font-extrabold tracking-tight accent-brown">
+          Caledonian Rocketry
+        </a>
+
+        <!-- desktop links -->
+        <nav class="hidden md:flex space-x-6 text-sm uppercase">
+          <a href="/index.html"           class="hover:text-[color:var(--rocket-red)]">Home</a>
+          <a href="/events.html"          class="hover:text-[color:var(--rocket-red)]">Events</a>
+          <a href="/certifications.html"  class="hover:text-[color:var(--rocket-red)]">Certifications</a>
+          <a href="/team.html"            class="text-[color:var(--rocket-red)] font-semibold">Team</a>
+        </nav>
+
+        <!-- burger -->
+        <button @click="open=!open" class="md:hidden text-gray-100 focus:outline-none">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" stroke="currentColor">
+            <path x-show="!open" stroke-linecap="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+            <path x-show="open"  stroke-linecap="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+          </svg>
+        </button>
+      </div>
+
+      <!-- mobile drawer -->
+      <div x-show="open" x-transition class="md:hidden bg-gray-900 border-t border-gray-800">
+        <ul class="flex flex-col items-center py-6 gap-6 text-lg font-semibold">
+          <li><a href="/index.html"          @click="open=false" class="hover:text-[color:var(--rocket-red)]">Home</a></li>
+          <li><a href="/events.html"         @click="open=false" class="hover:text-[color:var(--rocket-red)]">Events</a></li>
+          <li><a href="/certifications.html" @click="open=false" class="hover:text-[color:var(--rocket-red)]">Certifications</a></li>
+          <li><a href="/team.html"           @click="open=false" class="text-[color:var(--rocket-red)]">Team</a></li>
+        </ul>
+      </div>
+    </header>
+    <!-- ╚═════════════════════════╝ -->
+
+    <!-- ================== ORIGINAL PAGE CONTENT (unchanged) ================== -->
+    <section class="pt-28 pb-20 bg-gradient-to-b from-black to-gray-900 text-center relative overflow-hidden">
+      <img src="../assets/team/team_hero.jpg" alt="Rocketry team group photo"
+           class="absolute inset-0 w-full h-full object-cover opacity-20 pointer-events-none" />
+      <div class="relative z-10 max-w-3xl mx-auto px-4" data-aos="zoom-in">
+        <h1 class="text-4xl md:text-5xl font-extrabold mb-3 accent-brown">Meet the Team</h1>
+        <p class="text-gray-300 max-w-xl mx-auto">
+          From simulations to certifications, this is the crew building Scotland’s next-generation rocketry force.
+        </p>
+      </div>
+    </section>
+
+    <main class="max-w-4xl mx-auto px-4 py-16 space-y-16">
+      <!-- Craig -->
+      <div class="grid md:grid-cols-4 gap-6 items-start" data-aos="fade-up">
+        <img src="../assets/team/craig.jpg" alt="Craig Andrews"
+             class="rounded-xl w-full aspect-square object-cover md:col-span-1" />
+        <div class="md:col-span-3">
+          <h2 class="text-2xl font-bold accent-red">Craig Andrews</h2>
+          <p class="mt-2 text-gray-400">
+            Founder of the GCU Rocketry Society and Systems Engineer at BAE&nbsp;Systems.
+            Craig built a full 6-DOF rocket simulator and used the society to learn Simulink,
+            control theory, and advanced guidance techniques — skills that secured his graduate
+            role in aerospace.
+          </p>
+          <p class="mt-2 italic text-sm text-gray-500">LinkedIn: [Add link here]</p>
+        </div>
+      </div>
+
+      <!-- Lewis -->
+      <div class="grid md:grid-cols-4 gap-6 items-start" data-aos="fade-up">
+        <img src="../assets/team/lewis.jpg" alt="Lewis Smith"
+             class="rounded-xl w-full aspect-square object-cover md:col-span-1" />
+        <div class="md:col-span-3">
+          <h2 class="text-2xl font-bold accent-red">Lewis Smith</h2>
+          <p class="mt-2 text-gray-400">
+            Propulsion and fabrication lead who secured a competitive year-long internship
+            at Orbex Space in Forres. Lewis gained hands-on experience with test stands and
+            propellant flow systems after refining his skills through launch prep with the society.
+          </p>
+          <p class="mt-2 italic text-sm text-gray-500">LinkedIn: [Add link here]</p>
+        </div>
+      </div>
+
+      <!-- Euan -->
+      <div class="grid md:grid-cols-4 gap-6 items-start" data-aos="fade-up">
+        <img src="../assets/team/euan.jpg" alt="Euan Kirkland"
+             class="rounded-xl w-full aspect-square object-cover md:col-span-1" />
+        <div class="md:col-span-3">
+          <h2 class="text-2xl font-bold accent-red">Euan Kirkland</h2>
+          <p class="mt-2 text-gray-400">
+            Electronics and payload enthusiast now pursuing a Master’s degree at the University of Glasgow.
+            His CanSat payload designs and flight-hardware skills grew through society challenges and group launches.
+          </p>
+          <p class="mt-2 italic text-sm text-gray-500">LinkedIn: [Add link here]</p>
+        </div>
+      </div>
+
+      <!-- Andrew -->
+      <div class="grid md:grid-cols-4 gap-6 items-start" data-aos="fade-up">
+        <img src="../assets/team/andrew.jpg" alt="Andrew Stewart"
+             class="rounded-xl w-full aspect-square object-cover md:col-span-1" />
+        <div class="md:col-span-3">
+          <h2 class="text-2xl font-bold accent-red">Andrew Stewart</h2>
+          <p class="mt-2 text-gray-400">
+            Telemetry and test-stand contributor who secured an internship at Thales.
+            Andrew learned systems integration and lab testing through society projects and competition prep.
+          </p>
+          <p class="mt-2 italic text-sm text-gray-500">LinkedIn: [Add link here]</p>
+        </div>
+      </div>
+
+      <!-- Gabe -->
+      <div class="grid md:grid-cols-4 gap-6 items-start" data-aos="fade-up">
+        <img src="../assets/team/gabe.jpg" alt="Gabe Eide"
+             class="rounded-xl w-full aspect-square object-cover md:col-span-1" />
+        <div class="md:col-span-3">
+          <h2 class="text-2xl font-bold accent-red">Gabe Eide</h2>
+          <p class="mt-2 text-gray-400">
+            Launch logistics and 3-D CAD contributor. Gabe brings structure and visuals to team projects
+            and is a consistent presence during outreach, field testing, and launch readiness reviews.
+          </p>
+          <p class="mt-2 italic text-sm text-gray-500">LinkedIn: [Add link here]</p>
+        </div>
+      </div>
+
+      <!-- Archie -->
+      <div class="grid md:grid-cols-4 gap-6 items-start" data-aos="fade-up">
+        <img src="../assets/team/archie.jpg" alt="Archie Simmons Clark"
+             class="rounded-xl w-full aspect-square object-cover md:col-span-1" />
+        <div class="md:col-span-3">
+          <h2 class="text-2xl font-bold accent-red">Archie Simmons Clark</h2>
+          <p class="mt-2 text-gray-400">
+            Currently in his third year, Archie focuses on structural design and composite testing.
+            He’s part of the next wave of GCU Rocketry leaders bringing fresh ideas to flight hardware.
+          </p>
+          <p class="mt-2 italic text-sm text-gray-500">LinkedIn: [Add link here]</p>
+        </div>
+      </div>
+
+      <!-- Join CTA -->
+      <section data-aos="zoom-in-up" class="text-center pt-20">
+        <h2 class="text-3xl font-bold accent-brown">Want to Join the Team?</h2>
+        <p class="mt-2 max-w-xl mx-auto text-gray-400">
+          If you’re passionate about rocketry, control systems, CAD, or launch logistics,
+          we’d love to meet you. Send us a message and get involved.
+        </p>
+        <a href="mailto:info@caledonianrocketry.uk?subject=Join%20GCU%20Rocketry%20Team"
+           class="inline-block mt-6 px-6 py-3 rounded-lg bg-[color:var(--rocket-red)] text-white font-semibold
+                  shadow-lg hover:opacity-90 transition">
+          Get Involved →
+        </a>
+      </section>
+    </main>
+
+    <footer class="border-t border-gray-800 dark:border-gray-700 py-8 text-center text-sm
+                   text-gray-500 dark:text-gray-400">
+      © 2025 Craig Andrews · Caledonian Rocketry
+    </footer>
+
+    <script> AOS.init({ duration:800, once:true }); </script>
+
+    <!-- ★ Star-field JS -->
+    <script>
+      document.addEventListener('DOMContentLoaded',()=>{
+        const c=document.getElementById('starfield'),ctx=c.getContext('2d'),
+              DPR=window.devicePixelRatio||1,L=[[70,.06,1.6],[120,.03,1.1],[160,.015,.8]];
+        let W,H,S=[],mx=0,my=0,last=0;
+        const R=()=>{W=c.width=innerWidth*DPR;H=c.height=innerHeight*DPR;ctx.scale(DPR,DPR);S=[];
+          L.forEach(([n,v,z])=>{for(let i=0;i<n;i++)S.push({x:Math.random()*innerWidth,
+            y:Math.random()*innerHeight,v,z})})};
+        const step=t=>{
+          ctx.clearRect(0,0,W,H);
+          if(t-last>600+Math.random()*600){last=t;const n=1+Math.floor(Math.random()*3);
+            for(let k=0;k<n;k++){const v=4+Math.random()*4;S.push({m:1,x:-180-Math.random()*100,
+              y:Math.random()*innerHeight*.7,v,len:120+Math.random()*80})}}
+          S.forEach((s,i)=>{
+            if(s.m){ctx.strokeStyle='rgba(255,255,255,.85)';ctx.lineWidth=2;
+              ctx.beginPath();ctx.moveTo(s.x,s.y);ctx.lineTo(s.x-s.len,s.y-s.len*.2);ctx.stroke();
+              s.x+=s.v;s.y+=s.v*.15;s.len*=.985;if(s.x>innerWidth+200)S.splice(i,1);return}
+            const X=s.x+mx*s.v*30,Y=s.y+my*s.v*30;
+            ctx.fillStyle='hsla(200,100%,88%,'+(.6+.4*Math.sin(t/1000+i))+')';
+            ctx.fillRect(X,Y,s.z,s.z);s.y+=s.v*16;if(s.y>innerHeight)s.y=0});
+          requestAnimationFrame(step)};
+        addEventListener('pointermove',e=>{mx=e.clientX/innerWidth-.5;my=e.clientY/innerHeight-.5},{passive:!0});
+        addEventListener('resize',R);R();requestAnimationFrame(step);
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en" x-data="guRocketryApp" :class="{ dark: darkMode }">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Preliminaries • 5-DOF Rocket Simulation</title>
+
+    <!-- Fonts & core CSS -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet" />
+    <script src="https://cdn.tailwindcss.com?plugins=typography,aspect-ratio"></script>
+
+    <!-- AOS scroll animations -->
+    <link rel="stylesheet" href="https://unpkg.com/aos@2.3.4/dist/aos.css" />
+    <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+
+    <!-- Alpine.js -->
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <script>
+      document.addEventListener('alpine:init', () => {
+        Alpine.data('guRocketryApp', () => ({ darkMode: true }));
+      });
+    </script>
+
+    <style>
+      :root{ --rocket-red:#ff3131; --earth-brown:#8b5e3c; }
+      body{ font-family:'Inter',sans-serif; }
+      .accent-red  { color:var(--rocket-red); }
+      .accent-brown{ color:var(--earth-brown); }
+      pre code{display:block;background:rgba(17,24,39,.9);padding:1rem;border-radius:.375rem;
+               color:#f3f4f6;overflow-x:auto;font-size:.75rem;line-height:1.625;}
+      /* ★ star-field canvas */
+      #starfield{position:fixed;inset:0;background:#000;z-index:-1;touch-action:none}
+    </style>
+  </head>
+
+  <body class="bg-white dark:bg-gray-950 text-gray-900 dark:text-white antialiased">
+
+    <!-- ★ star-field canvas -->
+    <canvas id="starfield"></canvas>
+
+    <!-- ╔════════ NAVBAR ═════════╗ -->
+    <header class="sticky top-0 z-50 backdrop-blur-lg/60 border-b border-gray-800 dark:border-gray-700"
+            x-data="{open:false}">
+      <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
+        <a href="/index.html" class="text-xl font-extrabold tracking-tight accent-brown">
+          Caledonian Rocketry
+        </a>
+
+        <!-- desktop links -->
+        <nav class="hidden md:flex space-x-6 text-sm uppercase">
+          <a href="/index.html"            class="hover:text-[color:var(--rocket-red)]">Home</a>
+          <a href="/tutorials/5dof.html"   class="hover:text-[color:var(--rocket-red)]">Tutorial</a>
+          <a href="/preliminaries.html"    class="text-[color:var(--rocket-red)] font-semibold">Preliminaries</a>
+        </nav>
+
+        <!-- burger -->
+        <button @click="open=!open" class="md:hidden text-gray-100 focus:outline-none">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" stroke="currentColor">
+            <path x-show="!open" stroke-linecap="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+            <path x-show="open"  stroke-linecap="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+          </svg>
+        </button>
+      </div>
+
+      <!-- mobile drawer -->
+      <div x-show="open" x-transition class="md:hidden bg-gray-900 border-t border-gray-800">
+        <ul class="flex flex-col items-center py-6 gap-6 text-lg font-semibold">
+          <li><a href="/index.html"          @click="open=false" class="hover:text-[color:var(--rocket-red)]">Home</a></li>
+          <li><a href="/tutorials/5dof.html" @click="open=false" class="hover:text-[color:var(--rocket-red)]">Tutorial</a></li>
+          <li><a href="/preliminaries.html"  @click="open=false" class="text-[color:var(--rocket-red)]">Preliminaries</a></li>
+        </ul>
+      </div>
+    </header>
+    <!-- ╚═════════════════════════╝ -->
+
+    <!-- ================= HERO (unchanged) ================= -->
+    <section class="pt-28 pb-20 bg-gradient-to-b from-black to-gray-900 text-center relative overflow-hidden">
+      <img src="../assets/preliminaries/preliminaries_hero.jpg" alt=""
+           class="absolute inset-0 w-full h-full object-cover opacity-20 pointer-events-none" />
+      <div class="relative z-10 max-w-4xl mx-auto px-4" data-aos="zoom-in">
+        <h1 class="text-4xl md:text-5xl font-extrabold mb-3 accent-brown">Preliminaries</h1>
+        <p class="text-gray-300 max-w-2xl mx-auto">
+          Foundational dynamics, modelling assumptions &amp; control-theory concepts behind
+          the 5-DOF rocket simulation and SCvx controller.
+        </p>
+      </div>
+    </section>
+
+    <!-- ================= ORIGINAL MAIN CONTENT (unchanged) ================= -->
+    <main class="prose dark:prose-invert md:prose-lg max-w-4xl mx-auto px-4 py-16
+                 prose-headings:font-semibold prose-headings:accent-brown">
+
+      <!-- 4.1 ------------------------------------------------------------------------>
+      <h2 id="mathematical-formulation">4 · Mathematical Formulation</h2>
+      <div class="my-8 flex justify-center"><!-- TODO: Insert Figure here --></div>
+      <p>The thrust-vector-controlled rocket is modelled as a rigid body with five active degrees of freedom. …</p>
+      <pre><code>q̇ = ½ q ⊗ ω
+v̇<b>_b</b> = F<b>_b</b> / m
+ω̇ = J⁻¹ (τ − ω × Jω)</code></pre>
+      <p>where <em>q</em> …</p>
+
+      <!-- 4.2 -->
+      <h2 id="rocket-problem">4 · The Rocket Problem</h2>
+      <div class="my-8 flex justify-center"><!-- TODO schematic --></div>
+      <h3>4.2.1 Simulation Requirements</h3>
+      <p>The objective is …</p>
+      <h3>4.2.2 Assumptions</h3>
+      <ul>
+        <li>Rigid, axisymmetric airframe; roll dynamics neglected.</li>
+        <li>Constant mass (<em>m</em>) and inertia throughout burn.</li>
+        <li>Flat-Earth kinematics …</li>
+        <li>Constant air density ρ = 1.225 kg·m<sup>−3</sup>.</li>
+        <li>Small solid motor ⇒ negligible mass depletion.</li>
+        <li>Sinusoidal lateral wind profile used as a disturbance.</li>
+      </ul>
+
+      <!-- 4.3 -->
+      <h2 id="frames">4 · Orientation Using Body &amp; Inertial Frames</h2>
+      <div class="my-8 flex justify-center"><!-- TODO visual --></div>
+      <p>The inertial frame … quaternion math …</p>
+
+      <!-- 4.4 -->
+      <h2 id="physics">4 · Relevant Non-Linear Physics</h2>
+      <div class="my-8 flex justify-center"><!-- TODO forces diagram --></div>
+      <h3>4.4.1 Coupled Differential Equations</h3>
+      <p>Newton–Euler equations …</p>
+      <h3>4.4.2 Aerodynamics</h3>
+      <p>Normal, side and drag forces …</p>
+      <h3>4.4.3 Thrust Vector Control</h3>
+      <p>TVC gimbals …</p>
+      <pre><code>f<b>_TVC</b> = f<b>_T</b>[cosθ cosϕ, −sinϕ, sinθ]ᵀ
+τ<b>_TVC</b> = r<b>_TVC</b> × f<b>_TVC</b></code></pre>
+
+      <!-- 4.5 -->
+      <h2 id="ltv-mpc">4 · Linear Time-Varying MPC</h2>
+      <div class="my-8 flex justify-center"><!-- TODO MPC diagram --></div>
+      <p>Full NMPC is computationally …</p>
+      <h3>4.5.1 Single vs Multiple Shooting</h3>
+      <p>Multiple shooting …</p>
+      <h3>4.5.2 Linearising a Non-Linear World</h3>
+      <p>Jacobian matrices …</p>
+      <h3>4.5.3 Successive Linearisation</h3>
+      <p>By re-linearising …</p>
+
+      <!-- 4.6 -->
+      <h2 id="scvx">4 · Successive Convexification</h2>
+      <div class="my-8 flex justify-center"><!-- TODO SCvx graph --></div>
+      <p>SCvx refines …</p>
+      <h3>4.6.1 Trust Regions</h3>
+      <p>A radius Δ …</p>
+      <h3>4.6.2 Slack Variables</h3>
+      <p>Soft constraints …</p>
+      <h3>4.6.3 Convergence Criteria</h3>
+      <p>Terminates when …</p>
+    </main>
+
+    <footer class="border-t border-gray-800 dark:border-gray-700 py-8 text-center text-sm
+                   text-gray-500 dark:text-gray-400">
+      © 2025 Craig Andrews · Caledonian Rocketry
+    </footer>
+
+    <script> AOS.init({ duration:800, once:true }); </script>
+
+    <!-- ★ Star-field JS -->
+    <script>
+      document.addEventListener('DOMContentLoaded',()=>{
+        const c=document.getElementById('starfield'),g=c.getContext('2d'),
+              D=window.devicePixelRatio||1,L=[[70,.06,1.6],[120,.03,1.1],[160,.015,.8]];
+        let W,H,S=[],mx=0,my=0,last=0;
+        const R=()=>{W=c.width=innerWidth*D;H=c.height=innerHeight*D;g.scale(D,D);S=[];
+          L.forEach(([n,v,z])=>{for(let i=0;i<n;i++)S.push({x:Math.random()*innerWidth,y:Math.random()*innerHeight,v,z})})};
+        const step=t=>{
+          g.clearRect(0,0,W,H);
+          if(t-last>600+Math.random()*600){last=t;const n=1+Math.floor(Math.random()*3);
+            for(let k=0;k<n;k++){const v=4+Math.random()*4;
+              S.push({m:1,x:-180-Math.random()*100,y:Math.random()*innerHeight*.7,v,len:120+Math.random()*80})}}
+          S.forEach((s,i)=>{
+            if(s.m){g.strokeStyle='rgba(255,255,255,.85)';g.lineWidth=2;
+              g.beginPath();g.moveTo(s.x,s.y);g.lineTo(s.x-s.len,s.y-s.len*.2);g.stroke();
+              s.x+=s.v;s.y+=s.v*.15;s.len*=.985;if(s.x>innerWidth+200)S.splice(i,1);return}
+            const X=s.x+mx*s.v*30,Y=s.y+my*s.v*30;
+            g.fillStyle='hsla(200,100%,88%,'+(.6+.4*Math.sin(t/1000+i))+')';
+            g.fillRect(X,Y,s.z,s.z);s.y+=s.v*16;if(s.y>innerHeight)s.y=0});
+          requestAnimationFrame(step)};
+        addEventListener('pointermove',e=>{mx=e.clientX/innerWidth-.5;my=e.clientY/innerHeight-.5},{passive:!0});
+        addEventListener('resize',R);R();requestAnimationFrame(step);
+      });
+    </script>
+  </body>
+</html>

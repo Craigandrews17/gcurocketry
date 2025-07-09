@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en" x-data="guRocketryApp" :class="{ dark: darkMode }">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>UK Rocketry Certifications • Caledonian Rocketry</title>
+
+    <!-- Fonts & Tailwind -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet" />
+    <script src="https://cdn.tailwindcss.com?plugins=typography,aspect-ratio"></script>
+
+    <!-- AOS scroll animations -->
+    <link rel="stylesheet" href="https://unpkg.com/aos@2.3.4/dist/aos.css" />
+    <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+
+    <!-- Alpine.js for dark-mode -->
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <script>
+      document.addEventListener('alpine:init', () => {
+        Alpine.data('guRocketryApp', () => ({ darkMode: true }));
+      });
+    </script>
+
+    <!-- Craig’s original colour tokens + CTA btn -->
+    <style>
+      :root{ --rocket-red:#ff3131; --earth-brown:#8b5e3c; }
+      body{font-family:'Inter',sans-serif}
+      .accent-red{color:var(--rocket-red);}
+      .accent-brown{color:var(--earth-brown);}
+      .cta-btn{@apply inline-block mt-8 px-6 py-3 rounded-lg bg-[color:var(--rocket-red)] text-white font-semibold shadow-lg hover:opacity-90 transition;}
+    </style>
+
+    <!-- ★★ star-field styles (new) -->
+    <style>#starfield{position:fixed;inset:0;z-index:-1;background:#000;touch-action:none}</style>
+  </head>
+
+  <body class="bg-white dark:bg-gray-950 text-gray-900 dark:text-white antialiased">
+    <!-- ★★ star-field canvas (new) -->
+    <canvas id="starfield"></canvas>
+
+    <!-- ================================= NAVBAR  ================================= -->
+    <header class="sticky top-0 z-50 backdrop-blur-lg/60 border-b border-gray-800 dark:border-gray-700" x-data="{open:false}">
+      <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
+        <a href="index.html" class="text-xl font-extrabold tracking-tight accent-brown">Caledonian Rocketry</a>
+
+        <!-- desktop -->
+        <nav class="hidden md:flex gap-8 text-sm uppercase font-semibold">
+          <a href="index.html"           class="hover:text-[color:var(--rocket-red)]">Home</a>
+          <a href="Events.html"          class="hover:text-[color:var(--rocket-red)]">Events</a>
+          <a href="Preliminaries.html"   class="hover:text-[color:var(--rocket-red)]">Preliminaries</a>
+          <a href="certification.html"   class="text-[color:var(--rocket-red)]">Certifications</a>
+        </nav>
+
+        <!-- mobile burger -->
+        <button @click="open=!open" class="md:hidden text-gray-100">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" stroke="currentColor">
+            <path x-show="!open" stroke-linecap="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+            <path x-show="open"  stroke-linecap="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+          </svg>
+        </button>
+      </div>
+
+      <!-- mobile drawer -->
+      <div x-show="open" x-transition class="md:hidden bg-gray-900 border-t border-gray-800">
+        <ul class="flex flex-col items-center py-6 gap-6 text-lg font-semibold">
+          <li><a href="index.html"         @click="open=false" class="hover:text-[color:var(--rocket-red)]">Home</a></li>
+          <li><a href="Events.html"        @click="open=false" class="hover:text-[color:var(--rocket-red)]">Events</a></li>
+          <li><a href="Preliminaries.html" @click="open=false" class="hover:text-[color:var(--rocket-red)]">Preliminaries</a></li>
+          <li><a href="certification.html" @click="open=false" class="text-[color:var(--rocket-red)]">Certifications</a></li>
+        </ul>
+      </div>
+    </header>
+
+    <!-- ====================== HERO ====================== -->
+    <section class="pt-28 pb-20 bg-gradient-to-b from-black to-gray-900 text-center relative overflow-hidden">
+      <img src="./assets/certifications/certifications_hero.jpg" alt="UK high-power rocket lifting off"
+           class="absolute inset-0 w-full h-full object-cover opacity-20 pointer-events-none">
+      <div class="relative z-10 max-w-4xl mx-auto px-4" data-aos="zoom-in">
+        <h1 class="text-4xl md:text-5xl font-extrabold mb-3 accent-brown">UK Rocketry Certifications</h1>
+        <p class="text-gray-300 max-w-2xl mx-auto">
+          Build bigger. Fly higher. Prove it. Here’s your roadmap from first H motors to nationally-recognised Level 3.
+        </p>
+        <a href="#levels" class="cta-btn">See the Levels ↓</a>
+      </div>
+    </section>
+
+    <!-- ====================== MAIN (Craig’s original prose) ====================== -->
+    <main id="levels"
+          class="prose dark:prose-invert md:prose-lg max-w-4xl mx-auto px-4 py-16 prose-headings:font-semibold prose-headings:accent-brown">
+
+      <h2>Why Certify?</h2>
+      <p>High-power rocketry in the UK is governed by the <strong>UK Rocketry Association (UKRA)</strong> in cooperation with the <em>Civil Aviation Authority</em> and local clubs. Certification gives you:</p>
+      <ul>
+        <li><strong>Access to larger rocket motors</strong> (H-classes and above).</li>
+        <li><strong>Insurance coverage</strong> through UKRA for public launches.</li>
+        <li><strong>Credibility with mentors, suppliers &amp; sponsors</strong>.</li>
+        <li>Motivation to design, build and <em>finish</em> your own rocket.</li>
+      </ul>
+
+      <div class="my-10 flex justify-center" data-aos="zoom-in-up">
+        <!-- TODO: infographic showing motor classes A–O -->
+      </div>
+
+      <!-- ############ LEVEL 1 ############ -->
+      <section id="level-1" data-aos="fade-up">
+        <h2>Level 1 — Your First Taste of HPR</h2>
+        <p><em>Motor limits:</em> H or I class (impulse ≤ 640 N·s)<br>
+           <em>Altitude envelope:</em> typically &lt; 3 000 ft AGL at most UK sites</p>
+        <p><strong>Objective</strong> — prove you can build &amp; recover a high-power rocket safely.</p>
+        <ul>
+          <li>Single-stage rocket using solid composite motor.</li>
+          <li>Recovery by single parachute or streamer is acceptable.</li>
+          <li>No electronics required, but an altimeter adds polish.</li>
+          <li>RSO (Range Safety Officer) inspects build quality &amp; signs off.</li>
+        </ul>
+
+        <div class="callout bg-gray-800/60 border-l-4 border-[color:var(--rocket-red)] p-4 rounded-lg text-gray-200 text-sm">
+          🧠 <strong>Tip:</strong> A well-finished paint job and tidy avionics bay make a strong first impression on the certification panel.
+        </div>
+      </section>
+
+      <!-- ############ LEVEL 2 ############ -->
+      <section id="level-2" data-aos="fade-up">
+        <h2>Level 2 — Bigger Motors, Dual Deployment</h2>
+        <p><em>Motor limits:</em> J or K class (impulse ≤ 5 120 N·s)</p>
+        <p><strong>Objective</strong> — demonstrate competency with electronics &amp; more energetic motors.</p>
+        <ul>
+          <li>Dual-deployment recovery is mandatory (drogue at apogee, main at low altitude).</li>
+          <li>Electronics bay using commercial altimeter(s) or custom-built hardware.</li>
+          <li>Better structural margins to survive higher dynamic pressure.</li>
+          <li>Documented flight predictions &amp; stability margin calculations.</li>
+        </ul>
+
+        <div class="callout bg-gray-800/60 border-l-4 border-[color:var(--rocket-red)] p-4 rounded-lg text-gray-200 text-sm">
+          🔧 <strong>Pro Move:</strong> add a backup altimeter on a separate battery &amp; charge to showcase risk-mitigation best practice.
+        </div>
+      </section>
+
+      <!-- ############ LEVEL 3 ############ -->
+      <section id="level-3" data-aos="fade-up">
+        <h2>Level 3 — Expert Status</h2>
+        <p><em>Motor limits:</em> L or M class (impulse ≤ 40 960 N·s)</p>
+        <p><strong>Objective</strong> — plan, document &amp; execute a complex project under mentorship.</p>
+        <ul>
+          <li>Written <strong>project proposal</strong> reviewed by UKRA L3 committee.</li>
+          <li>Structural analysis, flight stability, and recovery simulations.</li>
+          <li>Redundant electronics (at least two independent altimeters).</li>
+          <li>Full reports before &amp; after flight; photographic evidence of build process.</li>
+        </ul>
+        <p>On successful flight &amp; documentation, you join an elite <span class="accent-red font-semibold">&lt; 200-person</span> community of UK L3 flyers — opening doors to hybrid &amp; liquid propulsion projects, sponsorship deals, and outreach opportunities.</p>
+      </section>
+
+      <!-- ############ Getting Started ############ -->
+      <section id="getting-started" data-aos="zoom-in-up" class="mt-20 text-center">
+        <h2>Ready to Start Your Journey?</h2>
+        <p class="max-w-2xl mx-auto">
+          Whether you’re polishing a Level 1 kit or sketching a composite Level 3, the best time to begin is <em>now</em>. Join a launch club, order your first airframe parts, and set a target date for certification.
+        </p>
+        <a href="mailto:info@caledonianrocketry.uk?subject=Certification%20Mentorship" class="cta-btn">Find a Mentor</a>
+      </section>
+    </main>
+
+    <!-- ====================== FOOTER ====================== -->
+    <footer class="border-t border-gray-800 dark:border-gray-700 py-8 text-center text-sm text-gray-500 dark:text-gray-400">
+      © 2025 Craig Andrews · Caledonian Rocketry
+    </footer>
+
+    <!-- Init scripts -->
+    <script>
+      AOS.init({ duration: 800, once: true });
+    </script>
+
+    <!-- ★★ Star-field JS (new) -->
+    <script>
+      document.addEventListener('DOMContentLoaded',()=>{
+        const c=document.getElementById('starfield'),ctx=c.getContext('2d'),
+              DPR=window.devicePixelRatio||1,
+              L=[{n:60,s:.06,z:1.6},{n:120,s:.03,z:1.1},{n:180,s:.015,z:.8}];
+        let W,H,S=[],tx=0,ty=0,last=0;
+        const R=()=>{W=c.width=innerWidth*DPR;H=c.height=innerHeight*DPR;ctx.scale(DPR,DPR);S=[];
+          L.forEach(l=>{for(let i=0;i<l.n;i++)S.push({x:Math.random()*innerWidth,y:Math.random()*innerHeight,l,phi:Math.random()*360})})};
+        const draw=t=>{
+          ctx.clearRect(0,0,W,H);
+          if(t-last>600+Math.random()*600){last=t;const n=1+Math.floor(Math.random()*3);
+            for(let k=0;k<n;k++){const v=4+Math.random()*4;S.push({m:1,x:-200-Math.random()*150,y:Math.random()*innerHeight*.7,vx:v,vy:v*.15,len:120+Math.random()*80})}}
+          S.forEach((s,i)=>{
+            if(s.m){ctx.strokeStyle='rgba(255,255,255,.85)';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(s.x,s.y);ctx.lineTo(s.x-s.len,s.y-s.len*.2);ctx.stroke();
+              s.x+=s.vx;s.y+=s.vy;s.len*=.985;if(s.x>innerWidth+200)S.splice(i,1);return}
+            const px=s.x+tx*s.l.s*30,py=s.y+ty*s.l.s*30,
+                  a=.6+.4*Math.sin(t/1000+s.phi),
+                  h=200+55*Math.sin(t/1500+s.phi);
+            ctx.fillStyle=`hsla(${h},100%,88%,${a})`;
+            ctx.fillRect(px,py,s.l.z,s.l.z);
+            s.y+=s.l.s*16;if(s.y>innerHeight)s.y=0});
+          requestAnimationFrame(draw)};
+        addEventListener('pointermove',e=>{tx=e.clientX/innerWidth-.5;ty=e.clientY/innerHeight-.5},{passive:true});
+        addEventListener('deviceorientation',e=>{if(e.beta!=null){tx=e.gamma/20;ty=e.beta/40}},{passive:true});
+        R();requestAnimationFrame(draw);addEventListener('resize',R);
+      });
+    </script>
+  </body>
+</html>

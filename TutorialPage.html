@@ -107,7 +107,7 @@
         <li><strong>Axis-symmetric launch vehicles</strong> whose roll is either uncontrollable or has negligible effect on guidance.</li>
         <li>Concept studies where pitch–yaw motion and translation dominate performance metrics (e.g. altitude, range, attitude for TVC).</li>
       </ul>
-     <p> The roll moments where neglected as when introduced created a bug, likely to do with some other part of the code, feel free to experiment and let me know if you can solve it! </p>
+     <p> The roll moments were neglected as when introduced created a bug, likely to do with some other part of the code, feel free to experiment and let me know if you can solve it! </p>
 
 <!-- Why Simulink? -->
 <section id="why-simulink" class="py-16 px-6 md:px-12 max-w-5xl mx-auto">
@@ -204,7 +204,7 @@ end
 end</code></pre>
 
       <div class="callout">🧠 <strong>Note</strong> — This EOM uses a quaternion-based attitude representation to avoid gimbal lock and to cleanly rotate forces between frames. Euler angle rates are derived later in the Kinematics block.</div>
-      <div class="callout">💡 <strong>Tip</strong> — Keeping φ as a constant parameter retains gravity-projection trig without adding a dynamic state.</div>
+     
 
      <!-- 2 · Block-Diagram Topology -->
 <h2 id="blocks">2 · Block-Diagram Topology</h2>

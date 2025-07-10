@@ -115,6 +115,52 @@
     <!-- =============== BODY CONTENT =============== -->
     <main class="prose dark:prose-invert md:prose-lg max-w-4xl mx-auto px-4 py-16 prose-headings:font-semibold prose-headings:accent-brown">
 
+
+
+
+
+
+
+      <!-- Motor Selection -->
+<h2 class="text-4xl md:text-5xl font-extrabold tracking-tight text-center mb-8 accent-brown">Motor Selection: Cesaroni 2372K1440</h2>
+
+<p class="mb-6">
+  Due to accessibility of motors, the entire design of this rocket was based around the
+  <strong>Cesaroni 2372K1440</strong> solid rocket motor. Balancing the payload, motor and aerostructures together to achieve a desirable stability margin was the goal. 
+
+<div class="grid sm:grid-cols-2 gap-8 items-start mb-12" data-aos="fade-up">
+  <!-- Thrust Curve Chart -->
+  <figure class="flex flex-col">
+    <img src="dualDeployImages/k1440.png" alt="Cesaroni K1440 Thrust Curve"
+         class="w-full max-h-[450px] object-contain rounded-xl shadow-lg" />
+    <figcaption class="text-sm text-center text-gray-400 mt-3">Manufacturer thrust curve for K1440</figcaption>
+  </figure>
+
+  <!-- Motor Specs -->
+  <div class="bg-gray-900 text-white rounded-xl shadow-xl p-6">
+    <h3 class="text-xl font-semibold mb-4 accent-brown">Motor Specs</h3>
+    <ul class="text-base space-y-2">
+      <li><strong>Total Impulse:</strong> 2372 N·s</li>
+      <li><strong>Average Thrust:</strong> 1440 N</li>
+      <li><strong>Max Thrust:</strong> ~1600 N</li>
+      <li><strong>Burn Time:</strong> ~1.65 s</li>
+      <li><strong>Diameter:</strong> 54 mm</li>
+      <li><strong>Length:</strong> 477 mm</li>
+      <li><strong>Propellant Mass:</strong> 1224 g</li>
+      <li><strong>Case Type:</strong> Cesaroni Pro54 6GXL</li>
+    </ul>
+  </div>
+</div>
+
+<!-- Downloadable .eng or PDF -->
+<div class="text-center mt-6">
+  <a href="LINK-TO-K1440-FILE-HERE.pdf" 
+     target="_blank"
+     class="cta-btn bg-[color:var(--rocket-red)] hover:bg-red-600 transition">
+    Download K1440 Thrust Data (.PDF)
+  </a>
+</div>
+
      <!-- OpenRocket Simulation Preview -->
 <h2>OpenRocket Simulation</h2>
 
@@ -156,7 +202,7 @@
   <p class="text-gray-300 mb-6 max-w-2xl mx-auto">
     You can explore and simulate our final dual-deployment rocket using the actual <code>.ork</code> file we used during development. Perfect for modifying, extending, or studying the setup.
   </p>
-  <a href="INSERT-YOUR-FILE-LINK-HERE.ork"
+  <a href="Files/RocketTheBruce.ork"
      download
      class="cta-btn bg-[color:var(--rocket-red)] hover:bg-red-500 transition">
     Download .ork File

@@ -3,7 +3,6 @@
   lang="en"
   x-data="guRocketryApp()"
   :class="{ dark: darkMode }"
-  open: false,  ← Add this line
 >
 <head>
   <!-- Google tag (gtag.js) -->
@@ -670,6 +669,7 @@
     function guRocketryApp() {
       return {
         darkMode: true,
+        open: false,
       };
     }
 

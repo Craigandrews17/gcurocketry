@@ -52,10 +52,18 @@
        TOKENS + UTILS
   ──────────────────────────── -->
   <style>
-    :root {
-      --rocket-red: #ff3131;
-      --earth-brown: #8b5e3c;
-    }
+:root {
+  --rocket-red: #ff3131;
+  --earth-brown: #8b5e3c;
+  --gcu-blue: #005EB8;
+  --gcu-blue-light: #66B2FF;
+  --text-white: #ffffff;
+  --bg-dark: #0A192F;
+  --bg-mid: #112240;
+}
+
+
+    
 
     body {
       font-family: "Inter", sans-serif;
@@ -68,6 +76,11 @@
     .accent-brown {
       color: var(--earth-brown);
     }
+
+    .accent-blue { 
+      color: var(--gcu-blue); 
+    }
+
 
     .btn {
       display: inline-block;
@@ -84,20 +97,21 @@
       transform: scale(1.05);
     }
 
-    .btn-red {
-      background: var(--rocket-red);
-      color: white;
-    }
-    .btn-red:hover {
-      background: #dc2626;
-    }
+.btn-blue {
+  background: var(--gcu-blue-light);
+  color: white;
+}
+.btn-blue:hover {
+  background: var(--gcu-blue);
+}
+
 
     .btn-dark {
       background: #111827;
-      color: var(--rocket-red);
+      color: var(--gcu-blue-light);
     }
     .btn-dark:hover {
-      background: #1f2937;
+      background: #66B2FF;
     }
 
     .section-h2 {
@@ -281,6 +295,8 @@
       addEventListener("resize", resize);
     });
   </script>
+  <style>[x-cloak] { display: none !important; }</style>
+
 </head>
 
 <body
@@ -293,15 +309,14 @@
        NAVBAR
   ──────────────────────────── -->
   <header
-    class="fixed top-0 left-0 w-full z-50 bg-white/80 dark:bg-gray-900/90 backdrop-blur border-b border-gray-200 dark:border-gray-800"
+    class="fixed top-0 left-0 w-full z-50 bg-[color:var(--gcu-blue)]/90 dark:bg-[color:var(--gcu-blue)]/90 text-white shadow"
   >
     <div
       class="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between"
     >
-      <a
-        href="#"
-        class="text-2xl font-extrabold text-red-600 tracking-wide"
-      >
+      <a href="#" class="text-2xl font-extrabold text-[color:var(--gcu-blue)] tracking-wide">
+
+      
         Caledonian Rocketry 
       </a>
 
@@ -330,25 +345,41 @@
      HERO
 ──────────────────────────── -->
 <section class="relative h-screen flex flex-col items-center justify-center text-center overflow-hidden">
-  <!-- Background Image -->
-  <img
-    src="hero_launch.jpg"
-    alt="Rocket launch background"
-    class="absolute inset-0 w-full h-full object-cover brightness-50"
-  />
+  <!-- Starfield Canvas Background Already Handled by <canvas> -->
 
   <!-- Foreground Content -->
   <div class="relative z-10 px-6 max-w-4xl mx-auto" data-aos="zoom-in">
-    <!-- Title and Subtitle -->
-    <h1 class="text-white text-5xl md:text-6xl font-extrabold mb-4">
-      Bolstering Glasgow as Scotland’s Rocketry Hub
-    </h1>
-    <p class="text-white text-lg md:text-xl mb-8">
-      Glasgow’s next student-run rocket lab — designing, building, and
-      launching the next generation of aerospace talent.
-    </p>
 
+<!-- 🌟 Two Side-by-Side Images (Logo + Partner Badge) -->
+<div class="flex items-center justify-center gap-8 flex-wrap mb-10" data-aos="fade-down">
+  <!-- GCU Rocketry Logo -->
+  <img 
+    src="IndexImages/gcurocketryLOGO.jpg" 
+    alt="GCU Rocketry Logo" 
+    class="h-32 md:h-48 rounded-xl opacity-90 drop-shadow-lg"
+  />
+
+  <!-- Second Image (e.g. Mach 25 logo, patch, another emblem) -->
+  <img 
+    src="IndexImages/mach2025.jpg" 
+    alt="Partner Logo or Patch" 
+    class="h-32 md:h-48 rounded-xl opacity-90 drop-shadow-lg"
+  />
+</div>
+
+
+    <!-- Title and Subtitle -->
+<h1 class="text-white text-5xl md:text-6xl font-extrabold mb-4">
+  Join the UK’s Booming Space Economy
+</h1>
+<p class="text-white text-lg md:text-xl mb-8">
+  Student-led rocketry with real-world impact — building pathways from university to the aerospace industry through innovation, outreach, and collaboration.
+</p>
+
+
+  </div>
 </section>
+
 
 
 <!-- ╔══════════════════════════════════════════════════════════╗
@@ -364,11 +395,11 @@
   <div class="absolute inset-0 bg-gradient-to-b from-black/80 to-black"></div>
 
   <div class="relative z-10 max-w-6xl mx-auto px-6 text-center">
-    <h2 class="section-h2 accent-brown">Our Mission</h2>
+    <h2 class="section-h2 accent-blue">Our Mission</h2>
     <p
       class="text-xl md:text-2xl text-gray-300 max-w-4xl mx-auto mb-12 leading-relaxed"
     >
-      “Our mission is to <span class="accent-red font-semibold"
+      “Our mission is to <span class="accent-blue font-semibold"
         >inspire, educate, and empower</span
       >
       the next generation of engineers by advancing hands-on
@@ -383,7 +414,7 @@
         class="max-w-3xl mx-auto mb-12"
         data-aos="fade-right"
       >
-        <h3 class="text-2xl font-semibold accent-red mb-4 text-center">
+        <h3 class="text-2xl font-semibold accent-blue mb-4 text-center">
           Objectives
         </h3>
         <ul class="list-disc list-inside text-left text-gray-300 space-y-2">
@@ -402,8 +433,8 @@
         <div
           class="flex-shrink-0 w-64 bg-black/70 rounded-2xl p-6 shadow-lg hover:shadow-red-600/60 transition"
         >
-          <div class="text-5xl accent-red mb-4">🚀</div>
-          <h3 class="font-semibold accent-brown mb-2">Propulsion</h3>
+          <div class="text-5xl accent-blue mb-4">🚀</div>
+          <h3 class="font-semibold accent-blue mb-2">Propulsion</h3>
           <p class="text-sm text-gray-400"></p>
         </div>
 
@@ -411,8 +442,8 @@
           class="flex-shrink-0 w-64 bg-black/70 rounded-2xl p-6 shadow-lg hover:shadow-red-600/60 transition"
           data-aos-delay="100"
         >
-          <div class="text-5xl accent-red mb-4">🛰️</div>
-          <h3 class="font-semibold accent-brown mb-2">Avionics</h3>
+          <div class="text-5xl accent-blue mb-4">🛰️</div>
+          <h3 class="font-semibold accent-blue mb-2">Avionics</h3>
           <p class="text-sm text-gray-400"></p>
         </div>
 
@@ -420,8 +451,8 @@
           class="flex-shrink-0 w-64 bg-black/70 rounded-2xl p-6 shadow-lg hover:shadow-red-600/60 transition"
           data-aos-delay="200"
         >
-          <div class="text-5xl accent-red mb-4">🛡️</div>
-          <h3 class="font-semibold accent-brown mb-2">Safety</h3>
+          <div class="text-5xl accent-blue mb-4">🛡️</div>
+          <h3 class="font-semibold accent-blue mb-2">Safety</h3>
           <p class="text-sm text-gray-400"></p>
         </div>
 
@@ -429,8 +460,8 @@
           class="flex-shrink-0 w-64 bg-black/70 rounded-2xl p-6 shadow-lg hover:shadow-red-600/60 transition"
           data-aos-delay="300"
         >
-          <div class="text-5xl accent-red mb-4">🛠️</div>
-          <h3 class="font-semibold accent-brown mb-2">Iteration</h3>
+          <div class="text-5xl accent-blue mb-4">🛠️</div>
+          <h3 class="font-semibold accent-blue mb-2">Iteration</h3>
           <p class="text-sm text-gray-400"></p>
         </div>
       </div>
@@ -447,8 +478,8 @@
 
   <div class="relative z-10 max-w-5xl mx-auto px-6 text-center">
     <!-- Title -->
-    <h2 class="section-h2 accent-brown">Rocket the Bruce</h2>
-    <p class="text-lg max-w-3xl mx-auto text-gray-300 mb-12">
+    <h2 class="section-h2 accent-blue">Rocket the Bruce</h2>
+    <p class="text-lg max-w-3xl mx-auto text-white/90 mb-12">
       Our flagship competition rocket — dual-deploy recovery, onboard telemetry, and built for Mach 25 altitude challenges.
     </p>
 
@@ -480,9 +511,9 @@
   <div class="absolute inset-0 bg-gradient-to-b from-black/80 to-gray-900"></div>
 
   <div class="relative z-10 max-w-6xl mx-auto px-6 text-center">
-    <h2 class="section-h2 accent-brown">Tutorials</h2>
+    <h2 class="section-h2 accent-blue">Tutorials</h2>
 
-    <p class="text-lg max-w-3xl mx-auto mb-12 text-gray-300">
+    <p class="text-lg max-w-3xl mx-auto text-white/90 mb-12">
       Free, hands-on modules you can finish in a weekend.
     </p>
 
@@ -492,7 +523,7 @@
 
 <!-- Dual Deployment 101 card -->
 <a href="DeploymentTutorial.html" class="bg-black/70 rounded-2xl p-6 shadow-lg hover:shadow-red-600/60 transition flex flex-col">
-  <h3 class="text-xl font-semibold accent-brown mb-2">
+  <h3 class="text-xl font-semibold accent-blue mb-2">
     Dual Deployment&nbsp;101
   </h3>
   <p class="text-sm text-gray-400 flex-grow">
@@ -505,7 +536,7 @@
 
       <!-- 5-DOF Rocket Simulation card -->
       <div class="bg-black/70 rounded-2xl p-6 shadow-lg hover:shadow-red-600/60 transition flex flex-col">
-        <h3 class="text-xl font-semibold accent-brown mb-2">
+        <h3 class="text-xl font-semibold accent-blue mb-2">
           Build a 5-DOF Rocket&nbsp;Simulation
         </h3>
         <p class="text-sm text-gray-400 flex-grow">
@@ -554,7 +585,7 @@
     ></div>
 
     <div class="relative z-10 max-w-6xl mx-auto px-6 text-center">
-      <h2 class="section-h2 accent-brown">
+      <h2 class="section-h2 accent-blue">
         Like to partner with us?
       </h2>
       <p

@@ -50,65 +50,56 @@
     <canvas id="starfield"></canvas>
 
     <!-- ╔════════ NAVBAR ═════════╗ -->
-    <header class="sticky top-0 z-50 backdrop-blur-lg/60 border-b border-gray-800 dark:border-gray-700"
-            x-data="{open:false}">
-      <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
-        <a href="/index.html" class="text-xl font-extrabold tracking-tight accent-brown">
-          Caledonian Rocketry
-        </a>
+    <header class="fixed top-0 left-0 w-full z-50 bg-[color:var(--gcu-blue)] text-white shadow" x-data="{ open: false }">
+    <div class="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
+      <!-- Logo -->
+      <a href="index.html" class="text-2xl font-extrabold tracking-tight text-white">
+        Caledonian Rocketry
+      </a>
+      <!-- Desktop Nav -->
+      <nav class="hidden md:flex space-x-6 text-sm font-semibold">
+        <a href="index.html" class="text-white hover:text-red-500 transition">Home</a>
+        <a href="MeetTeam.html" class="hover:text-[color:var(--gcu-blue-light)] transition">Team</a>
+        <a href="Events.html" class="hover:text-[color:var(--gcu-blue-light)] transition">Events</a>
+        <a href="certification.html" class="hover:text-[color:var(--gcu-blue-light)] transition">Certification</a>
+        <a href="preliminaries.html" class="hover:text-[color:var(--gcu-blue-light)] transition">Preliminaries</a>
+      </nav>
+      <!-- Mobile Burger -->
+      <button @click="open = !open" class="md:hidden text-white focus:outline-none">
+        <template x-if="!open">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" stroke="currentColor">
+            <path stroke-linecap="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+        </template>
+        <template x-if="open">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" stroke="currentColor">
+            <path stroke-linecap="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </template>
+      </button>
+    </div>
 
-        <!-- desktop links -->
-   <nav class="hidden md:flex space-x-6 text-sm font-semibold">
-  <!-- Anchors (same-page sections) -->
-  <a href="index.html#mission" class="hover:text-red-500 transition">Home</a>
-
-  <!-- External Pages -->
-  <a href="MeetTeam.html" class="hover:text-red-500 transition">Team</a>
-  <a href="Events.html" class="hover:text-red-500 transition">Events</a>
-  <a href="certification.html" class="hover:text-red-500 transition">Certification</a>
-  <a href="preliminaries.html"    class="hover:text-[color:var(--rocket-red)]">Preliminaries</a>
-</nav>
-
-<!-- mobile burger -->
-<button @click="open = !open" class="md:hidden text-gray-100">
-  <template x-if="!open">
-    <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" stroke="currentColor">
-      <path stroke-linecap="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-    </svg>
-  </template>
-  <template x-if="open">
-    <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" stroke="currentColor">
-      <path stroke-linecap="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-    </svg>
-  </template>
-</button>
-
-
-      <!-- mobile drawer -->
-<!-- mobile drawer -->
-<div
-  x-show="open"
-  x-cloak
-  x-transition:enter="transition ease-out duration-300"
-  x-transition:enter-start="opacity-0 -translate-y-4"
-  x-transition:enter-end="opacity-100 translate-y-0"
-  x-transition:leave="transition ease-in duration-200"
-  x-transition:leave-start="opacity-100 translate-y-0"
-  x-transition:leave-end="opacity-0 -translate-y-4"
-  class="md:hidden bg-gray-900 border-t border-gray-800"
->
-  <ul class="flex flex-col items-center py-6 gap-6 text-lg font-semibold text-white dark:text-gray-200">
-    <li><a href="index.html"             @click="open=false" class="hover:text-[color:var(--rocket-red)]">Home</a></li>
-    <li><a href="Events.html"            @click="open=false" class="hover:text-[color:var(--rocket-red)]">Events</a></li>
-    <li><a href="preliminaries.html"     @click="open=false" class="hover:text-[color:var(--rocket-red)]">Preliminaries</a></li>
-    <li><a href="DeploymentTutorial.html"@click="open=false" class="text-[color:var(--rocket-red)]">Tutorials</a></li>
-    <li><a href="certification.html"     @click="open=false" class="hover:text-[color:var(--rocket-red)]">Certifications</a></li>
-  </ul>
-</div>
-
-    </header>
-    <!-- ╚═════════════════════════╝ -->
-
+    <!-- Mobile Drawer -->
+    <div
+      x-show="open"
+      x-cloak
+      x-transition:enter="transition ease-out duration-300"
+      x-transition:enter-start="opacity-0 -translate-y-4"
+      x-transition:enter-end="opacity-100 translate-y-0"
+      x-transition:leave="transition ease-in duration-200"
+      x-transition:leave-start="opacity-100 translate-y-0"
+      x-transition:leave-end="opacity-0 -translate-y-4"
+      class="md:hidden bg-[color:var(--gcu-blue)] text-white">
+      <ul class="flex flex-col items-center py-6 gap-6 text-lg font-semibold">
+        <li><a href="index.html"         @click="open = false" class="text-white hover:text-[color:var(--gcu-blue-light)]">Home</a></li>
+        <li><a href="MeetTeam.html"    @click="open = false" class="text-white hover:text-[color:var(--gcu-blue-light)]">Team</a></li>
+        <li><a href="Events.html"      @click="open = false" class="text-white hover:text-[color:var(--gcu-blue-light)]">Events</a></li>
+        <li><a href="certification.html" @click="open = false" class="text-white hover:text-[color:var(--gcu-blue-light)]">Certification</a></li>
+        <li><a href="preliminaries.html" @click="open = false" class="text-white hover:text-[color:var(--gcu-blue-light)]">Preliminaries</a></li>
+      </ul>
+    </div>
+  </header>
+ 
     <!-- ================== ORIGINAL PAGE CONTENT (unchanged) ================== -->
     <section class="pt-28 pb-20 bg-gradient-to-b from-black to-gray-900 text-center relative overflow-hidden">
       <img src="../assets/team/team_hero.jpg" alt="Rocketry team group photo"
@@ -121,107 +112,109 @@
       </div>
     </section>
 
-    <main class="max-w-4xl mx-auto px-4 py-16 space-y-16">
-      <!-- Craig -->
-      <div class="grid md:grid-cols-4 gap-6 items-start" data-aos="fade-up">
-        <img src="../assets/team/craig.jpg" alt="Craig Andrews"
-             class="rounded-xl w-full aspect-square object-cover md:col-span-1" />
-        <div class="md:col-span-3">
-          <h2 class="text-2xl font-bold accent-red">Craig Andrews</h2>
-          <p class="mt-2 text-gray-400">
-            Co-Founder of the GCU Rocketry Society and soon-to-be Graduate Systems Engineer at BAE&nbsp;Systems.
-            he credits GCUR with giving him the experience and skills required to secure his graduate
-            role in aerospace.
-          </p>
-          <p class="mt-2 italic text-sm text-gray-500">LinkedIn: https://www.linkedin.com/in/craig-andrews-115090266/</p>
-        </div>
-      </div>
+   <main class="max-w-4xl mx-auto px-6 py-16 text-white text-base leading-relaxed space-y-16">
 
-      <!-- Lewis -->
-      <div class="grid md:grid-cols-4 gap-6 items-start" data-aos="fade-up">
-        <img src="../assets/team/lewis.jpg" alt="Lewis Smith"
-             class="rounded-xl w-full aspect-square object-cover md:col-span-1" />
-        <div class="md:col-span-3">
-          <h2 class="text-2xl font-bold accent-red">Lewis Smith</h2>
-          <p class="mt-2 text-gray-400">
-            Co-Founder of the GCU Rocketry Society, who secured a competitive year-long internship
-            at Orbex Space in Forres. Lewis gained hands-on experience with test stands and
-            propellant flow systems after refining his skills through launch prep with the society.
-          </p>
-          <p class="mt-2 italic text-sm text-gray-500">LinkedIn: https://www.linkedin.com/in/lewis-smith-5a71672b5/</p>
-        </div>
-      </div>
+  <!-- Craig -->
+  <div class="grid md:grid-cols-4 gap-6 items-start" data-aos="fade-up">
+    <img src="../assets/team/craig.jpg" alt="Craig Andrews"
+         class="rounded-xl w-full aspect-square object-cover md:col-span-1" />
+    <div class="md:col-span-3">
+      <h2 class="text-2xl font-bold text-[color:var(--rocket-red)]">Craig Andrews</h2>
+      <p class="mt-2 text-gray-200">
+        Co-Founder of the GCU Rocketry Society and soon-to-be Graduate Systems Engineer at BAE&nbsp;Systems.
+        He credits GCUR with giving him the experience and skills required to secure his graduate
+        role in aerospace.
+      </p>
+      <p class="mt-2 italic text-sm text-gray-400">LinkedIn: https://www.linkedin.com/in/craig-andrews-115090266/</p>
+    </div>
+  </div>
 
-      <!-- Euan -->
-      <div class="grid md:grid-cols-4 gap-6 items-start" data-aos="fade-up">
-        <img src="../assets/team/euan.jpg" alt="Euan Kirkland"
-             class="rounded-xl w-full aspect-square object-cover md:col-span-1" />
-        <div class="md:col-span-3">
-          <h2 class="text-2xl font-bold accent-red">Euan Kirkland</h2>
-          <p class="mt-2 text-gray-400">
-            Co-Founder of the GCU Rocketry Society now pursuing a Master’s degree at the University of Glasgow.
-            His CanSat payload designs and flight-hardware skills grew through society challenges and group launches.
-          </p>
-          <p class="mt-2 italic text-sm text-gray-500">LinkedIn: https://www.linkedin.com/in/euan-kirkland-ba50372b7/</p>
-        </div>
-      </div>
+  <!-- Lewis -->
+  <div class="grid md:grid-cols-4 gap-6 items-start" data-aos="fade-up">
+    <img src="../assets/team/lewis.jpg" alt="Lewis Smith"
+         class="rounded-xl w-full aspect-square object-cover md:col-span-1" />
+    <div class="md:col-span-3">
+      <h2 class="text-2xl font-bold text-[color:var(--rocket-red)]">Lewis Smith</h2>
+      <p class="mt-2 text-gray-200">
+        Co-Founder of the GCU Rocketry Society, who secured a competitive year-long internship
+        at Orbex Space in Forres. Lewis gained hands-on experience with test stands and
+        propellant flow systems after refining his skills through launch prep with the society.
+      </p>
+      <p class="mt-2 italic text-sm text-gray-400">LinkedIn: https://www.linkedin.com/in/lewis-smith-5a71672b5/</p>
+    </div>
+  </div>
 
-      <!-- Andrew -->
-      <div class="grid md:grid-cols-4 gap-6 items-start" data-aos="fade-up">
-        <img src="../assets/team/andrew.jpg" alt="Andrew Stewart"
-             class="rounded-xl w-full aspect-square object-cover md:col-span-1" />
-        <div class="md:col-span-3">
-          <h2 class="text-2xl font-bold accent-red">Andrew Stewart</h2>
-          <p class="mt-2 text-gray-400">
-            Telemetry and test-stand contributor who secured an internship at Thales.
-            Andrew learned systems integration and lab testing through society projects and competition prep.
-          </p>
-          <p class="mt-2 italic text-sm text-gray-500">LinkedIn: https://www.linkedin.com/in/andrew--stewart/</p>
-        </div>
-      </div>
+  <!-- Euan -->
+  <div class="grid md:grid-cols-4 gap-6 items-start" data-aos="fade-up">
+    <img src="../assets/team/euan.jpg" alt="Euan Kirkland"
+         class="rounded-xl w-full aspect-square object-cover md:col-span-1" />
+    <div class="md:col-span-3">
+      <h2 class="text-2xl font-bold text-[color:var(--rocket-red)]">Euan Kirkland</h2>
+      <p class="mt-2 text-gray-200">
+        Co-Founder of the GCU Rocketry Society now pursuing a Master’s degree at the University of Glasgow.
+        His CanSat payload designs and flight-hardware skills grew through society challenges and group launches.
+      </p>
+      <p class="mt-2 italic text-sm text-gray-400">LinkedIn: https://www.linkedin.com/in/euan-kirkland-ba50372b7/</p>
+    </div>
+  </div>
 
-      <!-- Gabe -->
-      <div class="grid md:grid-cols-4 gap-6 items-start" data-aos="fade-up">
-        <img src="../assets/team/gabe.jpg" alt="Gabe Eide"
-             class="rounded-xl w-full aspect-square object-cover md:col-span-1" />
-        <div class="md:col-span-3">
-          <h2 class="text-2xl font-bold accent-red">Gabe Eide</h2>
-          <p class="mt-2 text-gray-400">
-            Launch logistics and 3-D CAD contributor. Gabe brings structure and visuals to team projects
-            and is a consistent presence during outreach, field testing, and launch readiness reviews.
-          </p>
-          <p class="mt-2 italic text-sm text-gray-500">LinkedIn: https://www.linkedin.com/in/gabe-eide/</p>
-        </div>
-      </div>
+  <!-- Andrew -->
+  <div class="grid md:grid-cols-4 gap-6 items-start" data-aos="fade-up">
+    <img src="../assets/team/andrew.jpg" alt="Andrew Stewart"
+         class="rounded-xl w-full aspect-square object-cover md:col-span-1" />
+    <div class="md:col-span-3">
+      <h2 class="text-2xl font-bold text-[color:var(--rocket-red)]">Andrew Stewart</h2>
+      <p class="mt-2 text-gray-200">
+        Telemetry and test-stand contributor who secured an internship at Thales.
+        Andrew learned systems integration and lab testing through society projects and competition prep.
+      </p>
+      <p class="mt-2 italic text-sm text-gray-400">LinkedIn: https://www.linkedin.com/in/andrew--stewart/</p>
+    </div>
+  </div>
 
-      <!-- Archie -->
-      <div class="grid md:grid-cols-4 gap-6 items-start" data-aos="fade-up">
-        <img src="../assets/team/archie.jpg" alt="Archie Simmons Clark"
-             class="rounded-xl w-full aspect-square object-cover md:col-span-1" />
-        <div class="md:col-span-3">
-          <h2 class="text-2xl font-bold accent-red">Archie Simmons Clark</h2>
-          <p class="mt-2 text-gray-400">
-            Currently in his third year, Archie focuses on structural design and composite testing.
-            He’s part of the next wave of GCU Rocketry leaders bringing fresh ideas to flight hardware.
-          </p>
-          <p class="mt-2 italic text-sm text-gray-500">LinkedIn: [Add link here]</p>
-        </div>
-      </div>
+  <!-- Gabe -->
+  <div class="grid md:grid-cols-4 gap-6 items-start" data-aos="fade-up">
+    <img src="../assets/team/gabe.jpg" alt="Gabe Eide"
+         class="rounded-xl w-full aspect-square object-cover md:col-span-1" />
+    <div class="md:col-span-3">
+      <h2 class="text-2xl font-bold text-[color:var(--rocket-red)]">Gabe Eide</h2>
+      <p class="mt-2 text-gray-200">
+        Launch logistics and 3-D CAD contributor. Gabe brings structure and visuals to team projects
+        and is a consistent presence during outreach, field testing, and launch readiness reviews.
+      </p>
+      <p class="mt-2 italic text-sm text-gray-400">LinkedIn: https://www.linkedin.com/in/gabe-eide/</p>
+    </div>
+  </div>
 
-      <!-- Join CTA -->
-      <section data-aos="zoom-in-up" class="text-center pt-20">
-        <h2 class="text-3xl font-bold accent-brown">Want to Join the Team?</h2>
-        <p class="mt-2 max-w-xl mx-auto text-gray-400">
-          If you’re passionate about rocketry, control systems, CAD, or launch logistics,
-          we’d love to meet you. Send us a message and get involved.
-        </p>
-        <a href="mailto:info@caledonianrocketry.uk?subject=Join%20GCU%20Rocketry%20Team"
-           class="inline-block mt-6 px-6 py-3 rounded-lg bg-[color:var(--rocket-red)] text-white font-semibold
-                  shadow-lg hover:opacity-90 transition">
-          Get Involved →
-        </a>
-      </section>
-    </main>
+  <!-- Archie -->
+  <div class="grid md:grid-cols-4 gap-6 items-start" data-aos="fade-up">
+    <img src="../assets/team/archie.jpg" alt="Archie Simmons Clark"
+         class="rounded-xl w-full aspect-square object-cover md:col-span-1" />
+    <div class="md:col-span-3">
+      <h2 class="text-2xl font-bold text-[color:var(--rocket-red)]">Archie Simmons Clark</h2>
+      <p class="mt-2 text-gray-200">
+        Currently in his third year, Archie focuses on structural design and composite testing.
+        He’s part of the next wave of GCU Rocketry leaders bringing fresh ideas to flight hardware.
+      </p>
+      <p class="mt-2 italic text-sm text-gray-400">LinkedIn: [Add link here]</p>
+    </div>
+  </div>
+
+  <!-- Join CTA -->
+  <section data-aos="zoom-in-up" class="text-center pt-20">
+    <h2 class="text-3xl font-bold text-[color:var(--earth-brown)]">Want to Join the Team?</h2>
+    <p class="mt-2 max-w-xl mx-auto text-gray-200">
+      If you’re passionate about rocketry, control systems, CAD, or launch logistics,
+      we’d love to meet you. Send us a message and get involved.
+    </p>
+    <a href="mailto:info@caledonianrocketry.uk?subject=Join%20GCU%20Rocketry%20Team"
+       class="inline-block mt-6 px-6 py-3 rounded-lg bg-[color:var(--rocket-red)] text-white font-semibold
+              shadow-lg hover:opacity-90 transition">
+      Get Involved →
+    </a>
+  </section>
+</main>
+
 
     <footer class="border-t border-gray-800 dark:border-gray-700 py-8 text-center text-sm
                    text-gray-500 dark:text-gray-400">

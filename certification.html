@@ -63,60 +63,55 @@
     <canvas id="starfield"></canvas>
 
     <!-- ================================= NAVBAR  ================================= -->
-    <header class="sticky top-0 z-50 backdrop-blur-lg/60 border-b border-gray-800 dark:border-gray-700" x-data="{open:false}">
-      <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
-        <a href="index.html" class="text-xl font-extrabold tracking-tight accent-brown">Caledonian Rocketry</a>
+ <header class="fixed top-0 left-0 w-full z-50 bg-[color:var(--gcu-blue)] text-white shadow" x-data="{ open: false }">
+    <div class="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
+      <!-- Logo -->
+      <a href="index.html" class="text-2xl font-extrabold tracking-tight text-white">
+        Caledonian Rocketry
+      </a>
+      <!-- Desktop Nav -->
+      <nav class="hidden md:flex space-x-6 text-sm font-semibold">
+        <a href="index.html" class="text-white hover:text-red-500 transition">Home</a>
+        <a href="MeetTeam.html" class="hover:text-[color:var(--gcu-blue-light)] transition">Team</a>
+        <a href="Events.html" class="hover:text-[color:var(--gcu-blue-light)] transition">Events</a>
+        <a href="certification.html" class="hover:text-[color:var(--gcu-blue-light)] transition">Certification</a>
+        <a href="preliminaries.html" class="hover:text-[color:var(--gcu-blue-light)] transition">Preliminaries</a>
+      </nav>
+      <!-- Mobile Burger -->
+      <button @click="open = !open" class="md:hidden text-white focus:outline-none">
+        <template x-if="!open">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" stroke="currentColor">
+            <path stroke-linecap="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+        </template>
+        <template x-if="open">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" stroke="currentColor">
+            <path stroke-linecap="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </template>
+      </button>
+    </div>
 
-   <nav class="hidden md:flex space-x-6 text-sm font-semibold">
-  <!-- Anchors (same-page sections) -->
-  <a href="index.html#mission" class="hover:text-red-500 transition">Home</a>
-
-
-  <!-- External Pages -->
-  <a href="MeetTeam.html" class="hover:text-red-500 transition">Team</a>
-  <a href="Events.html" class="hover:text-red-500 transition">Events</a>
-  <a href="certification.html" class="hover:text-red-500 transition">Certification</a>
-  <a href="preliminaries.html"    class="hover:text-[color:var(--rocket-red)]">Preliminaries</a>
-</nav>
-
-<!-- mobile burger -->
-<button @click="open = !open" class="md:hidden text-gray-100">
-  <template x-if="!open">
-    <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" stroke="currentColor">
-      <path stroke-linecap="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-    </svg>
-  </template>
-  <template x-if="open">
-    <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" stroke="currentColor">
-      <path stroke-linecap="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-    </svg>
-  </template>
-</button>
-
-
-      <!-- mobile drawer -->
-<!-- mobile drawer -->
-<div
-  x-show="open"
-  x-cloak
-  x-transition:enter="transition ease-out duration-300"
-  x-transition:enter-start="opacity-0 -translate-y-4"
-  x-transition:enter-end="opacity-100 translate-y-0"
-  x-transition:leave="transition ease-in duration-200"
-  x-transition:leave-start="opacity-100 translate-y-0"
-  x-transition:leave-end="opacity-0 -translate-y-4"
-  class="md:hidden bg-gray-900 border-t border-gray-800"
->
-  <ul class="flex flex-col items-center py-6 gap-6 text-lg font-semibold text-white dark:text-gray-200">
-    <li><a href="index.html"             @click="open=false" class="hover:text-[color:var(--rocket-red)]">Home</a></li>
-    <li><a href="Events.html"            @click="open=false" class="hover:text-[color:var(--rocket-red)]">Events</a></li>
-    <li><a href="preliminaries.html"     @click="open=false" class="hover:text-[color:var(--rocket-red)]">Preliminaries</a></li>
-    <li><a href="DeploymentTutorial.html"@click="open=false" class="text-[color:var(--rocket-red)]">Tutorials</a></li>
-    <li><a href="certification.html"     @click="open=false" class="hover:text-[color:var(--rocket-red)]">Certifications</a></li>
-  </ul>
-</div>
-
-    </header>
+    <!-- Mobile Drawer -->
+    <div
+      x-show="open"
+      x-cloak
+      x-transition:enter="transition ease-out duration-300"
+      x-transition:enter-start="opacity-0 -translate-y-4"
+      x-transition:enter-end="opacity-100 translate-y-0"
+      x-transition:leave="transition ease-in duration-200"
+      x-transition:leave-start="opacity-100 translate-y-0"
+      x-transition:leave-end="opacity-0 -translate-y-4"
+      class="md:hidden bg-[color:var(--gcu-blue)] text-white">
+      <ul class="flex flex-col items-center py-6 gap-6 text-lg font-semibold">
+        <li><a href="index.html"         @click="open = false" class="text-white hover:text-[color:var(--gcu-blue-light)]">Home</a></li>
+        <li><a href="MeetTeam.html"    @click="open = false" class="text-white hover:text-[color:var(--gcu-blue-light)]">Team</a></li>
+        <li><a href="Events.html"      @click="open = false" class="text-white hover:text-[color:var(--gcu-blue-light)]">Events</a></li>
+        <li><a href="certification.html" @click="open = false" class="text-white hover:text-[color:var(--gcu-blue-light)]">Certification</a></li>
+        <li><a href="preliminaries.html" @click="open = false" class="text-white hover:text-[color:var(--gcu-blue-light)]">Preliminaries</a></li>
+      </ul>
+    </div>
+  </header>
 
     <!-- ====================== HERO ====================== -->
     <section class="pt-28 pb-20 bg-gradient-to-b from-black to-gray-900 text-center relative overflow-hidden">
@@ -132,80 +127,84 @@
     </section>
 
     <!-- ====================== MAIN (Craig’s original prose) ====================== -->
-    <main id="levels"
-          class="prose dark:prose-invert md:prose-lg max-w-4xl mx-auto px-4 py-16 prose-headings:font-semibold prose-headings:accent-brown">
+   <main id="levels"
+      class="max-w-4xl mx-auto px-6 py-16 text-white text-base leading-relaxed">
 
-      <h2>Why Certify?</h2>
-      <p>High-power rocketry in the UK is governed by the <strong>UK Rocketry Association (UKRA)</strong> in cooperation with the <em>Civil Aviation Authority</em> and local clubs. Certification gives you:</p>
-      <ul>
-        <li><strong>Access to larger rocket motors</strong> (H-classes and above).</li>
-        <li><strong>Insurance coverage</strong> through UKRA for public launches.</li>
-        <li><strong>Credibility with mentors, suppliers &amp; sponsors</strong>.</li>
-        <li>Motivation to design, build and <em>finish</em> your own rocket.</li>
-      </ul>
+  <h2 class="text-3xl font-bold text-[color:var(--earth-brown)] mb-4">Why Certify?</h2>
+  <p>
+    High-power rocketry in the UK is governed by the <strong>UK Rocketry Association (UKRA)</strong> in cooperation with the <em>Civil Aviation Authority</em> and local clubs. Certification gives you:
+  </p>
+  <ul class="list-disc list-inside my-4">
+    <li><strong>Access to larger rocket motors</strong> (H-classes and above).</li>
+    <li><strong>Insurance coverage</strong> through UKRA for public launches.</li>
+    <li><strong>Credibility with mentors, suppliers &amp; sponsors</strong>.</li>
+    <li>Motivation to design, build and <em>finish</em> your own rocket.</li>
+  </ul>
 
-      <div class="my-10 flex justify-center" data-aos="zoom-in-up">
-        <!-- TODO: infographic showing motor classes A–O -->
-      </div>
+  <div class="my-10 flex justify-center" data-aos="zoom-in-up">
+    <!-- TODO: infographic showing motor classes A–O -->
+  </div>
 
-      <!-- ############ LEVEL 1 ############ -->
-      <section id="level-1" data-aos="fade-up">
-        <h2>Level 1 — Your First Taste of HPR</h2>
-        <p><em>Motor limits:</em> H or I class (impulse ≤ 640 N·s)<br>
-           <em>Altitude envelope:</em> typically &lt; 3 000 ft AGL at most UK sites</p>
-        <p><strong>Objective</strong> — prove you can build &amp; recover a high-power rocket safely.</p>
-        <ul>
-          <li>Single-stage rocket using solid composite motor.</li>
-          <li>Recovery by single parachute or streamer is acceptable.</li>
-          <li>No electronics required, but an altimeter adds polish.</li>
-          <li>RSO (Range Safety Officer) inspects build quality &amp; signs off.</li>
-        </ul>
+  <!-- ############ LEVEL 1 ############ -->
+  <section id="level-1" data-aos="fade-up" class="mb-12">
+    <h2 class="text-2xl md:text-3xl font-bold text-[color:var(--earth-brown)] mb-2">Level 1 — Your First Taste of HPR</h2>
+    <p><em>Motor limits:</em> H or I class (impulse ≤ 640 N·s)<br>
+       <em>Altitude envelope:</em> typically &lt; 3 000 ft AGL at most UK sites</p>
+    <p><strong>Objective</strong> — prove you can build &amp; recover a high-power rocket safely.</p>
+    <ul class="list-disc list-inside my-4">
+      <li>Single-stage rocket using solid composite motor.</li>
+      <li>Recovery by single parachute or streamer is acceptable.</li>
+      <li>No electronics required, but an altimeter adds polish.</li>
+      <li>RSO (Range Safety Officer) inspects build quality &amp; signs off.</li>
+    </ul>
 
-        <div class="callout bg-gray-800/60 border-l-4 border-[color:var(--rocket-red)] p-4 rounded-lg text-gray-200 text-sm">
-          🧠 <strong>Tip:</strong> A well-finished paint job and tidy avionics bay make a strong first impression on the certification panel.
-        </div>
-      </section>
+    <div class="callout bg-gray-800/60 border-l-4 border-[color:var(--rocket-red)] p-4 rounded-lg text-gray-200 text-sm">
+      🧠 <strong>Tip:</strong> A well-finished paint job and tidy avionics bay make a strong first impression on the certification panel.
+    </div>
+  </section>
 
-      <!-- ############ LEVEL 2 ############ -->
-      <section id="level-2" data-aos="fade-up">
-        <h2>Level 2 — Bigger Motors, Dual Deployment</h2>
-        <p><em>Motor limits:</em> J or K class (impulse ≤ 5 120 N·s)</p>
-        <p><strong>Objective</strong> — demonstrate competency with electronics &amp; more energetic motors.</p>
-        <ul>
-          <li>Dual-deployment recovery is mandatory (drogue at apogee, main at low altitude).</li>
-          <li>Electronics bay using commercial altimeter(s) or custom-built hardware.</li>
-          <li>Better structural margins to survive higher dynamic pressure.</li>
-          <li>Documented flight predictions &amp; stability margin calculations.</li>
-        </ul>
+  <!-- ############ LEVEL 2 ############ -->
+  <section id="level-2" data-aos="fade-up" class="mb-12">
+    <h2 class="text-2xl md:text-3xl font-bold text-[color:var(--earth-brown)] mb-2">Level 2 — Bigger Motors, Dual Deployment</h2>
+    <p><em>Motor limits:</em> J or K class (impulse ≤ 5 120 N·s)</p>
+    <p><strong>Objective</strong> — demonstrate competency with electronics &amp; more energetic motors.</p>
+    <ul class="list-disc list-inside my-4">
+      <li>Dual-deployment recovery is mandatory (drogue at apogee, main at low altitude).</li>
+      <li>Electronics bay using commercial altimeter(s) or custom-built hardware.</li>
+      <li>Better structural margins to survive higher dynamic pressure.</li>
+      <li>Documented flight predictions &amp; stability margin calculations.</li>
+    </ul>
 
-        <div class="callout bg-gray-800/60 border-l-4 border-[color:var(--rocket-red)] p-4 rounded-lg text-gray-200 text-sm">
-          🔧 <strong>Pro Move:</strong> add a backup altimeter on a separate battery &amp; charge to showcase risk-mitigation best practice.
-        </div>
-      </section>
+    <div class="callout bg-gray-800/60 border-l-4 border-[color:var(--rocket-red)] p-4 rounded-lg text-gray-200 text-sm">
+      🔧 <strong>Pro Move:</strong> add a backup altimeter on a separate battery &amp; charge to showcase risk-mitigation best practice.
+    </div>
+  </section>
 
-      <!-- ############ LEVEL 3 ############ -->
-      <section id="level-3" data-aos="fade-up">
-        <h2>Level 3 — Expert Status</h2>
-        <p><em>Motor limits:</em> L or M class (impulse ≤ 40 960 N·s)</p>
-        <p><strong>Objective</strong> — plan, document &amp; execute a complex project under mentorship.</p>
-        <ul>
-          <li>Written <strong>project proposal</strong> reviewed by UKRA L3 committee.</li>
-          <li>Structural analysis, flight stability, and recovery simulations.</li>
-          <li>Redundant electronics (at least two independent altimeters).</li>
-          <li>Full reports before &amp; after flight; photographic evidence of build process.</li>
-        </ul>
-        <p>On successful flight &amp; documentation, you join an elite <span class="accent-red font-semibold">&lt; 200-person</span> community of UK L3 flyers — opening doors to hybrid &amp; liquid propulsion projects, sponsorship deals, and outreach opportunities.</p>
-      </section>
+  <!-- ############ LEVEL 3 ############ -->
+  <section id="level-3" data-aos="fade-up" class="mb-12">
+    <h2 class="text-2xl md:text-3xl font-bold text-[color:var(--earth-brown)] mb-2">Level 3 — Expert Status</h2>
+    <p><em>Motor limits:</em> L or M class (impulse ≤ 40 960 N·s)</p>
+    <p><strong>Objective</strong> — plan, document &amp; execute a complex project under mentorship.</p>
+    <ul class="list-disc list-inside my-4">
+      <li>Written <strong>project proposal</strong> reviewed by UKRA L3 committee.</li>
+      <li>Structural analysis, flight stability, and recovery simulations.</li>
+      <li>Redundant electronics (at least two independent altimeters).</li>
+      <li>Full reports before &amp; after flight; photographic evidence of build process.</li>
+    </ul>
+    <p>
+      On successful flight &amp; documentation, you join an elite <span class="accent-red font-semibold">&lt; 200-person</span> community of UK L3 flyers — opening doors to hybrid &amp; liquid propulsion projects, sponsorship deals, and outreach opportunities.
+    </p>
+  </section>
 
-      <!-- ############ Getting Started ############ -->
-      <section id="getting-started" data-aos="zoom-in-up" class="mt-20 text-center">
-        <h2>Ready to Start Your Journey?</h2>
-        <p class="max-w-2xl mx-auto">
-          Whether you’re polishing a Level 1 kit or sketching a composite Level 3, the best time to begin is <em>now</em>. Join a launch club, order your first airframe parts, and set a target date for certification.
-        </p>
-        <a href="mailto:info@caledonianrocketry.uk?subject=Certification%20Mentorship" class="cta-btn">Find a Mentor</a>
-      </section>
-    </main>
+  <!-- ############ Getting Started ############ -->
+  <section id="getting-started" data-aos="zoom-in-up" class="mt-20 text-center">
+    <h2 class="text-3xl font-bold text-[color:var(--earth-brown)] mb-4">Ready to Start Your Journey?</h2>
+    <p class="max-w-2xl mx-auto mb-6">
+      Whether you’re polishing a Level 1 kit or sketching a composite Level 3, the best time to begin is <em>now</em>. Join a launch club, order your first airframe parts, and set a target date for certification.
+    </p>
+    <a href="mailto:info@caledonianrocketry.uk?subject=Certification%20Mentorship" class="cta-btn">Find a Mentor</a>
+  </section>
+</main>
 
     <!-- ====================== FOOTER ====================== -->
     <footer class="border-t border-gray-800 dark:border-gray-700 py-8 text-center text-sm text-gray-500 dark:text-gray-400">

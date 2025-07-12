@@ -22,46 +22,48 @@
     <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
 
     <style>
-  :root {
-    --rocket-red: #ff3131;
-    --earth-brown: #8b5e3c;
-  }
+    :root {
+      --rocket-red: #ff3131;
+      --earth-brown: #8b5e3c;
+      --gcu-blue: #005EB8;
+      --gcu-blue-light: #66B2FF;
+      --text-white: #ffffff;
+      --bg-dark: #0A192F;
+      --bg-mid: #112240;
+    }
+    body { font-family: 'Inter', sans-serif; }
 
-  body {
-    font-family: "Inter", sans-serif;
-  }
+    .accent-red   { color: var(--rocket-red); }
+    .accent-brown { color: var(--earth-brown); }
+    .accent-blue  { color: var(--gcu-blue); }
 
-  .accent-red {
-    color: var(--rocket-red);
-  }
+    .cta-btn {
+      display: inline-block;
+      margin-top: 2rem;
+      padding: .75rem 1.5rem;
+      border-radius: .5rem;
+      background-color: var(--rocket-red);
+      color: var(--text-white);
+      font-weight: 600;
+      box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1),
+                  0 4px 6px -2px rgba(0,0,0,0.05);
+      transition: opacity 0.2s;
+    }
+    .cta-btn:hover { opacity: .9; }
 
-  .accent-brown {
-    color: var(--earth-brown);
-  }
+    /* ★ star-field canvas */
+    #starfield {
+      position: fixed; inset: 0;
+      background: #000; z-index: -1;
+      touch-action: none;
+    }
 
-  ::selection {
-    background: #dc2626;
-    color: white;
-  }
+    [x-cloak] { display: none !important; }
+  </style>
 
-  [x-cloak] {
-    display: none;
-  }
-
-  ::-webkit-scrollbar {
-    width: 8px;
-  }
-  ::-webkit-scrollbar-track {
-    background: transparent;
-  }
-  ::-webkit-scrollbar-thumb {
-    background: #888;
-    border-radius: 9999px;
-  }
-  ::-webkit-scrollbar-thumb:hover {
-    background: #555;
-  }
-</style>
+    <!-- ★★ star-field styles (new) -->
+    <style>#starfield{position:fixed;inset:0;z-index:-1;background:#000;touch-action:none}</style>
+    <style>[x-cloak] { display: none !important; }</style>
 
     <!-- AOS init -->
     <script>
@@ -83,7 +85,8 @@
     <canvas id="starfield"></canvas>
 
     <!-- Navigation Bar -->
-    <header class="w-full py-6 px-4 flex justify-center">
+   <header class="fixed top-0 left-0 w-full z-50 bg-[color:var(--gcu-blue)] text-white shadow" x-data="{ open: false }">
+    <div class="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
    <nav class="hidden md:flex space-x-6 text-sm font-semibold">
   <!-- Anchors (same-page sections) -->
   <a href="index.html#mission" class="hover:text-red-500 transition">Home</a>
@@ -138,7 +141,7 @@
     <section class="pt-28 pb-20 bg-gradient-to-b from-black to-gray-900 text-center relative overflow-hidden">
       <img src="../assets/preliminaries/preliminaries_hero.jpg" alt="" class="absolute inset-0 w-full h-full object-cover opacity-20 pointer-events-none" />
       <div class="relative z-10 max-w-4xl mx-auto px-4" data-aos="zoom-in">
-        <h1 class="text-4xl md:text-5xl font-extrabold mb-3 accent-brown">Preliminaries</h1>
+        <h1 class="text-4xl md:text-5xl font-extrabold mb-3 accent-blue">Preliminaries</h1>
         <p class="text-gray-300 max-w-2xl mx-auto">
           Foundational dynamics, modelling assumptions &amp; control-theory concepts behind
           the 5-DOF rocket simulation and (coming soon) SCvx controller.
@@ -161,7 +164,7 @@
 
 
     <!-- Main Content -->
-    <main class="prose dark:prose-invert prose-headings:text-[color:var(--rocket-red)] prose-p:text-gray-200 prose-li:text-gray-200 prose-a:text-[color:var(--gcu-blue-light)] max-w-4xl mx-auto px-6 py-16">
+     <main class="max-w-4xl mx-auto px-6 py-16 text-white text-base leading-relaxed space-y-16">
 
       <!-- 4.1 ------------------------------------------------------------------------>
       <h2 id="mathematical-formulation">4 · Mathematical Formulation</h2>

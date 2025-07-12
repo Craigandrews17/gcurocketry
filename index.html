@@ -309,50 +309,45 @@
   <!-- canvas first -->
   <canvas id="starfield"></canvas>
 
-  <!-- ────────────────────────────
-       NAVBAR
-  ──────────────────────────── -->
+
   <!-- ────────────────────────────
      NAVBAR
 ──────────────────────────── -->
-<header class="fixed top-0 left-0 w-full z-50 bg-[color:var(--gcu-blue)]/90 dark:bg-[color:var(--gcu-blue)]/90 text-white shadow">
+<header <header class="fixed top-0 left-0 w-full z-50 text-white shadow" style="background-color: rgba(0, 94, 184, 0.9)">
+
   <div class="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
 
     <!-- Logo -->
-    <a href="#" class="text-2xl font-extrabold text-[color:var(--gcu-blue)] tracking-wide">
-      Caledonian Rocketry 
+    <a href="index.html" class="text-2xl font-extrabold tracking-tight text-white hover:text-[color:var(--gcu-blue-light)] transition">
+      Caledonian Rocketry
     </a>
 
-    <!-- Right side: Desktop Nav + Mobile Burger -->
-    <div class="flex items-center space-x-6">
-      
-      <!-- Desktop Nav -->
-      <nav class="hidden md:flex space-x-6 text-sm font-semibold">
-        <a href="#mission" class="hover:text-red-500 transition">Mission</a>
-        <a href="#projects" class="hover:text-red-500 transition">Projects</a>
-        <a href="#tutorials" class="hover:text-red-500 transition">Tutorials</a>
-        <a href="#sponsors" class="hover:text-red-500 transition">Sponsors</a>
-        <a href="#contact"  class="hover:text-red-500 transition">Contact</a>
-        <a href="MeetTeam.html" class="hover:text-red-500 transition">Team</a>
-        <a href="Events.html" class="hover:text-red-500 transition">Events</a>
-        <a href="certification.html" class="hover:text-red-500 transition">Certification</a>
-        <a href="preliminaries.html" class="hover:text-[color:var(--rocket-red)]">Preliminaries</a>
-      </nav>
+    <!-- Desktop Nav -->
+    <nav class="hidden md:flex space-x-6 text-sm font-semibold">
+      <a href="#mission" class="hover:text-[color:var(--gcu-blue-light)] transition">Mission</a>
+      <a href="#projects" class="hover:text-[color:var(--gcu-blue-light)] transition">Projects</a>
+      <a href="#tutorials" class="hover:text-[color:var(--gcu-blue-light)] transition">Tutorials</a>
+      <a href="#sponsors" class="hover:text-[color:var(--gcu-blue-light)] transition">Sponsors</a>
+      <a href="#contact"  class="hover:text-[color:var(--gcu-blue-light)] transition">Contact</a>
+      <a href="MeetTeam.html" class="hover:text-[color:var(--gcu-blue-light)] transition">Team</a>
+      <a href="Events.html" class="hover:text-[color:var(--gcu-blue-light)] transition">Events</a>
+      <a href="certification.html" class="hover:text-[color:var(--gcu-blue-light)] transition">Certification</a>
+      <a href="preliminaries.html" class="hover:text-[color:var(--gcu-blue-light)] transition">Preliminaries</a>
+    </nav>
 
-      <!-- 🍔 Mobile Burger -->
-      <button @click="open = !open" class="md:hidden text-white focus:outline-none">
-        <template x-if="!open">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" stroke="currentColor">
-            <path stroke-linecap="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-          </svg>
-        </template>
-        <template x-if="open">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" stroke="currentColor">
-            <path stroke-linecap="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-          </svg>
-        </template>
-      </button>
-    </div>
+    <!-- 🍔 Mobile Burger -->
+    <button @click="open = !open" class="md:hidden text-white focus:outline-none">
+      <template x-if="!open">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" stroke="currentColor">
+          <path stroke-linecap="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+      </template>
+      <template x-if="open">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" stroke="currentColor">
+          <path stroke-linecap="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </template>
+    </button>
   </div>
 
   <!-- 📱 Mobile Drawer -->
@@ -365,21 +360,23 @@
     x-transition:leave="transition ease-in duration-200"
     x-transition:leave-start="opacity-100 translate-y-0"
     x-transition:leave-end="opacity-0 -translate-y-4"
-    class="md:hidden bg-[color:var(--gcu-blue)]/95 backdrop-blur-sm border-t border-white/10"
-  >
+    class="md:hidden backdrop-blur-sm border-t border-white/10" style="background-color: rgba(0, 94, 184, 0.95)">
+
+  
     <ul class="flex flex-col items-center py-6 gap-6 text-lg font-semibold text-white">
-      <li><a href="#mission"         @click="open = false" class="hover:text-red-500">Mission</a></li>
-      <li><a href="#projects"        @click="open = false" class="hover:text-red-500">Projects</a></li>
-      <li><a href="#tutorials"       @click="open = false" class="hover:text-red-500">Tutorials</a></li>
-      <li><a href="#sponsors"        @click="open = false" class="hover:text-red-500">Sponsors</a></li>
-      <li><a href="#contact"         @click="open = false" class="hover:text-red-500">Contact</a></li>
-      <li><a href="MeetTeam.html"    @click="open = false" class="hover:text-red-500">Team</a></li>
-      <li><a href="Events.html"      @click="open = false" class="hover:text-red-500">Events</a></li>
-      <li><a href="certification.html" @click="open = false" class="hover:text-red-500">Certification</a></li>
-      <li><a href="preliminaries.html" @click="open = false" class="hover:text-red-500">Preliminaries</a></li>
+      <li><a href="#mission"         @click="open = false" class="hover:text-[color:var(--gcu-blue-light)]">Mission</a></li>
+      <li><a href="#projects"        @click="open = false" class="hover:text-[color:var(--gcu-blue-light)]">Projects</a></li>
+      <li><a href="#tutorials"       @click="open = false" class="hover:text-[color:var(--gcu-blue-light)]">Tutorials</a></li>
+      <li><a href="#sponsors"        @click="open = false" class="hover:text-[color:var(--gcu-blue-light)]">Sponsors</a></li>
+      <li><a href="#contact"         @click="open = false" class="hover:text-[color:var(--gcu-blue-light)]">Contact</a></li>
+      <li><a href="MeetTeam.html"    @click="open = false" class="hover:text-[color:var(--gcu-blue-light)]">Team</a></li>
+      <li><a href="Events.html"      @click="open = false" class="hover:text-[color:var(--gcu-blue-light)]">Events</a></li>
+      <li><a href="certification.html" @click="open = false" class="hover:text-[color:var(--gcu-blue-light)]">Certification</a></li>
+      <li><a href="preliminaries.html" @click="open = false" class="hover:text-[color:var(--gcu-blue-light)]">Preliminaries</a></li>
     </ul>
   </div>
 </header>
+
 
 
 <!-- ────────────────────────────

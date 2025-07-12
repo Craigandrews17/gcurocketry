@@ -1,255 +1,300 @@
 <!DOCTYPE html>
-<html lang="en" x-data="guRocketryApp" :class="{ dark: darkMode }">
-  <head>
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-40JDE37SXF"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+<html lang="en" x-data="guRocketryApp()" :class="{ dark: darkMode }">
+<head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-40JDE37SXF"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-40JDE37SXF');
+  </script>
 
-  gtag('config', 'G-40JDE37SXF');
-</script>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>UK Rocketry Events & Competitions • Caledonian Rocketry</title>
+  <!-- ───────────────── META ───────────────── -->
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>UK Rocketry Events & Competitions • Caledonian Rocketry</title>
 
-    <!-- Fonts & Tailwind -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet" />
-    <script src="https://cdn.tailwindcss.com?plugins=typography,aspect-ratio"></script>
+  <!-- ───────────────── GOOGLE FONT + LIBS ───────────────── -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com?plugins=typography,aspect-ratio"></script>
+  <link rel="stylesheet" href="https://unpkg.com/aos@2.3.4/dist/aos.css" />
+  <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+  <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
 
-    <!-- AOS -->
-    <link rel="stylesheet" href="https://unpkg.com/aos@2.3.4/dist/aos.css" />
-    <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+  <!-- ───────────────── TOKENS + UTILS ───────────────── -->
+  <style>
+    :root {
+      --rocket-red: #ff3131;
+      --earth-brown: #8b5e3c;
+      --gcu-blue: #005EB8;
+      --gcu-blue-light: #66B2FF;
+      --text-white: #ffffff;
+      --bg-dark: #0A192F;
+      --bg-mid: #112240;
+    }
+    body { font-family: 'Inter', sans-serif; }
+    .accent-red   { color: var(--rocket-red); }
+    .accent-brown { color: var(--earth-brown); }
+    .accent-blue  { color: var(--gcu-blue); }
 
-    <!-- Alpine -->
-    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
-    <script>
-      document.addEventListener('alpine:init', () => {
-        Alpine.data('guRocketryApp', () => ({ darkMode: true }));
-      });
-    </script>
+    .cta-btn {
+      display: inline-block;
+      margin-top: 2rem;
+      padding: .75rem 1.5rem;
+      border-radius: .5rem;
+      background-color: var(--rocket-red);
+      color: #fff;
+      font-weight: 600;
+      box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1),
+                  0 4px 6px -2px rgba(0,0,0,0.05);
+      transition: opacity 0.2s;
+    }
+    .cta-btn:hover { opacity: .9; }
 
-    <!-- Tokens -->
-    <style>
-      :root { --rocket-red:#ff3131; --earth-brown:#8b5e3c; }
-      body  { font-family:'Inter',sans-serif; }
-      .accent-red   { color:var(--rocket-red); }
-      .accent-brown { color:var(--earth-brown); }
-      .cta-btn {
-        display: inline-block;
-        margin-top: 2rem;
-        padding-left: 1.5rem;
-        padding-right: 1.5rem;
-        padding-top: 0.75rem;
-        padding-bottom: 0.75rem;
-        border-radius: 0.5rem;
-        background-color: var(--rocket-red);
-        color: #fff;
-        font-weight: 600;
-        box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05);
-        transition: opacity 0.2s;
-      }
-      .cta-btn:hover {
-        opacity: 0.9;
-      }
-      /* ★ star-field canvas */
-      #starfield{position:fixed;inset:0;background:#000;z-index:-1;touch-action:none}
-    </style>
-    <style>[x-cloak] { display: none !important; }</style>
+    /* ★ star-field canvas */
+    #starfield {
+      position: fixed; inset: 0;
+      background: #000; z-index: -1;
+      touch-action: none;
+    }
 
-  </head>
+    [x-cloak] { display: none !important; }
+  </style>
 
-  <body class="bg-white dark:bg-gray-950 text-gray-900 dark:text-white antialiased">
+</head>
+<body class="bg-white dark:bg-gray-950 text-gray-900 dark:text-white antialiased scroll-smooth">
 
-    <!-- ★ star-field canvas -->
-    <canvas id="starfield"></canvas>
+  <!-- Starfield -->
+  <canvas id="starfield"></canvas>
 
-    <!-- Header / Nav -->
-    <header class="sticky top-0 z-50 backdrop-blur-lg/60 border-b border-gray-800 dark:border-gray-700"
-            x-data="{open:false}">
-      <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
-        <a href="/index.html" class="text-xl font-extrabold tracking-tight accent-brown">
-          Caledonian Rocketry
-        </a>
+  <!-- ───────────────── NAVBAR ───────────────── -->
+  <header class="fixed top-0 left-0 w-full z-50 bg-[color:var(--gcu-blue)]/90 dark:bg-[color:var(--gcu-blue)]/90 text-white shadow" x-data="{ open: false }">
+    <div class="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
+      <!-- Logo -->
+      <a href="index.html" class="text-2xl font-extrabold tracking-tight">
+        Caledonian Rocketry
+      </a>
+      <!-- Desktop Nav -->
+      <nav class="hidden md:flex space-x-6 text-sm font-semibold">
+        <a href="index.html" class="hover:text-red-500 transition">Home</a>
+        <a href="MeetTeam.html" class="hover:text-red-500 transition">Team</a>
+        <a href="Events.html" class="text-[color:var(--rocket-red)]">Events</a>
+        <a href="certification.html" class="hover:text-red-500 transition">Certification</a>
+        <a href="preliminaries.html" class="hover:text-red-500 transition">Preliminaries</a>
+      </nav>
+      <!-- Mobile Burger -->
+      <button @click="open = !open" class="md:hidden text-white">
+        <template x-if="!open">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" stroke="currentColor">
+            <path stroke-linecap="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+        </template>
+        <template x-if="open">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" stroke="currentColor">
+            <path stroke-linecap="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </template>
+      </button>
+    </div>
+    <!-- Mobile Drawer -->
+    <div x-show="open" x-cloak class="md:hidden bg-[color:var(--gcu-blue)]/95 backdrop-blur-sm border-t border-white/10"
+         x-transition:enter="transition ease-out duration-300"
+         x-transition:enter-start="opacity-0 -translate-y-4"
+         x-transition:enter-end="opacity-100 translate-y-0"
+         x-transition:leave="transition ease-in duration-200"
+         x-transition:leave-start="opacity-100 translate-y-0"
+         x-transition:leave-end="opacity-0 -translate-y-4">
+      <ul class="flex flex-col items-center py-6 gap-6 text-lg font-semibold text-white">
+        <li><a href="index.html"             @click="open = false" class="hover:text-red-500">Home</a></li>
+        <li><a href="MeetTeam.html"          @click="open = false" class="hover:text-red-500">Team</a></li>
+        <li><a href="Events.html"            @click="open = false" class="text-[color:var(--rocket-red)]">Events</a></li>
+        <li><a href="certification.html"     @click="open = false" class="hover:text-red-500">Certification</a></li>
+        <li><a href="preliminaries.html"     @click="open = false" class="hover:text-red-500">Preliminaries</a></li>
+      </ul>
+    </div>
+  </header>
 
-   <nav class="hidden md:flex space-x-6 text-sm font-semibold">
-  <!-- Anchors (same-page sections) -->
-  <a href="index.html" class="hover:text-red-500 transition">Home</a>
- 
-  <!-- External Pages -->
-  <a href="MeetTeam.html" class="hover:text-red-500 transition">Team</a>
-  <a href="Events.html" class="hover:text-red-500 transition">Events</a>
-  <a href="certification.html" class="hover:text-red-500 transition">Certification</a>
-  <a href="preliminaries.html"    class="hover:text-[color:var(--rocket-red)]">Preliminaries</a>
-</nav>
+  <!-- =================== HERO =================== -->
+  <section class="pt-28 pb-20 bg-gradient-to-b from-black to-gray-900 text-center relative overflow-hidden">
+    <img src="../assets/events/events_hero.jpg" alt="Rockets soaring over a UK launch site"
+         class="absolute inset-0 w-full h-full object-cover opacity-20 pointer-events-none" />
+    <div class="relative z-10 max-w-3xl mx-auto px-4" data-aos="zoom-in">
+      <h1 class="text-4xl md:text-5xl font-extrabold mb-3 accent-blue">
+        UK Rocketry Events &amp; Competitions
+      </h1>
+      <p class="text-gray-300">
+        Mark your calendar, form a team, and build toward liftoff.
+        These are the <em>must-attend</em> launches and challenges for students &amp; hobbyists in 2025.
+      </p>
+      <a href="#mach" class="cta-btn">Jump to Events ↓</a>
+    </div>
+  </section>
 
-<!-- mobile burger -->
-<button @click="open = !open" class="md:hidden text-gray-100">
-  <template x-if="!open">
-    <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" stroke="currentColor">
-      <path stroke-linecap="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-    </svg>
-  </template>
-  <template x-if="open">
-    <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" stroke="currentColor">
-      <path stroke-linecap="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-    </svg>
-  </template>
-</button>
+  <!-- Intro Callout -->
+  <section class="bg-gray-100 dark:bg-gray-800 py-8 px-4">
+    <div class="max-w-3xl mx-auto text-center" data-aos="fade-up">
+      <p class="text-lg">
+        Want to get involved?
+        <strong>Join the Glasgow Caledonian Rocketry Society</strong>
+        to take part in these events, find launch partners, and access mentorship &amp; funding opportunities.
+      </p>
+      <a href="mailto:info@caledonianrocketry.uk?subject=Join%20GCU%20Rocketry%20Society" class="cta-btn mt-6">
+        Join the Society
+      </a>
+    </div>
+  </section>
 
-
-      <!-- mobile drawer -->
-<!-- mobile drawer -->
-<div
-  x-show="open"
-  x-cloak
-  x-transition:enter="transition ease-out duration-300"
-  x-transition:enter-start="opacity-0 -translate-y-4"
-  x-transition:enter-end="opacity-100 translate-y-0"
-  x-transition:leave="transition ease-in duration-200"
-  x-transition:leave-start="opacity-100 translate-y-0"
-  x-transition:leave-end="opacity-0 -translate-y-4"
-  class="md:hidden bg-gray-900 border-t border-gray-800"
->
-  <ul class="flex flex-col items-center py-6 gap-6 text-lg font-semibold text-white dark:text-gray-200">
-    <li><a href="index.html"             @click="open=false" class="hover:text-[color:var(--rocket-red)]">Home</a></li>
-    <li><a href="Events.html"            @click="open=false" class="hover:text-[color:var(--rocket-red)]">Events</a></li>
-    <li><a href="preliminaries.html"     @click="open=false" class="hover:text-[color:var(--rocket-red)]">Preliminaries</a></li>
-    <li><a href="DeploymentTutorial.html"@click="open=false" class="text-[color:var(--rocket-red)]">Tutorials</a></li>
-    <li><a href="certification.html"     @click="open=false" class="hover:text-[color:var(--rocket-red)]">Certifications</a></li>
-  </ul>
-</div>
-
-    </header>
-
-    <!-- =================== CRAIG’S ORIGINAL EVENTS CONTENT (unchanged) =================== -->
-    <!-- Hero -->
-    <section class="pt-28 pb-20 bg-gradient-to-b from-black to-gray-900 text-center relative overflow-hidden">
-      <img src="../assets/events/events_hero.jpg" alt="Rockets soaring over a UK launch site"
-           class="absolute inset-0 w-full h-full object-cover opacity-20 pointer-events-none" />
-      <div class="relative z-10 max-w-3xl mx-auto px-4" data-aos="zoom-in">
-        <h1 class="text-4xl md:text-5xl font-extrabold mb-3 accent-brown">
-          UK Rocketry Events &amp; Competitions
-        </h1>
-        <p class="text-gray-300">
-          Mark your calendar, form a team, and build toward liftoff.
-          These are the <em>must-attend</em> launches and challenges for students &amp; hobbyists in 2025.
-        </p>
-        <a href="#mach" class="cta-btn">Jump to Events ↓</a>
-      </div>
+  <!-- Events List -->
+  <main class="prose dark:prose-invert md:prose-lg max-w-4xl mx-auto px-4 py-16
+               prose-headings:font-semibold prose-headings:accent-blue">
+    <section id="mach" data-aos="fade-up">
+      <h2>MACH-25 — Rocketry Competition &amp; Conference</h2>
+      <p><strong>Date:</strong> 1–5 July 2025 · <strong>Venue:</strong> Machrihanish Air Base, Scotland</p>
+      <p>
+        Student teams design, build, and fly rockets carrying payloads.
+        Industry mentors deliver workshops and there’s a technical conference day.
+        <a href="https://mach25.org" target="_blank" rel="noopener">Visit mach25.org →</a>
+      </p>
     </section>
 
-    <!-- Intro Callout -->
-    <section class="bg-gray-100 dark:bg-gray-800 py-8 px-4">
-      <div class="max-w-3xl mx-auto text-center" data-aos="fade-up">
-        <p class="text-lg">
-          Want to get involved?
-          <strong>Join the Glasgow Caledonian Rocketry Society</strong>
-          to take part in these events, find launch partners, and access mentorship &amp; funding opportunities.
-        </p>
-        <a href="mailto:info@caledonianrocketry.uk?subject=Join%20GCU%20Rocketry%20Society" class="cta-btn mt-6">
-          Join the Society
-        </a>
-      </div>
+    <section id="race2space" data-aos="fade-up">
+      <h2>Race&nbsp;2 Space — Student Propulsion Challenge</h2>
+      <p><strong>Date:</strong> Autumn 2025 (TBA) · <strong>Venue:</strong> Westcott Space Cluster</p>
+      <p>
+        Liquid &amp; hybrid engine design symposium with funding and mentoring.
+        <a href="https://race2space.org.uk" target="_blank" rel="noopener">Visit race2space.org.uk →</a>
+      </p>
     </section>
 
-    <!-- Events List -->
-    <main class="prose dark:prose-invert md:prose-lg max-w-4xl mx-auto px-4 py-16
-                 prose-headings:font-semibold prose-headings:accent-brown">
+    <section id="nrc" data-aos="fade-up">
+      <h2>UKSEDS National Rocketry Championship</h2>
+      <p><strong>Date:</strong> 11 June 2025 · <strong>Venue:</strong> Midlands (TBC)</p>
+      <p>
+        Design, fly, and recover a working rocket payload as a team.
+        <a href="https://ukseds.org" target="_blank" rel="noopener">Visit ukseds.org →</a>
+      </p>
+    </section>
 
-      <section id="mach" data-aos="fade-up">
-        <h2>MACH-25 — Rocketry Competition &amp; Conference</h2>
-        <p><strong>Date:</strong> 1–5 July 2025 · <strong>Venue:</strong> Machrihanish Air Base, Scotland</p>
-        <p>
-          Student teams design, build, and fly rockets carrying payloads.
-          Industry mentors deliver workshops and there’s a technical conference day.
-          <a href="https://mach25.org" target="_blank" rel="noopener">Visit mach25.org →</a>
-        </p>
-      </section>
+    <section id="irw" data-aos="fade-up">
+      <h2>International Rocket Week — Fairlie Moor</h2>
+      <p><strong>Date:</strong> 20–24 August 2025 · <strong>Venue:</strong> North Ayrshire</p>
+      <p>
+        Open-range launch event for low- to high-power rocketry with workshops and socials.
+        <a href="https://irw.rocketry.org.uk" target="_blank" rel="noopener">Visit IRW →</a>
+      </p>
+    </section>
 
-      <section id="race2space" data-aos="fade-up">
-        <h2>Race&nbsp;2 Space — Student Propulsion Challenge</h2>
-        <p><strong>Date:</strong> Autumn 2025 (TBA) · <strong>Venue:</strong> Westcott Space Cluster</p>
-        <p>
-          Liquid &amp; hybrid engine design symposium with funding and mentoring.
-          <a href="https://race2space.org.uk" target="_blank" rel="noopener">Visit race2space.org.uk →</a>
-        </p>
-      </section>
+    <section id="cansat" data-aos="fade-up">
+      <h2>ESA / UK National CanSat Competition</h2>
+      <p><strong>Registration:</strong> Open now · <strong>UK Finals:</strong> Spring 2025</p>
+      <p>
+        Perfect for high-school teams — build a real satellite in a can.
+        <a href="https://cansat.esa.int" target="_blank" rel="noopener">Visit cansat.esa.int →</a>
+      </p>
+    </section>
 
-      <section id="nrc" data-aos="fade-up">
-        <h2>UKSEDS National Rocketry Championship</h2>
-        <p><strong>Date:</strong> 11 June 2025 · <strong>Venue:</strong> Midlands (TBC)</p>
-        <p>
-          Design, fly, and recover a working rocket payload as a team.
-          <a href="https://ukseds.org" target="_blank" rel="noopener">Visit ukseds.org →</a>
-        </p>
-      </section>
+    <section id="cta" class="mt-20 text-center" data-aos="zoom-in-up">
+      <h2>Want help preparing?</h2>
+      <p class="max-w-2xl mx-auto">
+        We’ve been there. Let Caledonian Rocketry help you pick a project,
+        pass certification, and fly it on time.
+      </p>
+      <a href="mailto:info@caledonianrocketry.uk?subject=Rocketry%20Event%20Help" class="cta-btn">
+        Get Help
+      </a>
+    </section>
+  </main>
 
-      <section id="irw" data-aos="fade-up">
-        <h2>International Rocket Week — Fairlie Moor</h2>
-        <p><strong>Date:</strong> 20–24 August 2025 · <strong>Venue:</strong> North Ayrshire</p>
-        <p>
-          Open-range launch event for low- to high-power rocketry with workshops and socials.
-          <a href="https://irw.rocketry.org.uk" target="_blank" rel="noopener">Visit IRW →</a>
-        </p>
-      </section>
+  <!-- Footer -->
+  <footer class="border-t border-gray-800 dark:border-gray-700 py-8 text-center text-sm text-gray-500 dark:text-gray-400">
+    © 2025 Craig Andrews · Caledonian Rocketry
+  </footer>
 
-      <section id="cansat" data-aos="fade-up">
-        <h2>ESA / UK National CanSat Competition</h2>
-        <p><strong>Registration:</strong> Open now · <strong>UK Finals:</strong> Spring 2025</p>
-        <p>
-          Perfect for high-school teams — build a real satellite in a can.
-          <a href="https://cansat.esa.int" target="_blank" rel="noopener">Visit cansat.esa.int →</a>
-        </p>
-      </section>
+  <!-- ───────────────── SCRIPTS ───────────────── -->
+  <script>
+    function guRocketryApp() {
+      return {
+        darkMode: true,
+        open: false,
+      };
+    }
 
-      <section id="cta" data-aos="zoom-in-up" class="mt-20 text-center">
-        <h2>Want help preparing?</h2>
-        <p class="max-w-2xl mx-auto">
-          We’ve been there. Let Caledonian Rocketry help you pick a project,
-          pass certification, and fly it on time.
-        </p>
-        <a href="mailto:info@caledonianrocketry.uk?subject=Rocketry%20Event%20Help" class="cta-btn">
-          Get Help
-        </a>
-      </section>
-    </main>
+    AOS.init({
+      duration: 800,
+      once: true,
+      easing: "ease-in-out",
+    });
 
-    <!-- Footer -->
-    <footer class="border-t border-gray-800 dark:border-gray-700 py-8 text-center text-sm
-                   text-gray-500 dark:text-gray-400">
-      © 2025 Craig Andrews · Caledonian Rocketry
-    </footer>
+    document.addEventListener("DOMContentLoaded", () => {
+      document.body.classList.add("transition-opacity", "duration-1000", "opacity-100");
+    });
 
-    <script> AOS.init({ duration:800, once:true }); </script>
+    // Starfield
+    document.addEventListener("DOMContentLoaded", () => {
+      const c = document.getElementById("starfield"),
+            ctx = c.getContext("2d"),
+            DPR = window.devicePixelRatio || 1,
+            LAYERS = [
+              { count: 60, size: 1.6, speed: 0.06 },
+              { count: 120, size: 1.1, speed: 0.03 },
+              { count: 180, size: 0.8, speed: 0.015 },
+            ];
+      let W, H, stars = [], tiltX = 0, tiltY = 0, lastShot = 0;
 
-    <!-- ★ Star-field JS -->
-    <script>
-      document.addEventListener('DOMContentLoaded',()=>{
-        const c=document.getElementById('starfield'),ctx=c.getContext('2d'),
-              DPR=window.devicePixelRatio||1,
-              L=[[70,.06,1.6],[120,.03,1.1],[160,.015,.8]];
-        let W,H,S=[],mx=0,my=0,last=0;
-        const R=()=>{W=c.width=innerWidth*DPR;H=c.height=innerHeight*DPR;ctx.scale(DPR,DPR);S=[];
-          L.forEach(([n,v,z])=>{for(let i=0;i<n;i++)S.push({x:Math.random()*innerWidth,
-            y:Math.random()*innerHeight,v,z})})};
-        const step=t=>{
-          ctx.clearRect(0,0,W,H);
-          if(t-last>600+Math.random()*600){last=t;const n=1+Math.floor(Math.random()*3);
-            for(let i=0;i<n;i++){const v=4+Math.random()*4;S.push({m:1,x:-180-Math.random()*100,
-              y:Math.random()*innerHeight*.7,v,len:120+Math.random()*80})}}
-          S.forEach((s,i)=>{
-            if(s.m){ctx.strokeStyle='rgba(255,255,255,.85)';ctx.lineWidth=2;
-              ctx.beginPath();ctx.moveTo(s.x,s.y);ctx.lineTo(s.x-s.len,s.y-s.len*.2);ctx.stroke();
-              s.x+=s.v;s.y+=s.v*.15;s.len*=.985;if(s.x>innerWidth+200)S.splice(i,1);return}
-            const X=s.x+mx*s.v*30,Y=s.y+my*s.v*30;
-            ctx.fillStyle='hsla(200,100%,88%,'+(.6+.4*Math.sin(t/1000+i))+')';
-            ctx.fillRect(X,Y,s.z,s.z);s.y+=s.v*16;if(s.y>innerHeight)s.y=0});
-          requestAnimationFrame(step)};
-        addEventListener('pointermove',e=>{mx=e.clientX/innerWidth-.5;my=e.clientY/innerHeight-.5},{passive:!0});
-        addEventListener('resize',R);R();requestAnimationFrame(step);
-      });
-    </script>
-  </body>
+      const resize = () => {
+        W = c.width = innerWidth * DPR;
+        H = c.height = innerHeight * DPR;
+        ctx.scale(DPR, DPR);
+        stars = [];
+        LAYERS.forEach(l => {
+          for (let i = 0; i < l.count; i++) {
+            stars.push({ x: Math.random() * innerWidth, y: Math.random() * innerHeight, layer: l, angle: Math.random() * 360 });
+          }
+        });
+      };
+
+      const draw = t => {
+        ctx.clearRect(0, 0, W, H);
+        if (t - lastShot > 600 + Math.random() * 600) {
+          lastShot = t;
+          const n = 1 + Math.floor(Math.random() * 3);
+          for (let i = 0; i < n; i++) {
+            const v = 4 + Math.random() * 4;
+            stars.push({ meteor: true, x: -200 - Math.random() * 150, y: Math.random() * innerHeight * 0.7, vx: v, vy: v * 0.15, len: 120 + Math.random() * 80 });
+          }
+        }
+        stars.forEach((s, i) => {
+          if (s.meteor) {
+            ctx.strokeStyle = "rgba(255,255,255,.85)";
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(s.x, s.y);
+            ctx.lineTo(s.x - s.len, s.y - s.len * 0.2);
+            ctx.stroke();
+            s.x += s.vx; s.y += s.vy; s.len *= .985;
+            if (s.x > innerWidth + 200) stars.splice(i,1);
+          } else {
+            const px = s.x + tiltX * s.layer.speed * 30,
+                  py = s.y + tiltY * s.layer.speed * 30,
+                  alpha = .6 + .4 * Math.sin(t/1000 + s.angle),
+                  hue = 200 + 55 * Math.sin(t/1500 + s.angle);
+            ctx.fillStyle = `hsla(${hue},100%,88%,${alpha})`;
+            ctx.fillRect(px, py, s.layer.size, s.layer.size);
+            s.y += s.layer.speed * 16; if (s.y > innerHeight) s.y = 0;
+          }
+        });
+        requestAnimationFrame(draw);
+      };
+
+      addEventListener("pointermove", e => {
+        tiltX = e.clientX/innerWidth - .5; tiltY = e.clientY/innerHeight - .5;
+      }, { passive: true });
+      addEventListener("resize", resize);
+
+      resize();
+      requestAnimationFrame(draw);
+    });
+  </script>
+</body>
 </html>

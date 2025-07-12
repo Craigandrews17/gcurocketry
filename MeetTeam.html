@@ -31,16 +31,45 @@
       });
     </script>
 
-    <!-- Design tokens -->
-    <style>
-      :root{ --rocket-red:#ff3131; --earth-brown:#8b5e3c; }
-      body{ font-family:'Inter',sans-serif; }
-      .accent-red   { color:var(--rocket-red); }
-      .accent-brown { color:var(--earth-brown); }
-      /* ★ star-field canvas */
-      #starfield{position:fixed;inset:0;background:#000;z-index:-1;touch-action:none}
-    </style>
-    <style>[x-cloak] { display: none !important; }</style>
+  <style>
+    :root {
+      --rocket-red: #ff3131;
+      --earth-brown: #8b5e3c;
+      --gcu-blue: #005EB8;
+      --gcu-blue-light: #66B2FF;
+      --text-white: #ffffff;
+      --bg-dark: #0A192F;
+      --bg-mid: #112240;
+    }
+    body { font-family: 'Inter', sans-serif; }
+
+    .accent-red   { color: var(--rocket-red); }
+    .accent-brown { color: var(--earth-brown); }
+    .accent-blue  { color: var(--gcu-blue); }
+
+    .cta-btn {
+      display: inline-block;
+      margin-top: 2rem;
+      padding: .75rem 1.5rem;
+      border-radius: .5rem;
+      background-color: var(--rocket-red);
+      color: var(--text-white);
+      font-weight: 600;
+      box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1),
+                  0 4px 6px -2px rgba(0,0,0,0.05);
+      transition: opacity 0.2s;
+    }
+    .cta-btn:hover { opacity: .9; }
+
+    /* ★ star-field canvas */
+    #starfield {
+      position: fixed; inset: 0;
+      background: #000; z-index: -1;
+      touch-action: none;
+    }
+
+    [x-cloak] { display: none !important; }
+  </style>
 
   </head>
 

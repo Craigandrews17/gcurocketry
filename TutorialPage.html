@@ -39,6 +39,7 @@
       body{font-family:'Inter',sans-serif}
       .accent-red{color:var(--rocket-red);}
       .accent-brown{color:var(--earth-brown);}
+      .accent-blue  { color: var(--gcu-blue); }
       .callout{background:rgba(31,41,55,.6);border-left:4px solid var(--rocket-red);
                padding:1rem;border-radius:.5rem;font-size:.875rem;color:#e5e7eb;margin:1.5rem 0;}
       pre code{display:block;background:rgba(17,24,39,.9);padding:1rem;border-radius:.375rem;
@@ -110,11 +111,10 @@
   class="md:hidden bg-gray-900 border-t border-gray-800"
 >
   <ul class="flex flex-col items-center py-6 gap-6 text-lg font-semibold text-white dark:text-gray-200">
-    <li><a href="index.html"             @click="open=false" class="hover:text-[color:var(--rocket-red)]">Home</a></li>
-    <li><a href="Events.html"            @click="open=false" class="hover:text-[color:var(--rocket-red)]">Events</a></li>
-    <li><a href="preliminaries.html"     @click="open=false" class="hover:text-[color:var(--rocket-red)]">Preliminaries</a></li>
-    <li><a href="DeploymentTutorial.html"@click="open=false" class="text-[color:var(--rocket-red)]">Tutorials</a></li>
-    <li><a href="certification.html"     @click="open=false" class="hover:text-[color:var(--rocket-red)]">Certifications</a></li>
+    <li><a href="index.html"             @click="open=false" class="text-white hover:text-[color:var(--gcu-blue-light)]">Home</a></li>
+     <li><a href="MeetTeam.html"    @click="open = false" class="text-white hover:text-[color:var(--gcu-blue-light)]">Team</a></li>
+    <li><a href="Events.html"            @click="open=false" class="text-white hover:text-[color:var(--gcu-blue-light)]">Events</a></li>
+    <li><a href="certification.html"     @click="open=false" class="text-white hover:text-[color:var(--gcu-blue-light)]">Certifications</a></li>
   </ul>
 </div>
 
@@ -129,7 +129,7 @@
     </section>
 
     <!-- ====================== MAIN ====================== -->
-    <main class="prose dark:prose-invert prose-headings:text-[color:var(--rocket-red)] prose-p:text-gray-200 prose-li:text-gray-200 prose-a:text-[color:var(--gcu-blue-light)] max-w-4xl mx-auto px-6 py-16">
+    <main  class="prose dark:prose-invert text-white prose-headings:text-white prose-strong:text-white prose-p:text-gray-200 prose-li:text-gray-200 prose-a:text-[color:var(--gcu-blue-light)] max-w-4xl mx-auto px-6 py-16">
 
       <!-- 0 · Why 5 DOF? -->
       <h2 id="why">0 · Why 5 DOF?</h2>

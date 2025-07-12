@@ -72,11 +72,7 @@
       });
     </script>
 
-    <!-- Starfield background style -->
-    <style>
-      #starfield { position: fixed; inset: 0; z-index: -1; background: #000; touch-action: none; }
-    </style>
-    <style>[x-cloak] { display: none !important; }</style>
+
 
   </head>
   <body class="bg-white dark:bg-gray-950 text-gray-900 dark:text-white antialiased scroll-smooth">
@@ -103,7 +99,7 @@
   <a href="MeetTeam.html" class="hover:text-[color:var(--gcu-blue-light)] transition">Team</a>
   <a href="Events.html" class="hover:text-[color:var(--gcu-blue-light)] transition">Events</a>
   <a href="certification.html" class="hover:text-[color:var(--gcu-blue-light)] transition">Certification</a>
-"
+
 </nav>
 <!-- mobile burger -->
 <button @click="open = !open" class="md:hidden text-gray-100">
@@ -145,14 +141,11 @@
 
     <!-- Hero Section -->
     <section class="pt-28 pb-20 bg-gradient-to-b from-black to-gray-900 text-center relative overflow-hidden">
-      <img src="../assets/preliminaries/preliminaries_hero.jpg" alt="" class="absolute inset-0 w-full h-full object-cover opacity-20 pointer-events-none" />
-      <div class="relative z-10 max-w-4xl mx-auto px-4" data-aos="zoom-in">
+  
         <h1 class="text-4xl md:text-5xl font-extrabold mb-3 accent-blue">Preliminaries</h1>
         <p class="text-gray-300 max-w-2xl mx-auto">
-          Foundational dynamics, modelling assumptions &amp; control-theory concepts behind
-          the 5-DOF rocket simulation and (coming soon) SCvx controller.
+          Foundational dynamics, modelling assumptions and mathematical formulation for the 5-DOF rocket simulation.
         </p>
-      </div>
     </section>
 
     <!-- Sidebar Table of Contents (Desktop) -->
@@ -218,12 +211,13 @@ The hypothetical rocket used throughout this thesis will be much smaller: on the
 
 <p>As the simulation progresses, for example, at each time step, aerodynamic forces need to be calculated in the body frame whilst wind is applied in the inertial frame. This demands that a relative velocity is computed and converted at every time step to calculate orientation changes.
 The relative velocity vector can be rotated to the inertial frame using the Equation below</p>
+
   <pre><code>
     v_i = q* ⊗ v_b ⊗ q
     v_b = q ⊗ v_i ⊗ q*
   </code></pre>
 
-  <section class="prose dark:prose-invert max-w-4xl mx-auto py-8 text-gray-800 dark:text-gray-200">
+  <section class="max-w-4xl mx-auto px-6 py-16 text-white text-base leading-relaxed space-y-16">
 
   <p>
     Similarly, Equation <code>vb</code> shows an inertial frame velocity vector rotated to the body frame by reversing the positions of the quaternion and its conjugate:
@@ -279,7 +273,7 @@ R<sub>b,i</sub> =
 
   <h2 id="non-linear-physics">Describing the Relevant Non-Linear Physics</h2>
   <h3>Coupled Differential Equations</h3>
-<section class="prose dark:prose-invert max-w-4xl mx-auto py-8 text-gray-800 dark:text-gray-200">
+<section class="max-w-4xl mx-auto px-6 py-16 text-white text-base leading-relaxed space-y-16">
   
 
 
@@ -339,7 +333,7 @@ q̇ = ½ · Ω(ω) · q
 
   <h3 id="aerodynamics">Aerodynamics: Squared Terms &amp; Trigonometric Non-Linearities</h3>
 
-<section class="prose dark:prose-invert max-w-4xl mx-auto py-8 text-gray-800 dark:text-gray-200">
+<section class="max-w-4xl mx-auto px-6 py-16 text-white text-base leading-relaxed space-y-16">
 
   <p>
     Aerodynamic forces, which contribute to the coupled relationship between rotation and translation, depend on aerodynamic coefficients such as the normal force coefficient <code>cₙ</code> and the pitching moment coefficient <code>cₘ</code>. They are typically calculated by summing pressure distributions across the components using Slender Body Theory for low Angles of Attack, <code>α</code>, where low perturbations in airflow are assumed and result in linear behaviour <cite>[Barrowman, 1967]</cite>.
@@ -447,7 +441,7 @@ c_m,damp = 0.55 · (l_ref⁴ / A_ref) · (r_t / d) · (ω² / v₀²)
 </section>
 
 
-<section class="prose dark:prose-invert max-w-4xl mx-auto py-8 text-gray-800 dark:text-gray-200">
+<section class="max-w-4xl mx-auto px-6 py-16 text-white text-base leading-relaxed space-y-16">
 
   <h3 id="tvc">Thrust Vector Control: Trigonometric Coupling of Translation &amp; Rotation</h3>
 
@@ -488,7 +482,7 @@ f<sub>TVC</sub> = f<sub>T</sub> ·
   </p>
 
 </section>
-<section class="prose dark:prose-invert max-w-4xl mx-auto py-12 text-gray-800 dark:text-gray-200" id="references">
+<section class="max-w-4xl mx-auto px-6 py-16 text-white text-base leading-relaxed space-y-16" id="references">
   <h2>References</h2>
 
   <ol class="list-decimal pl-4 space-y-2">

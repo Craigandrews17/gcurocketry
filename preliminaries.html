@@ -91,10 +91,10 @@
 
 
   <!-- External Pages -->
-  <a href="MeetTeam.html" class="hover:text-red-500 transition">Team</a>
-  <a href="Events.html" class="hover:text-red-500 transition">Events</a>
-  <a href="certification.html" class="hover:text-red-500 transition">Certification</a>
-  <a href="preliminaries.html"    class="hover:text-[color:var(--rocket-red)]">Preliminaries</a>
+  <a href="MeetTeam.html" class="hover:text-[color:var(--gcu-blue-light)] transition">Team</a>
+  <a href="Events.html" class="hover:text-[color:var(--gcu-blue-light)] transition">Events</a>
+  <a href="certification.html" class="hover:text-[color:var(--gcu-blue-light)] transition">Certification</a>
+"
 </nav>
 <!-- mobile burger -->
 <button @click="open = !open" class="md:hidden text-gray-100">
@@ -125,11 +125,10 @@
   class="md:hidden bg-gray-900 border-t border-gray-800"
 >
   <ul class="flex flex-col items-center py-6 gap-6 text-lg font-semibold text-white dark:text-gray-200">
-    <li><a href="index.html"             @click="open=false" class="hover:text-[color:var(--rocket-red)]">Home</a></li>
-    <li><a href="Events.html"            @click="open=false" class="hover:text-[color:var(--rocket-red)]">Events</a></li>
-    <li><a href="preliminaries.html"     @click="open=false" class="hover:text-[color:var(--rocket-red)]">Preliminaries</a></li>
-    <li><a href="DeploymentTutorial.html"@click="open=false" class="text-[color:var(--rocket-red)]">Tutorials</a></li>
-    <li><a href="certification.html"     @click="open=false" class="hover:text-[color:var(--rocket-red)]">Certifications</a></li>
+    <li><a href="index.html"             @click="open=false" class="hover:text-[color:var(--gcu-blue-light)]">Home</a></li>
+    <li><a href="MeetTeam.html"    @click="open = false" class="text-white hover:text-[color:var(--gcu-blue-light)]">Team</a></li>
+    <li><a href="Events.html"            @click="open=false" class="hover:text-[color:var(--gcu-blue-light)]">Events</a></li>
+    <li><a href="certification.html"     @click="open=false" class="hover:text-[color:var(--gcu-blue-light)]">Certifications</a></li>
   </ul>
 </div>
 

@@ -59,7 +59,6 @@
       <a href="index.html" class="hover:text-[color:var(--gcu-blue-light)] transition">Home</a>
       <a href="MeetTeam.html" class="hover:text-[color:var(--gcu-blue-light)] transition">Team</a>
       <a href="certification.html" class="hover:text-[color:var(--gcu-blue-light)] transition">Certification</a>
-      <a href="preliminaries.html" class="hover:text-[color:var(--gcu-blue-light)] transition">Preliminaries</a>
       <a href="contact.html" class="hover:text-[color:var(--gcu-blue-light)] transition">Contact</a>
     </nav>
     <button @click="open = !open" class="md:hidden text-white">
@@ -77,6 +76,43 @@
   </div>
 </header>
 
+
+<!-- mobile burger -->
+<button @click="open = !open" class="md:hidden text-gray-100">
+  <template x-if="!open">
+    <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" stroke="currentColor">
+      <path stroke-linecap="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+    </svg>
+  </template>
+  <template x-if="open">
+    <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" stroke="currentColor">
+      <path stroke-linecap="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+    </svg>
+  </template>
+</button>
+
+
+      <!-- mobile drawer -->
+<!-- mobile drawer -->
+<div
+  x-show="open"
+  x-cloak
+  x-transition:enter="transition ease-out duration-300"
+  x-transition:enter-start="opacity-0 -translate-y-4"
+  x-transition:enter-end="opacity-100 translate-y-0"
+  x-transition:leave="transition ease-in duration-200"
+  x-transition:leave-start="opacity-100 translate-y-0"
+  x-transition:leave-end="opacity-0 -translate-y-4"
+  class="md:hidden bg-gray-900 border-t border-gray-800"
+>
+  <ul class="flex flex-col items-center py-6 gap-6 text-lg font-semibold text-white dark:text-gray-200">
+    <li><a href="index.html"             @click="open=false" class="text-white hover:text-[color:var(--gcu-blue-light)]">Home</a></li>
+     <li><a href="MeetTeam.html"    @click="open = false" class="text-white hover:text-[color:var(--gcu-blue-light)]">Team</a></li>
+    <li><a href="Events.html"            @click="open=false" class="text-white hover:text-[color:var(--gcu-blue-light)]">Events</a></li>
+    <li><a href="certification.html"     @click="open=false" class="text-white hover:text-[color:var(--gcu-blue-light)]">Certifications</a></li>
+  </ul>
+</div>
+
 <!-- HERO -->
 <section class="pt-32 pb-20 bg-gradient-to-b from-black to-gray-900 text-center relative overflow-hidden">
   <div class="relative z-10 max-w-3xl mx-auto px-4" data-aos="zoom-in">
@@ -89,34 +125,56 @@
   </div>
 </section>
 
-<!-- CONTACT CONTENT -->
-<main class="max-w-3xl mx-auto px-6 py-16 text-white text-base leading-relaxed space-y-12">
-  <section data-aos="fade-up">
-    <h2 class="text-2xl font-bold text-[color:var(--gcu-blue-light)] mb-3">📸 Instagram</h2>
-    <p>Follow our builds, launches, and behind-the-scenes moments:</p>
-    <a href="https://instagram.com/gcurcc" target="_blank" class="cta-btn">Visit Instagram →</a>
-  </section>
+ <main class="max-w-5xl mx-auto px-6 py-20 text-white text-base leading-relaxed space-y-16">
 
+  <!-- GCU LINKS -->
   <section data-aos="fade-up">
-    <h2 class="text-2xl font-bold text-[color:var(--gcu-blue-light)] mb-3">🔗 LinkedIn</h2>
-    <p>Connect professionally and follow our society updates and member achievements:</p>
-    <a href="https://linkedin.com/company/caledonianrocketry" target="_blank" class="cta-btn">Visit LinkedIn →</a>
-  </section>
-
-  <section data-aos="fade-up">
-    <h2 class="text-2xl font-bold text-[color:var(--gcu-blue-light)] mb-3">🏛 GCU Official Links</h2>
-    <ul class="list-disc list-inside text-gray-300">
-      <li><a href="https://www.gcu.ac.uk/" class="underline text-[color:var(--rocket-red)] hover:text-white transition" target="_blank">GCU Official Website</a></li>
-      <li><a href="https://www.instagram.com/gcuofficial/" class="underline text-[color:var(--rocket-red)] hover:text-white transition" target="_blank">GCU Instagram</a></li>
-      <li><a href="https://www.linkedin.com/school/glasgow-caledonian-university/" class="underline text-[color:var(--rocket-red)] hover:text-white transition" target="_blank">GCU LinkedIn</a></li>
+    <h2 class="text-3xl font-extrabold tracking-tight text-[color:var(--gcu-blue-light)] mb-6">🏛 GCU Official & Society Links</h2>
+    <ul class="space-y-4 text-gray-300 list-disc list-inside">
+      <li>
+        <a href="https://www.gcu.ac.uk/" target="_blank" class="underline text-[color:var(--rocket-red)] hover:text-white transition">
+          GCU Official Website
+        </a>
+      </li>
+      <li>
+        <a href="https://www.instagram.com/glasgow_caledonian_university/" target="_blank" class="underline text-[color:var(--rocket-red)] hover:text-white transition">
+          GCU Official Instagram
+        </a>
+      </li>
+      <li>
+        <a href="https://www.linkedin.com/company/gcu-caledonian-rocketry/posts/?feedView=all" target="_blank" class="underline text-[color:var(--rocket-red)] hover:text-white transition">
+          Caledonian Rocketry LinkedIn
+        </a>
+      </li>
+      <li>
+        <a<a href="https://www.instagram.com/caledonianrocketry/" target="_blank" class="underline text-[color:var(--rocket-red)] hover:text-white transition">
+          Caledonian Rocketry Instagram
+        </a>
+      </li>
+      <li>
+        <a href="https://www.gcustudents.co.uk/groups/gcu-rocketry-society" target="_blank" class="underline text-[color:var(--rocket-red)] hover:text-white transition">
+          Rocketry Society GCU Students Portal
+        </a>
+      </li>
+      <li>
+        <a  href="https://www.instagram.com/gcu_students/" target="_blank" class="underline text-[color:var(--rocket-red)] hover:text-white transition">
+          GCU Students Instagram
+        </a>
+      </li>
     </ul>
   </section>
 
+  <!-- EMAIL -->
   <section data-aos="fade-up">
-    <h2 class="text-2xl font-bold text-[color:var(--gcu-blue-light)] mb-3">📬 Email Us</h2>
-    <p>Whether it’s for collaboration, questions, or joining the team — we’re here.</p>
-    <a href="mailto:rocketry.society@gcu.ac.uk" class="cta-btn">Send an Email</a>
+    <h2 class="text-3xl font-extrabold tracking-tight text-[color:var(--gcu-blue-light)] mb-6">📬 Email Us</h2>
+    <p class="mb-6 text-gray-300">
+      Whether you’re looking to collaborate, sponsor, join the team or just say hello — drop us a message.
+    </p>
+    <a href="mailto:rocketry@gcustudents.co.uk" class="cta-btn">
+      Send an Email
+    </a>
   </section>
+
 </main>
 
 <!-- FOOTER -->

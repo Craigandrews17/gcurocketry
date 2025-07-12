@@ -38,6 +38,7 @@
       body  { font-family:'Inter',sans-serif; }
       .accent-red   { color:var(--rocket-red); }
       .accent-brown { color:var(--earth-brown); }
+        .accent-blue  { color: var(--gcu-blue); }
       .cta-btn {
         display: inline-block;
         margin-top: 2rem;
@@ -76,21 +77,27 @@
     <canvas id="starfield"></canvas>
 
     <!-- ========================= NAVBAR ========================= -->
-    <header class="sticky top-0 z-50 backdrop-blur-lg/60 border-b border-gray-800 dark:border-gray-700" x-data="{open:false}">
-      <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
-        <a href="index.html" class="text-xl font-extrabold tracking-tight accent-brown">Caledonian Rocketry</a>
+    <!-- ★ star-field canvas -->
+  <canvas id="starfield"></canvas>
 
+  <!-- ───────────────── NAVBAR ───────────────── -->
+  <header class="fixed top-0 left-0 w-full z-50 bg-[color:var(--gcu-blue)] text-white shadow" x-data="{ open: false }">
+    
+    <div class="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
+      <!-- Logo -->
+      <a href="index.html" class="text-2xl font-extrabold tracking-tight text-white">
+        Caledonian Rocketry
+      </a>
    <nav class="hidden md:flex space-x-6 text-sm font-semibold">
   <!-- Anchors (same-page sections) -->
-  <a href="index.html" class="hover:text-red-500 transition">Home</a>
+  <a href="index.html" class="hover:text--500 transition">Home</a>
 
-
-
-  <!-- External Pages -->
-  <a href="MeetTeam.html" class="hover:text-red-500 transition">Team</a>
-  <a href="Events.html" class="hover:text-red-500 transition">Events</a>
-  <a href="certification.html" class="hover:text-red-500 transition">Certification</a>
-  <a href="preliminaries.html"    class="hover:text-[color:var(--rocket-red)]">Preliminaries</a>
+ <!-- Desktop Nav -->
+      <nav class="hidden md:flex space-x-6 text-sm font-semibold">
+   <a href="index.html" class="hover:text-[color:var(--gcu-blue-light)] transition">Home</a>
+  <a href="MeetTeam.html" class="hover:text-[color:var(--gcu-blue-light)] transition">Team</a>
+  <a href="Events.html"  class="hover:text-[color:var(--gcu-blue-light)] transition">Events</a>
+  <a href="certification.html"  class="hover:text-[color:var(--gcu-blue-light)] transition">Certification</a>
 </nav>
         
 
@@ -123,11 +130,10 @@
   class="md:hidden bg-gray-900 border-t border-gray-800"
 >
   <ul class="flex flex-col items-center py-6 gap-6 text-lg font-semibold text-white dark:text-gray-200">
-    <li><a href="index.html"             @click="open=false" class="hover:text-[color:var(--rocket-red)]">Home</a></li>
-    <li><a href="Events.html"            @click="open=false" class="hover:text-[color:var(--rocket-red)]">Events</a></li>
-    <li><a href="preliminaries.html"     @click="open=false" class="hover:text-[color:var(--rocket-red)]">Preliminaries</a></li>
-    <li><a href="DeploymentTutorial.html"@click="open=false" class="text-[color:var(--rocket-red)]">Tutorials</a></li>
-    <li><a href="certification.html"     @click="open=false" class="hover:text-[color:var(--rocket-red)]">Certifications</a></li>
+    <li><a href="index.html"             @click="open=false" class="text-white hover:text-[color:var(--gcu-blue-light)]">Home</a></li>
+     <li><a href="MeetTeam.html"    @click="open = false" class="text-white hover:text-[color:var(--gcu-blue-light)]">Team</a></li>
+    <li><a href="Events.html"            @click="open=false" class="text-white hover:text-[color:var(--gcu-blue-light)]">Events</a></li>
+    <li><a href="certification.html"     @click="open=false" class="text-white hover:text-[color:var(--gcu-blue-light)]">Certifications</a></li>
   </ul>
 </div>
 
@@ -135,9 +141,8 @@
 
     <!-- ========================= HERO ========================= -->
     <section class="pt-32 pb-20 bg-gradient-to-b from-black to-gray-900 text-center relative overflow-hidden">
-      <img src="./assets/tutorials/dual_hero.jpg" alt="Dual Deployment schematic" class="absolute inset-0 w-full h-full object-cover opacity-20 pointer-events-none" />
-      <div class="relative z-10 max-w-4xl mx-auto px-4" data-aos="zoom-in">
-        <h1 class="text-4xl md:text-5xl font-extrabold mb-3 accent-brown">Dual‑Deployment Rocket: Structural Tutorial</h1>
+    
+        <h1 class="text-4xl md:text-5xl font-extrabold mb-3 accent-blue">Dual‑Deployment Rocket: Structural Tutorial</h1>
         <p class="text-gray-300 max-w-2xl mx-auto">Step‑by‑step guide to each component.</p>
       </div>
     </section>
@@ -152,7 +157,7 @@
 
 
       <!-- Motor Selection -->
-<h2 class="text-4xl md:text-5xl font-extrabold tracking-tight text-center mb-8 accent-brown">Motor Selection: Cesaroni 2372K1440</h2>
+<h2 class="text-4xl md:text-5xl font-extrabold tracking-tight text-center mb-8 accent-blue">Motor Selection: Cesaroni 2372K1440</h2>
 
 <p class="mb-6">
   Due to accessibility of motors, the entire design of this rocket was based around the
@@ -168,7 +173,7 @@
 
   <!-- Motor Specs -->
   <div class="bg-gray-900 text-white rounded-xl shadow-xl p-6">
-    <h3 class="text-xl font-semibold mb-4 accent-brown">Motor Specs</h3>
+    <h3 class="text-xl font-semibold mb-4 accent-blue">Motor Specs</h3>
     <ul class="text-base space-y-2">
       <li><strong>Total Impulse:</strong> 2372 N·s</li>
       <li><strong>Average Thrust:</strong> 1440 N</li>
@@ -221,7 +226,7 @@
 
       <!-- OpenRocket File Download -->
 <div class="my-12 text-center">
-  <h3 class="text-2xl font-bold mb-4 accent-brown">Download Our OpenRocket File</h3>
+  <h3 class="text-2xl font-bold mb-4 accent-blue">Download Our OpenRocket File</h3>
   <p class="text-gray-300 mb-6 max-w-2xl mx-auto">
     You can explore and simulate our final dual-deployment rocket using the actual <code>.ork</code> file we used during development. Perfect for modifying, extending, or studying the setup.
   </p>
@@ -261,7 +266,7 @@
       <div class="callout">🧰 <strong>Materials</strong> — phenolic kraft tubing, PLA, birch plywood rings, shock cord, quick links, dual parachutes, CanSat components. </div>
 
 <!-- Nose Cone -->
-<h2 id="nose-cone" class="text-4xl md:text-5xl font-extrabold tracking-tight text-center mb-8 accent-brown">1 · Nose Cone</h2>
+<h2 id="nose-cone" class="text-4xl md:text-5xl font-extrabold tracking-tight text-center mb-8 accent-blue">1 · Nose Cone</h2>
 
 <!-- Full-width dual images -->
 <div class="w-full max-w-screen-xl mx-auto px-4 sm:px-8" data-aos="fade-up">
@@ -333,7 +338,7 @@
       <p> Arming switch holes are drilled on the upper airframe (this will be reflected upon in the conclusion, let's say it caused some issues). One for each flight computer, each computer can activate both main and drogue parachutes for redundancy.</p>
 
 <!-- Payload -->
-<h2 id="payload" class="text-4xl md:text-5xl font-extrabold tracking-tight text-center mb-8 accent-brown">4 · Payload: CanSat</h2>
+<h2 id="payload" class="text-4xl md:text-5xl font-extrabold tracking-tight text-center mb-8 accent-blue">4 · Payload: CanSat</h2>
 
 <!-- FULL WIDTH IMAGE CONTAINER -->
 <div class="w-full max-w-screen-xl mx-auto px-4 sm:px-8" data-aos="fade-up">
@@ -369,7 +374,7 @@
 </div>
 
       <!-- Lower Airframe -->
-<h2 id="lower-airframe" class="text-4xl md:text-5xl font-extrabold tracking-tight text-center mb-8 accent-brown">5 · Lower Airframe Tube</h2>
+<h2 id="lower-airframe" class="text-4xl md:text-5xl font-extrabold tracking-tight text-center mb-8 accent-blue">5 · Lower Airframe Tube</h2>
 
 <!-- Medium-large dual image grid -->
 <div class="grid sm:grid-cols-2 gap-8 my-10 items-start" data-aos="fade-up">
@@ -419,7 +424,7 @@
       <p>Below are the final successful ejection tests from our recent visit at Mach 2025.</p>
 <!-- Recovery System Test Video -->
 <div class="my-8">
-  <h3 class="text-xl font-semibold mb-2 accent-brown">Drogue Recovery System Test Video</h3>
+  <h3 class="text-xl font-semibold mb-2 accent-blue">Drogue Recovery System Test Video</h3>
   <video controls class="w-full max-w-4xl mx-auto rounded-xl shadow-xl">
     <source src="dualDeployImages/DrogueTest.mp4" type="video/mp4">
     Your browser does not support the video tag.
@@ -428,7 +433,7 @@
 
 <!-- Recovery System Ejection Sequence -->
 <div class="my-8">
-  <h3 class="text-xl font-semibold mb-2 accent-brown">Main Recovery System Test Video</h3>
+  <h3 class="text-xl font-semibold mb-2 accent-blue">Main Recovery System Test Video</h3>
   <video controls class="w-full max-w-4xl mx-auto rounded-xl shadow-xl">
     <source src="dualDeployImages/MainTest.mp4" type="video/mp4">
     Your browser does not support the video tag.
@@ -440,7 +445,7 @@
 
       <!-- Reflections Section -->
 <section class="max-w-4xl mx-auto px-4 py-20 prose dark:prose-invert md:prose-lg" data-aos="fade-up">
-  <h2 class="text-4xl md:text-5xl font-extrabold tracking-tight text-center mb-8 accent-brown">Reflections & Lessons Learned</h2>
+  <h2 class="text-4xl md:text-5xl font-extrabold tracking-tight text-center mb-8 accent-blue">Reflections & Lessons Learned</h2>
 
   <p>
     Our team witnessed and evoked murphy’s law on multiple occasions during the design and assembly of this dual-deployment rocket. Anything that can go wrong, will go wrong. As this was our first high power rocket, many things were overlooked. It was extremely difficult to set up the avionics bay once the upper airframe had been epoxied: next year, ease of assembly and disassembly will be a priority. The avionics bay was also not airtight, which meant we had to epoxy them over. The arming switches were relentlessly loose and stuck out too far - screw switches and shorter wires would remedy this.

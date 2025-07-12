@@ -79,10 +79,10 @@
       <!-- Desktop Nav -->
       <nav class="hidden md:flex space-x-6 text-sm font-semibold">
         <a href="index.html" class="text-white hover:text-red-500 transition">Home</a>
-        <a href="MeetTeam.html" class="text-white hover:text-red-500 transition">Team</a>
-        <a href="Events.html" class="text-white hover:text-red-500 transition">Events</a>
-        <a href="certification.html" class="text-white hover:text-red-500 transition">Certification</a>
-        <a href="preliminaries.html" class="text-white hover:text-red-500 transition">Preliminaries</a>
+        <a href="MeetTeam.html" class="hover:text-[color:var(--gcu-blue-light)] transition">Team</a>
+        <a href="Events.html" class="hover:text-[color:var(--gcu-blue-light)] transition">Events</a>
+        <a href="certification.html" class="hover:text-[color:var(--gcu-blue-light)] transition">Certification</a>
+        <a href="preliminaries.html" class="hover:text-[color:var(--gcu-blue-light)] transition">Preliminaries</a>
       </nav>
       <!-- Mobile Burger -->
       <button @click="open = !open" class="md:hidden text-white focus:outline-none">
@@ -112,10 +112,10 @@
       class="md:hidden bg-[color:var(--gcu-blue)] text-white">
       <ul class="flex flex-col items-center py-6 gap-6 text-lg font-semibold">
         <li><a href="index.html"         @click="open = false" class="text-white hover:text-red-500">Home</a></li>
-        <li><a href="MeetTeam.html"      @click="open = false" class="text-white hover:text-red-500">Team</a></li>
-        <li><a href="Events.html"        @click="open = false" class="text-white hover:text-red-500">Events</a></li>
-        <li><a href="certification.html" @click="open = false" class="text-white hover:text-red-500">Certification</a></li>
-        <li><a href="preliminaries.html" @click="open = false" class="text-white hover:text-red-500">Preliminaries</a></li>
+        <li><a href="MeetTeam.html"    @click="open = false" class="hover:text-[color:var(--gcu-blue-light)]">Team</a></li>
+        <li><a href="Events.html"      @click="open = false" class="hover:text-[color:var(--gcu-blue-light)]">Events</a></li>
+        <li><a href="certification.html" @click="open = false" class="hover:text-[color:var(--gcu-blue-light)]">Certification</a></li>
+        <li><a href="preliminaries.html" @click="open = false" class="hover:text-[color:var(--gcu-blue-light)]">Preliminaries</a></li>
       </ul>
     </div>
   </header>
@@ -136,19 +136,6 @@
     </div>
   </section>
 
-  <!-- Intro Callout -->
-  <section class="bg-gray-100 dark:bg-gray-800 py-8 px-4">
-    <div class="max-w-3xl mx-auto text-center" data-aos="fade-up">
-      <p class="text-lg">
-        Want to get involved?
-        <strong>Join the Glasgow Caledonian Rocketry Society</strong>
-        to take part in these events, find launch partners, and access mentorship &amp; funding opportunities.
-      </p>
-      <a href="mailto:info@caledonianrocketry.uk?subject=Join%20GCU%20Rocketry%20Society" class="cta-btn mt-6">
-        Join the Society
-      </a>
-    </div>
-  </section>
 
   <!-- Events List -->
   <main class="prose dark:prose-invert md:prose-lg max-w-4xl mx-auto px-4 py-16 prose-headings:font-semibold prose-headings:accent-blue">

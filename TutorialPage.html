@@ -61,27 +61,24 @@
     <!-- ★ star-field backdrop -->
     <canvas id="starfield"></canvas>
 
-    <!-- ====================== NAVBAR ====================== -->
-    <header class="sticky top-0 z-50 backdrop-blur-lg/60 border-b border-gray-800 dark:border-gray-700" x-data="{open:false}">
-      <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
-        <a href="index.html" class="text-xl font-extrabold tracking-tight accent-brown">Caledonian Rocketry</a>
+    <!-- ───────────────── NAVBAR ───────────────── -->
+  <header class="fixed top-0 left-0 w-full z-50 bg-[color:var(--gcu-blue)] text-white shadow" x-data="{ open: false }">
+    
+    <div class="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
+      <!-- Logo -->
+      <a href="index.html" class="text-2xl font-extrabold tracking-tight text-white">
+        Caledonian Rocketry
+      </a>
 
-        <!-- desktop links -->
-   <nav class="hidden md:flex space-x-6 text-sm font-semibold">
-  <!-- Anchors (same-page sections) -->
-  <a href="index.html#mission" class="hover:text-red-500 transition">Mission</a>
-  <a href="index.html#projects" class="hover:text-red-500 transition">Projects</a>
-  <a href="index.html#tutorials" class="hover:text-red-500 transition">Tutorials</a>
-  <a href="index.html#sponsors" class="hover:text-red-500 transition">Sponsors</a>
-  <a href="index.html#contact"  class="hover:text-red-500 transition">Contact</a>
-
-
-  <!-- External Pages -->
-  <a href="MeetTeam.html" class="hover:text-red-500 transition">Team</a>
-  <a href="Events.html" class="hover:text-red-500 transition">Events</a>
-  <a href="certification.html" class="hover:text-red-500 transition">Certification</a>
-  <a href="preliminaries.html"    class="hover:text-[color:var(--rocket-red)]">Preliminaries</a>
+ <!-- Desktop Nav -->
+      <nav class="hidden md:flex space-x-6 text-sm font-semibold">
+   <a href="index.html" class="hover:text-[color:var(--gcu-blue-light)] transition">Home</a>
+  <a href="MeetTeam.html" class="hover:text-[color:var(--gcu-blue-light)] transition">Team</a>
+  <a href="Events.html"  class="hover:text-[color:var(--gcu-blue-light)] transition">Events</a>
+  <a href="certification.html"  class="hover:text-[color:var(--gcu-blue-light)] transition">Certification</a>
 </nav>
+
+
 
 <!-- mobile burger -->
 <button @click="open = !open" class="md:hidden text-gray-100">
@@ -127,6 +124,18 @@
         <p class="text-gray-300">A practical, image-ready guide for rocketry students&nbsp;&amp;&nbsp;hobbyists</p>
       </div>
     </section>
+
+    <!-- ──────────────────────
+     PAGE NAVIGATION BAR
+───────────────────────── -->
+<nav class="sticky top-24 z-40 bg-gray-900/90 backdrop-blur-md border border-gray-800 shadow-md rounded-xl mx-auto max-w-4xl px-4 py-4 text-sm md:text-base text-gray-100 flex flex-wrap justify-center gap-4 mb-12">
+  <a href="#why" class="hover:text-[color:var(--gcu-blue-light)] transition">Why 5-DOF</a>
+  <a href="#why-simulink" class="hover:text-[color:var(--gcu-blue-light)] transition">Why Simulink</a>
+  <a href="#equations" class="hover:text-[color:var(--gcu-blue-light)] transition">Equations</a>
+  <a href="#blocks" class="hover:text-[color:var(--gcu-blue-light)] transition">Block Diagram</a>
+  <a href="#build" class="hover:text-[color:var(--gcu-blue-light)] transition">Build Steps</a>
+  <a href="#download" class="hover:text-[color:var(--gcu-blue-light)] transition">Download</a>
+</nav>
 
     <!-- ====================== MAIN ====================== -->
     <main  class="prose dark:prose-invert text-white prose-headings:text-white prose-strong:text-white prose-p:text-gray-200 prose-li:text-gray-200 prose-a:text-[color:var(--gcu-blue-light)] max-w-4xl mx-auto px-6 py-16">

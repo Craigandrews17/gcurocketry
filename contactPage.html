@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en" x-data="guRocketryApp()" :class="{ dark: darkMode }">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contact & Socials • Caledonian Rocketry</title>
+
+  <!-- Fonts + Libs -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com?plugins=typography,aspect-ratio"></script>
+  <link rel="stylesheet" href="https://unpkg.com/aos@2.3.4/dist/aos.css" />
+  <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+  <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
+  <style>
+    :root {
+      --rocket-red: #ff3131;
+      --earth-brown: #8b5e3c;
+      --gcu-blue: #005EB8;
+      --gcu-blue-light: #66B2FF;
+      --text-white: #ffffff;
+      --bg-dark: #0A192F;
+      --bg-mid: #112240;
+    }
+
+    body { font-family: 'Inter', sans-serif; }
+    .accent-blue { color: var(--gcu-blue); }
+    .cta-btn {
+      display: inline-block;
+      padding: .75rem 1.5rem;
+      border-radius: .5rem;
+      background-color: var(--rocket-red);
+      color: var(--text-white);
+      font-weight: 600;
+      margin-top: 1rem;
+    }
+
+    #starfield {
+      position: fixed;
+      inset: 0;
+      background: #000;
+      z-index: -1;
+      touch-action: none;
+    }
+
+    [x-cloak] { display: none !important; }
+  </style>
+</head>
+
+<body class="bg-white dark:bg-gray-950 text-gray-900 dark:text-white antialiased scroll-smooth">
+
+<canvas id="starfield"></canvas>
+
+<!-- NAVBAR -->
+<header class="fixed top-0 left-0 w-full z-50 bg-[color:var(--gcu-blue)] text-white shadow" x-data="{ open: false }">
+  <div class="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
+    <a href="index.html" class="text-2xl font-extrabold tracking-tight text-white">Caledonian Rocketry</a>
+    <nav class="hidden md:flex space-x-6 text-sm font-semibold">
+      <a href="index.html" class="hover:text-[color:var(--gcu-blue-light)] transition">Home</a>
+      <a href="MeetTeam.html" class="hover:text-[color:var(--gcu-blue-light)] transition">Team</a>
+      <a href="certification.html" class="hover:text-[color:var(--gcu-blue-light)] transition">Certification</a>
+      <a href="preliminaries.html" class="hover:text-[color:var(--gcu-blue-light)] transition">Preliminaries</a>
+      <a href="contact.html" class="hover:text-[color:var(--gcu-blue-light)] transition">Contact</a>
+    </nav>
+    <button @click="open = !open" class="md:hidden text-white">
+      <template x-if="!open">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" stroke="currentColor">
+          <path stroke-linecap="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+      </template>
+      <template x-if="open">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" stroke="currentColor">
+          <path stroke-linecap="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </template>
+    </button>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="pt-32 pb-20 bg-gradient-to-b from-black to-gray-900 text-center relative overflow-hidden">
+  <div class="relative z-10 max-w-3xl mx-auto px-4" data-aos="zoom-in">
+    <h1 class="text-4xl md:text-5xl font-extrabold mb-3 accent-blue">
+      Contact & Social Links
+    </h1>
+    <p class="text-gray-300">
+      Find us on socials or drop us an email — we’d love to hear from you.
+    </p>
+  </div>
+</section>
+
+<!-- CONTACT CONTENT -->
+<main class="max-w-3xl mx-auto px-6 py-16 text-white text-base leading-relaxed space-y-12">
+  <section data-aos="fade-up">
+    <h2 class="text-2xl font-bold text-[color:var(--gcu-blue-light)] mb-3">📸 Instagram</h2>
+    <p>Follow our builds, launches, and behind-the-scenes moments:</p>
+    <a href="https://instagram.com/gcurcc" target="_blank" class="cta-btn">Visit Instagram →</a>
+  </section>
+
+  <section data-aos="fade-up">
+    <h2 class="text-2xl font-bold text-[color:var(--gcu-blue-light)] mb-3">🔗 LinkedIn</h2>
+    <p>Connect professionally and follow our society updates and member achievements:</p>
+    <a href="https://linkedin.com/company/caledonianrocketry" target="_blank" class="cta-btn">Visit LinkedIn →</a>
+  </section>
+
+  <section data-aos="fade-up">
+    <h2 class="text-2xl font-bold text-[color:var(--gcu-blue-light)] mb-3">🏛 GCU Official Links</h2>
+    <ul class="list-disc list-inside text-gray-300">
+      <li><a href="https://www.gcu.ac.uk/" class="underline text-[color:var(--rocket-red)] hover:text-white transition" target="_blank">GCU Official Website</a></li>
+      <li><a href="https://www.instagram.com/gcuofficial/" class="underline text-[color:var(--rocket-red)] hover:text-white transition" target="_blank">GCU Instagram</a></li>
+      <li><a href="https://www.linkedin.com/school/glasgow-caledonian-university/" class="underline text-[color:var(--rocket-red)] hover:text-white transition" target="_blank">GCU LinkedIn</a></li>
+    </ul>
+  </section>
+
+  <section data-aos="fade-up">
+    <h2 class="text-2xl font-bold text-[color:var(--gcu-blue-light)] mb-3">📬 Email Us</h2>
+    <p>Whether it’s for collaboration, questions, or joining the team — we’re here.</p>
+    <a href="mailto:rocketry.society@gcu.ac.uk" class="cta-btn">Send an Email</a>
+  </section>
+</main>
+
+<!-- FOOTER -->
+<footer class="border-t border-gray-800 dark:border-gray-700 py-8 text-center text-sm text-gray-500 dark:text-gray-400">
+  © 2025 Craig Andrews · Caledonian Rocketry
+</footer>
+
+<!-- AOS Init -->
+<script>
+  AOS.init({ duration: 800, once: true });
+</script>
+
+<!-- Optional Starfield (copy your JS here if needed) -->
+</body>
+</html>

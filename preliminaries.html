@@ -192,7 +192,8 @@ The hypothetical rocket used throughout this thesis will be much smaller: on the
         <li>A lateral wind disturbance is modeled as a fixed sinusoidal wind profile (varying with altitude or time).</li>
       </ul>
 <p>With the requirements and assumptions clearly laid forth, the scope of the simulation preordains that for the TVC to manipulate the orientation of the rocket, it is essential to conceptualise how the rocket would rotate in a simulation. Thus, it must rotate with respect to another reference frame.</p>
-<h2 id="quatintro"> Introducing Orientation Using Body and Inertial Frames</h2>
+<h2 id="quatintro">4.3 · Introducing Orientation Using Body and Inertial Frames</h2>
+
   <p>This paper entails the construction of a 5 Degree-of-Freedom (5DOF) simulation. These allow the rocket to translate in the typical X, Y, and Z axes; the final 2 degrees allow the rocket to rotate around its pitch, Y and yaw, Z axes. This adds complexity to the system; it is now necessary to define the axes with respect to which the rocket will translate and rotate. Firstly, the inertial frame, which corresponds to the stationary reference frame of the Earth, encompasses the second and final frame within the rocket's body, located at its center of gravity. The concept and naming convention are illustrated below</p>
 
   <!-- Side-by-side figure pair -->
@@ -205,7 +206,8 @@ The hypothetical rocket used throughout this thesis will be much smaller: on the
 
   <img src="Figures/axisAngle.png" alt="Rocket simulation figure" class="rounded border border-gray-700 dark:border-gray-300">
   <p>Finding a robust mathematical representation is critical now that the coordinate systems have been clearly articulated.</p>
-  <h3>Quaternion Transformation</h3>
+  <h3>4.3.1 Quaternion Transformation</h3>
+
   <p>A glance at the literature will yield three of the most common ways to represent a rotation/orientation of a vector - namely, Euler angles, Direction Cosine Matrices (DCM) and quaternions. The literature states that Euler Angles are unfavourable in many rocket problems due to the infamous gimbal lock that occurs when one of its rotation axes reaches 90 degrees, resulting in a loss of a degree of freedom. However, the reference trajectories for this thesis will render this an unreachable ambit. Furthermore, DCM (3x3) matrices have redundant components and result in larger computational loads: not ideal when optimising for speed.</p>
  <p>Lastly, quaternions: a commonplace 4D vector in rocket control systems due to their computational speed (although storing four components compared to Euler angles' 3 components) and numerical stability. Curiously, using quaternions demands an awareness of the 'unwinding' phenomenon that leads to some positive quaternion representing the same orientation as its negative counterpart. Based on this review, a decision was made to proceed with quaternions due to their intuitive and computationally desirable use, especially considering numerical integration. 
 
@@ -271,8 +273,10 @@ R<sub>b,i</sub> =
 </section>
 
 
-  <h2 id="non-linear-physics">Describing the Relevant Non-Linear Physics</h2>
-  <h3>Coupled Differential Equations</h3>
+  <h2 id="non-linear-physics">4.4 · Describing the Relevant Non-Linear Physics</h2>
+
+  <h3>4.4.1 Coupled Differential Equations</h3>
+
 <section class="max-w-4xl mx-auto px-6 py-16 text-white text-base leading-relaxed space-y-16">
   
 
@@ -331,7 +335,8 @@ q̇ = ½ · Ω(ω) · q
 
 </section>
 
-  <h3 id="aerodynamics">Aerodynamics: Squared Terms &amp; Trigonometric Non-Linearities</h3>
+  <h2 id="aerodynamics">4.5 · Aerodynamics: Squared Terms & Trigonometric Non-Linearities</h2>
+
 
 <section class="max-w-4xl mx-auto px-6 py-16 text-white text-base leading-relaxed space-y-16">
 
@@ -364,7 +369,8 @@ q̇ = ½ · Ω(ω) · q
 
   <p>These angles trigonometrically scale the intensity of the aerodynamic forces and resulting moments.</p>
 
-  <h4>Aerodynamic Forces and Moments</h4>
+  <h3>4.5.1 Aerodynamic Forces and Moments</h3>
+
 
   <p>
     The normal force <code>fₙ</code>, side force <code>fₛ</code>, and drag force <code>f_d</code> are given by:
@@ -443,7 +449,8 @@ c_m,damp = 0.55 · (l_ref⁴ / A_ref) · (r_t / d) · (ω² / v₀²)
 
 <section class="max-w-4xl mx-auto px-6 py-16 text-white text-base leading-relaxed space-y-16">
 
-  <h3 id="tvc">Thrust Vector Control: Trigonometric Coupling of Translation &amp; Rotation</h3>
+  <h2 id="tvc">4.6 · Thrust Vector Control: Trigonometric Coupling of Translation & Rotation</h2>
+
 
 
   <p>

@@ -79,10 +79,10 @@
       </a>
       <!-- Desktop Nav -->
       <nav class="hidden md:flex space-x-6 text-sm font-semibold">
-        <a href="index.html" class="text-white hover:text-red-500 transition">Home</a>
+        <a href="index.html" class="hover:text-[color:var(--gcu-blue-light)] transition">Home</a>
         <a href="MeetTeam.html" class="hover:text-[color:var(--gcu-blue-light)] transition">Team</a>
         <a href="certification.html" class="hover:text-[color:var(--gcu-blue-light)] transition">Certification</a>
-        <a href="preliminaries.html" class="hover:text-[color:var(--gcu-blue-light)] transition">Preliminaries</a>
+        <a href="contact.html" class="hover-gcu-light transition">Contact</a>
       </nav>
       <!-- Mobile Burger -->
       <button @click="open = !open" class="md:hidden text-white focus:outline-none">
@@ -115,6 +115,7 @@
         <li><a href="MeetTeam.html"    @click="open = false" class="text-white hover:text-[color:var(--gcu-blue-light)]">Team</a></li>    
         <li><a href="certification.html" @click="open = false" class="text-white hover:text-[color:var(--gcu-blue-light)]">Certification</a></li>
         <li><a href="preliminaries.html" @click="open = false" class="text-white hover:text-[color:var(--gcu-blue-light)]">Preliminaries</a></li>
+      <li><a href="contactPage.html" @click="open=false" class="hover-gcu-light">Contact</a></li>
       </ul>
     </div>
   </header>

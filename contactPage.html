@@ -1,6 +1,15 @@
 <!DOCTYPE html>
 <html lang="en" x-data="guRocketryApp()" :class="{ dark: darkMode }">
 <head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-40JDE37SXF"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+    gtag('config', 'G-40JDE37SXF');
+  </script>
+
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Contact & Socials • Caledonian Rocketry</title>
@@ -23,8 +32,18 @@
       --bg-mid: #112240;
     }
 
-    body { font-family: 'Inter', sans-serif; }
-    .accent-blue { color: var(--gcu-blue); }
+    body {
+      font-family: 'Inter', sans-serif;
+    }
+
+    .accent-blue {
+      color: var(--gcu-blue);
+    }
+
+    .hover-gcu-light:hover {
+      color: var(--gcu-blue-light);
+    }
+
     .cta-btn {
       display: inline-block;
       padding: .75rem 1.5rem;
@@ -43,7 +62,16 @@
       touch-action: none;
     }
 
-    [x-cloak] { display: none !important; }
+    [x-cloak] {
+      display: none !important;
+    }
+
+    .prose a code {
+      color: #ffffff !important;
+      all: unset;
+      background: none !important;
+      font-weight: normal !important;
+    }
   </style>
 </head>
 
@@ -56,11 +84,13 @@
   <div class="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
     <a href="index.html" class="text-2xl font-extrabold tracking-tight text-white">Caledonian Rocketry</a>
     <nav class="hidden md:flex space-x-6 text-sm font-semibold">
-      <a href="index.html" class="hover:text-[color:var(--gcu-blue-light)] transition">Home</a>
-      <a href="MeetTeam.html" class="hover:text-[color:var(--gcu-blue-light)] transition">Team</a>
-      <a href="certification.html" class="hover:text-[color:var(--gcu-blue-light)] transition">Certification</a>
-      <a href="contact.html" class="hover:text-[color:var(--gcu-blue-light)] transition">Contact</a>
+      <a href="index.html" class="hover-gcu-light transition">Home</a>
+      <a href="MeetTeam.html" class="hover-gcu-light transition">Team</a>
+      <a href="certification.html" class="hover-gcu-light transition">Certification</a>
+      <a href="Events.html"  class="hover:text-[color:var(--gcu-blue-light)] transition">Events</a>
+      <a href="contact.html" class="hover-gcu-light transition">Contact</a>
     </nav>
+
     <button @click="open = !open" class="md:hidden text-white">
       <template x-if="!open">
         <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" stroke="currentColor">
@@ -76,23 +106,6 @@
   </div>
 </header>
 
-
-<!-- mobile burger -->
-<button @click="open = !open" class="md:hidden text-gray-100">
-  <template x-if="!open">
-    <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" stroke="currentColor">
-      <path stroke-linecap="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-    </svg>
-  </template>
-  <template x-if="open">
-    <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" stroke="currentColor">
-      <path stroke-linecap="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-    </svg>
-  </template>
-</button>
-
-
-      <!-- mobile drawer -->
 <!-- mobile drawer -->
 <div
   x-show="open"
@@ -106,10 +119,11 @@
   class="md:hidden bg-gray-900 border-t border-gray-800"
 >
   <ul class="flex flex-col items-center py-6 gap-6 text-lg font-semibold text-white dark:text-gray-200">
-    <li><a href="index.html"             @click="open=false" class="text-white hover:text-[color:var(--gcu-blue-light)]">Home</a></li>
-     <li><a href="MeetTeam.html"    @click="open = false" class="text-white hover:text-[color:var(--gcu-blue-light)]">Team</a></li>
-    <li><a href="Events.html"            @click="open=false" class="text-white hover:text-[color:var(--gcu-blue-light)]">Events</a></li>
-    <li><a href="certification.html"     @click="open=false" class="text-white hover:text-[color:var(--gcu-blue-light)]">Certifications</a></li>
+    <li><a href="index.html" @click="open=false" class="hover-gcu-light">Home</a></li>
+    <li><a href="MeetTeam.html" @click="open = false" class="hover-gcu-light">Team</a></li>
+    <li><a href="Events.html" @click="open=false" class="hover-gcu-light">Events</a></li>
+    <li><a href="certification.html" @click="open=false" class="hover-gcu-light">Certifications</a></li>
+    <li><a href="contactPage.html" @click="open=false" class="hover-gcu-light">Contact</a></li>
   </ul>
 </div>
 
@@ -125,7 +139,7 @@
   </div>
 </section>
 
- <main class="max-w-5xl mx-auto px-6 py-20 text-white text-base leading-relaxed space-y-16">
+<main class="max-w-5xl mx-auto px-6 py-20 text-white text-base leading-relaxed space-y-16">
 
   <!-- GCU LINKS -->
   <section data-aos="fade-up">
@@ -147,7 +161,7 @@
         </a>
       </li>
       <li>
-        <a<a href="https://www.instagram.com/caledonianrocketry/" target="_blank" class="underline text-[color:var(--rocket-red)] hover:text-white transition">
+        <a href="https://www.instagram.com/caledonianrocketry/" target="_blank" class="underline text-[color:var(--rocket-red)] hover:text-white transition">
           Caledonian Rocketry Instagram
         </a>
       </li>
@@ -157,7 +171,7 @@
         </a>
       </li>
       <li>
-        <a  href="https://www.instagram.com/gcu_students/" target="_blank" class="underline text-[color:var(--rocket-red)] hover:text-white transition">
+        <a href="https://www.instagram.com/gcu_students/" target="_blank" class="underline text-[color:var(--rocket-red)] hover:text-white transition">
           GCU Students Instagram
         </a>
       </li>
@@ -187,6 +201,5 @@
   AOS.init({ duration: 800, once: true });
 </script>
 
-<!-- Optional Starfield (copy your JS here if needed) -->
 </body>
 </html>

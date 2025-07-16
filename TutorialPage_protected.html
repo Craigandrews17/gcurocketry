@@ -41,7 +41,7 @@
     </style>
   </head>
 
-  <body class="bg-white dark:bg-gray-950 text-gray-900 dark:text-white antialiased scroll-smooth">
+  <body x-data="{ hasAccess: localStorage.getItem('hasAccess') === 'true', email: '', institution: '', location: '', error: '' }"  class="bg-white dark:bg-gray-950 text-gray-900 dark:text-white antialiased scroll-smooth">
 
     <!-- ★ star-field backdrop -->
     <canvas id="starfield"></canvas>
@@ -98,7 +98,39 @@
     </section>
 
     <!-- ====================== MAIN ====================== -->
-    <main class="prose dark:prose-invert md:prose-lg max-w-4xl mx-auto px-4 py-16 prose-headings:font-semibold prose-headings:accent-brown">
+    
+<!-- 🚀 Access Control Wrapper -->
+<div x-show="!hasAccess" class="min-h-screen flex items-center justify-center bg-black text-white px-6 py-20">
+  <div class="max-w-md w-full bg-gray-900 rounded-xl shadow-lg p-8 space-y-4">
+    <h2 class="text-2xl font-bold text-red-500">Access Required</h2>
+    <p class="text-sm text-gray-400 mb-4">Please fill out this form to unlock the tutorial.</p>
+
+    <form @submit.prevent="async () => {
+        try {
+            const res = await fetch('/api/leads', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email, institution, location })
+            });
+            if (!res.ok) throw new Error('Submission failed');
+            localStorage.setItem('hasAccess', 'true');
+            hasAccess = true;
+        } catch (e) {
+            error = 'Something went wrong. Please try again.';
+        }
+    }" class="space-y-4">
+      <input type="email" placeholder="Email" class="w-full p-2 bg-gray-800 border border-gray-700 rounded" x-model="email" required>
+      <input type="text" placeholder="Institution" class="w-full p-2 bg-gray-800 border border-gray-700 rounded" x-model="institution" required>
+      <input type="text" placeholder="Location" class="w-full p-2 bg-gray-800 border border-gray-700 rounded" x-model="location" required>
+      <button type="submit" class="w-full bg-red-600 hover:bg-red-700 transition rounded py-2 font-semibold">Unlock Tutorial</button>
+    </form>
+    <p x-show="error" x-text="error" class="text-red-400 text-sm mt-2"></p>
+  </div>
+</div>
+
+<!-- 🚀 Main Tutorial Content -->
+<div x-show="hasAccess">
+<main class="prose dark:prose-invert md:prose-lg max-w-4xl mx-auto px-4 py-16 prose-headings:font-semibold prose-headings:accent-brown">
 
       <!-- 0 · Why 5 DOF? -->
       <h2 id="why">0 · Why 5 DOF?</h2>
@@ -596,5 +628,7 @@ end
         R();requestAnimationFrame(draw);addEventListener('resize',R);
       });
     </script>
-  </body>
+  
+</div>
+</body>
 </html>

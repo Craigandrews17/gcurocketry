@@ -602,6 +602,50 @@
   </div>
 </section>
 
+<section x-data="leadForm()" class="max-w-md mx-auto p-6 bg-neutral-900/60 rounded-2xl backdrop-blur">
+  <h2 class="text-xl font-semibold mb-4 text-white">Access the Starter Kit</h2>
+
+  <form @submit.prevent="submit" class="grid gap-4">
+    <input x-model="institution" name="institution" placeholder="Institution*" required class="input">
+    <input x-model="location" name="location" placeholder="Location*" required class="input">
+    <input x-model="email" name="email" placeholder="Email*" type="email" required class="input">
+    <button :disabled="sending" class="btn-primary">Download</button>
+  </form>
+</section>
+
+<script>
+function leadForm () {
+  return {
+    email: '', institution: '', location: '', sending: false,
+    registered: localStorage.getItem('gu_registered') === 'yes',
+    async submit () {
+      this.sending = true
+      const res = await fetch('/api/leads', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          email: this.email,
+          institution: this.institution,
+          location: this.location
+        })
+      })
+      this.sending = false
+      if (res.ok) {
+        localStorage.setItem('gu_registered', 'yes')
+        window.location = '/assets/StarterKit.pdf' // update path
+      } else {
+        alert('Something went wrong. Try again.')
+      }
+    }
+  }
+}
+</script>
+
+<style>
+.input { @apply w-full px-3 py-2 bg-neutral-800 text-white rounded-xl; }
+.btn-primary { @apply w-full py-2 bg-red-600 hover:bg-red-500 text-white rounded-xl font-semibold; }
+</style>
+
 
   <!-- TEAM (already injected above) -->
 
